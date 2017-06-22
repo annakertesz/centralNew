@@ -1,0 +1,24 @@
+{% load staticfiles %}
+<nav class="navbar navbar-inverse" id="custom-navbar">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="menu-li"><button class="menu_button" onclick="show_home()">Home</button></li>
+        <li class="menu-li"><button class="menu_button" onclick="show_browser()">Browse</button></li>
+        <li class="menu-li"><button class="menu_button" onclick="show_playlists()">Playlists</button></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
