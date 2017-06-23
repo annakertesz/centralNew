@@ -17,7 +17,6 @@ import django
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from filebrowser.sites import site
 from central_publishing_new import settings
 from collection import views
 
@@ -29,7 +28,5 @@ urlpatterns = [
 
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^media/(?P<path>.*)$', django.views.static.serve, {'document_root': settings.MEDIA_ROOT}),
-    url(r'^admin/filebrowser/', include(site.urls)),
-    url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/', admin.site.urls),
 ]

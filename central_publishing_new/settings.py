@@ -42,9 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'collection',
-    'grappelli',
-    'filebrowser'
+    'collection'
 ]
 
 MIDDLEWARE = [
@@ -102,14 +100,21 @@ WSGI_APPLICATION = 'central_publishing_new.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'new_central_publishing',
+#         'USER': 'annakertesz',
+#         'PASSWORD': 'bmpa88',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'new_central_publishing',
-        'USER': 'annakertesz',
-        'PASSWORD': 'bmpa88',
-        'HOST': 'localhost',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'central',
     }
 }
 
