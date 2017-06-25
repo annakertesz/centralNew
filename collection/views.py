@@ -9,7 +9,9 @@ from rest_framework.views import APIView
 from collection import CollectionDao
 from collection.forms import SignUpForm, SongAddForm
 from collection.models import Song, Album, Artist, MusicFile, Tag
-from collection.serializers import SongSerializer, AlbumSerializer, ArtistSerializer, PlaylistSongSerializer
+from collection.playlistHandler import PlaylistHandler
+from collection.serializers import SongSerializer, AlbumSerializer, ArtistSerializer, PlaylistSongSerializer, \
+    PlaylistSerializer
 
 
 class SongList(APIView):
@@ -50,10 +52,20 @@ class ArtistList(APIView):
 class PlaylistList(APIView):
 
     def get(self, request):
-        print("jujuuuu")
-        playlists = request.user.playlists.all()
-        serializer = PlaylistSongSerializer(playlists, many=True)
-        print(request.user)
+        print("log - I'm in the get request")
+        playlists = PlaylistHandler.get_playlists_of_user(request.user)
+        for item in playlists:
+            print(item.playlist_name)
+        serializer = PlaylistSerializer(playlists, many=True)
+        return Response(serializer.data)
+
+
+class SongListFromPlaylist(APIView):
+
+    def get(self, request):
+        playlist_id = request.GET.get('playlist')
+        songlist = PlaylistHandler.get_songs_from_playlist(playlist_id)
+        serializer = SongSerializer(songlist, many=True)
         return Response(serializer.data)
 
 

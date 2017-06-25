@@ -115,6 +115,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': '/home/centralpublishing/centralNew/central',
+        # 'NAME': 'central',
+
     }
 }
 

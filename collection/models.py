@@ -41,11 +41,6 @@ class PlaylistSongMap(models.Model):
     song = models.ForeignKey(Song)
 
 
-class PlaylistUserMap(models.Model):
-    user = models.ForeignKey(User)
-    playlist = models.ForeignKey(Playlist)
-
-
 def add_song(cls, file):
     song = eyed3.load(file)
     try:

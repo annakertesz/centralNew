@@ -28,7 +28,7 @@ class PlaylistSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Playlist
-        fields = 'playlist_name'
+        fields = ('id', 'playlist_name')
 
 
 class PlaylistSongSerializer(serializers.ModelSerializer):
