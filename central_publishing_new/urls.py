@@ -17,6 +17,8 @@ import django
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.views.generic import RedirectView
+
 from central_publishing_new import settings
 from collection import views
 
@@ -25,7 +27,7 @@ urlpatterns = [
     url(r'^home/$', views.home, name='home'),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
-
+    url(r'^$', RedirectView.as_view(url='/home')),
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^media/(?P<path>.*)$', django.views.static.serve, {'document_root': settings.MEDIA_ROOT}),
     url(r'^admin/', admin.site.urls),

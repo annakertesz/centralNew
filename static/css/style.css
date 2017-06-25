@@ -5,6 +5,8 @@ body{
     color: snow;
 }
 
+
+
 .table_div{
      display:block;
     height:400px;
@@ -112,4 +114,12 @@ body{
 #search_button {
     padding-left: 2%;
     padding-right: 2%;
+}
+
+#id_username{
+    background-color: transparent; !important;
+}
+
+#id_password{
+    background-color: transparent; !important;
 }
