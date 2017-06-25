@@ -14,6 +14,7 @@
         <script src="{% static 'js/music_player.js' %}"></script>
         <script src="{% static 'js/navbar.js' %}"></script>
         <script src="{% static 'js/table.js' %}"></script>
+        <script src="{% static 'js/playlist.js' %}"></script>
     </head>
 
     <body>
@@ -24,7 +25,7 @@
         <div class="content">
         <div id="home">{% include "collection/homepage.html" %}</div>
         <div id = "browser">{% include "collection/browser/browser.html" %}</div>
-        <div id = "playlists">{% include "collection/playlists/playlists.html" %}</div>
+        <div id = "playlists">{% include "collection/playlists/main.html" %}</div>
         </div>
         {% include "collection/elements/music_player.html" %}
 
