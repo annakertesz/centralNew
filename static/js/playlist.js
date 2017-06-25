@@ -36,7 +36,7 @@ $(document).ready(function() {
         $.each(result, function(i, field){
             var row = list_table.insertRow(0);
             var cell1 = row.insertCell(0);
-            cell1.innerHTML = '<button class="no_button" onclick="show_songs_of_playlist('+ field.id + ')">' + field.playlist_name + '</li>';
+            cell1.innerHTML = '<button class="no_button" onclick="show_song_of_playlist('+ field.id + ')">' + field.playlist_name + '</li>';
         })
     });
 
