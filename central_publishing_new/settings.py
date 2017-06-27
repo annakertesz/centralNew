@@ -114,8 +114,8 @@ WSGI_APPLICATION = 'central_publishing_new.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/home/centralpublishing/centralNew/central',
-        # 'NAME': 'central',
+        # 'NAME': '/home/centralpublishing/centralNew/central',
+        'NAME': 'central',
 
     }
 }

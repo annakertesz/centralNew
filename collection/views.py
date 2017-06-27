@@ -1,3 +1,7 @@
+import eyed3
+import io
+
+from PIL import Image
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -5,7 +9,9 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.http import HttpResponse
 
+from central_publishing_new.settings import MEDIA_ROOT
 from collection import CollectionDao
 from collection.forms import SignUpForm, SongAddForm
 from collection.models import Song, Album, Artist, MusicFile, Tag
@@ -67,6 +73,15 @@ class SongListFromPlaylist(APIView):
         songlist = PlaylistHandler.get_songs_from_playlist(playlist_id)
         serializer = SongSerializer(songlist, many=True)
         return Response(serializer.data)
+
+
+def get_artwork(request):
+    song = Song.objects.get(id= request.GET.get('id'))
+    song_data = eyed3.load(MEDIA_ROOT + '/' + song.path)
+    image = song_data.tag.images[0]
+    im = io.BytesIO(image.render())
+    print(image.mime_type)
+    return HttpResponse(im, content_type='image/JPG')
 
 
 def add_song(request):

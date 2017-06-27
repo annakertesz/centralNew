@@ -6,35 +6,15 @@ var show_album = function () {
     $("#album_list").toggle();
 };
 
-$(document).ready(function() {
-
-
-    var album_list = document.getElementById("album_list");
-    
-    $("#artist_list").hide();
-    $("#album_list").hide();
-
-    $.getJSON("/api/albums", function(result){
-        $.each(result, function(i, field){
-            $("#album_list").append('<li><button class="no_button" onclick="filter_table(\'/api/songs/?album=' + field.id + '\')">' + field.album_name + '</button></li>');
-        })
+var create_popover = function () {
+    $.getJSON("/api/playlists/", function (result) {
+        $.each(result, function (i, field) {
+            $("#playlist_popover").append('<li>blabla</li>');
+        });
     });
+};
 
-    $.getJSON("/api/artists", function(result){
-        $.each(result, function(i, field){
-            $("#artist_list").append('<li><button class="no_button" onclick="filter_table(\'/api/songs/?album=' + field.id + '\')">' + field.artist_name + '</button></li>');
-        })
-    });
-
-
-    search = function () {
-        keywords = document.getElementById('search_field');
-        filter_table('/api/songs/?keywords=' + keywords.value);
-
-    };
-    
-    
-    filter_table = function (url) {
+filter_table = function (url) {
         $("#song_table tr").remove();
         var table = document.getElementById("song_table");
         $.getJSON(url, function(result){
@@ -56,11 +36,58 @@ $(document).ready(function() {
                 cell5.innerHTML = "<i class='glyphicon glyphicon-download'></i>";
                 cell5.innerHTML = '<a href="/download/?path=' + field.path + '"><i class="glyphicon glyphicon-download"></a>';
                 cell6.innerHTML = "<i class='glyphicon glyphicon-shopping-cart'></i>";
-                cell7.innerHTML = "<button class=\"no_button\" id=\"addtoplaylist\">add to playlist</button>";
+
+                $.getJSON("/api/playlists/", function (result) {
+                    var str ="<ul>";
+                    $.each(result, function (i, field) {
+                        str += "<li>"+field.id+"</li>";
+                       console.log(field.id)
+                    });
+                    str += "</ul>";
+                     cell7.innerHTML =
+                    '<a tabindex="0" role="button" data-html="true" data-placement="left" data-toggle="popover" data-trigger="focus" ' +
+                    'title="<b><a>new playlist</a></b> - title" data-content="'+ str + '">Example popover</a>';
+                    $('[data-toggle="popover"]').popover();
+                });
             });
         });
+
     };
 
+$(document).ready(function() {
+
+    var album_list = document.getElementById("album_list");
+    
+    $("#artist_list").hide();
+    $("#album_list").hide();
+
+    $.getJSON("/api/albums", function(result){
+        $.each(result, function(i, field){
+            $("#album_list").append('<li><button class="no_button" onclick="filter_table(\'/api/songs/?album=' + field.id + '\')">' + field.album_name + '</button></li>');
+        })
+    });
+
+    $.getJSON("/api/artists", function(result){
+        $.each(result, function(i, field){
+            $("#artist_list").append('<li><button class="no_button" onclick="filter_table(\'/api/songs/?album=' + field.id + '\')">' + field.artist_name + '</button></li>');
+        })
+    });
+
+
+
+
+
+
+    search = function () {
+        keywords = document.getElementById('search_field');
+        filter_table('/api/songs/?keywords=' + keywords.value);
+
+    };
+    
+    
+
+
     filter_table('/api/songs');
+
 
 });

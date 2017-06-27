@@ -17,7 +17,7 @@ show_song_of_playlist = function (id) {
             var cell6 = row.insertCell(5);
             var cell7 = row.insertCell(6);
 
-            cell1.innerHTML = '<button id="play" class="btn btn-primary" onclick="play(\'' + field.path + '\')">' +
+            cell1.innerHTML = '<button id="play" class="table_btn" onclick="play(\'' + field.path + '\')">' +
                 '<i class="glyphicon glyphicon-play"></i></button></td>';
             cell2.innerHTML = field.name;
             cell3.innerHTML = field.album.album_name;
@@ -36,7 +36,11 @@ $(document).ready(function() {
         $.each(result, function(i, field){
             var row = list_table.insertRow(0);
             var cell1 = row.insertCell(0);
-            cell1.innerHTML = '<button class="no_button" onclick="show_song_of_playlist('+ field.id + ')">' + field.playlist_name + '</li>';
+            var cell2 = row.insertCell(1);
+            cell1.innerHTML = '<button id="play" class="table_btn" onclick="play_playlist('+ field.id +')">' +
+                '<i class="glyphicon glyphicon-play"></i></button>';
+            cell2.innerHTML = '<button class="no_button playlist_name" onclick="show_song_of_playlist('+ field.id + ')">' + field.playlist_name;
+
         })
     });
 

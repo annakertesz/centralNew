@@ -6,6 +6,22 @@ body{
 }
 
 
+.popover-content{
+    color: black;
+}
+
+
+.playlist_name{
+    text-transform: capitalize;
+    text-align: left;
+    vertical-align: bottom;
+}
+
+.table_btn{
+    border: solid snow 1px;
+    background-color: transparent;
+}
+
 
 .table_div{
      display:block;
