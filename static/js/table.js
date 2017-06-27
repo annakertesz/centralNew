@@ -6,13 +6,6 @@ var show_album = function () {
     $("#album_list").toggle();
 };
 
-var create_popover = function () {
-    $.getJSON("/api/playlists/", function (result) {
-        $.each(result, function (i, field) {
-            $("#playlist_popover").append('<li>blabla</li>');
-        });
-    });
-};
 
 filter_table = function (url) {
         $("#song_table tr").remove();
@@ -38,15 +31,18 @@ filter_table = function (url) {
                 cell6.innerHTML = "<i class='glyphicon glyphicon-shopping-cart'></i>";
 
                 $.getJSON("/api/playlists/", function (result) {
+                    var alert = "please";
                     var str ="<ul>";
                     $.each(result, function (i, field) {
-                        str += "<li>"+field.id+"</li>";
-                       console.log(field.id)
+                        str += "<li><button class='popover_btn' value='"+field.id+"'>"+field.playlist_name+"</button></li>";
+                        // str += '<li onclick="filter_table(\'/api/songs/?album=' + field.id + '\')">' + field.playlist_name + '</li>';
+
                     });
                     str += "</ul>";
+                    console.log(str);
                      cell7.innerHTML =
-                    '<a tabindex="0" role="button" data-html="true" data-placement="left" data-toggle="popover" data-trigger="focus" ' +
-                    'title="<b><a>new playlist</a></b> - title" data-content="'+ str + '">Example popover</a>';
+                        '<a tabindex="0" role="button" data-html="true" data-placement="left" data-toggle="popover" data-trigger="focus" ' +
+                        'title="<b><a>new playlist</a></b> - title" data-content="'+ str + '">Example popover</a>';
                     $('[data-toggle="popover"]').popover();
                 });
             });
@@ -55,6 +51,10 @@ filter_table = function (url) {
     };
 
 $(document).ready(function() {
+
+    $(document).on("click", ".popover_btn", function() {
+        alert($(this).val());
+    });
 
     var album_list = document.getElementById("album_list");
     
