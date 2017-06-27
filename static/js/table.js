@@ -42,7 +42,7 @@ filter_table = function (url) {
                     console.log(str);
                      cell7.innerHTML =
                         '<a tabindex="0" role="button" data-html="true" data-placement="left" data-toggle="popover" data-trigger="focus" ' +
-                        'title="<b><a>new playlist</a></b> - title" data-content="'+ str + '">Example popover</a>';
+                        'title="<b><a>new playlist</a></b> - title" data-content="'+ str + '">Add to playlist</a>';
                     $('[data-toggle="popover"]').popover();
                 });
             });
