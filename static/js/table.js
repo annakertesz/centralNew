@@ -53,7 +53,6 @@ $(document).ready(function() {
     $(document).on("click", ".popover_btn", function() {
         var playlist_id=$(this).val()[0];
         var song_id=$(this).val()[2];
-        alert($(this).val()[2]);
         var url = "/api/add_song_to_playlist/?playlist=" + playlist_id + "&song=" + song_id;
         alert(url);
         $.getJSON(url, function(result){
