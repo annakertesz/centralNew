@@ -110,6 +110,10 @@ body{
     border: solid snow 2px;
 }
 
+.new_playlist_btn {
+    color: black;
+}
+
 
 #new_playlist_input{
     color: black;
