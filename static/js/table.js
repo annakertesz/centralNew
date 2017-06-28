@@ -55,7 +55,6 @@ $(document).ready(function() {
             attributes = $(this).val().split(",");
             var playlist_id=attributes[0];
             var song_id=attributes[1];
-            alert($(this).val());
             var url = "/api/add_song_to_playlist/?playlist=" + playlist_id + "&song=" + song_id;
             $.getJSON(url, function(result){
                 $.each(result, function(i, field){
