@@ -31,16 +31,17 @@ filter_table = function (url) {
                 cell6.innerHTML = "<i class='glyphicon glyphicon-shopping-cart'></i>";
 
                 $.getJSON("/api/playlists/", function (result) {
-                    var str ="<ul>";
+                    var new_playlist_str = "<button class='new_playlist_btn no_button' value='"+song_field.id+"'>new playlist</button>";
+                    var popover_str ="<ul>";
                     $.each(result, function (i, playlist_field) {
-                        var attribute_list = [playlist_field.id, song_field.id];
-                        str += "<li><button class='popover_btn' value='"+attribute_list+"'>"+playlist_field.playlist_name+"</button></li>";
+                        var attribute_list = playlist_field.id + "," + song_field.id;
+                        popover_str += "<li><button class='popover_btn no_button' value='"+attribute_list+"'>"+playlist_field.playlist_name+"</button></li>";
                     });
-                    str += "</ul>";
-                    console.log(str);
+                    popover_str += "</ul>";
+                    console.log(popover_str);
                      cell7.innerHTML =
                         '<a tabindex="0" role="button" data-html="true" data-placement="left" data-toggle="popover" data-trigger="focus" ' +
-                        'title="<b><a>new playlist</a></b> - title" data-content="'+ str + '">Add to playlist</a>';
+                        'title="'+new_playlist_str+'" data-content="'+ popover_str + '">Add to playlist</a>';
                     $('[data-toggle="popover"]').popover();
                 });
             });
@@ -51,16 +52,45 @@ filter_table = function (url) {
 $(document).ready(function() {
 
     $(document).on("click", ".popover_btn", function() {
-        var playlist_id=$(this).val()[0];
-        var song_id=$(this).val()[2];
-        var url = "/api/add_song_to_playlist/?playlist=" + playlist_id + "&song=" + song_id;
-        alert(url);
-        $.getJSON(url, function(result){
-        $.each(result, function(i, field){
-            // $("#album_list").append('<li><button class="no_button" onclick="filter_table(\'/api/songs/?album=' + field.id + '\')">' + field.album_name + '</button></li>');
-        })
+            attributes = $(this).val().split(",");
+            var playlist_id=attributes[0];
+            var song_id=attributes[1];
+            alert($(this).val());
+            var url = "/api/add_song_to_playlist/?playlist=" + playlist_id + "&song=" + song_id;
+            $.getJSON(url, function(result){
+                $.each(result, function(i, field){
+                })
+        });
     });
+    
+    $(document).on("click", ".new_playlist_btn", function () {
+        var song_id= $(this).val();
+        $("#create_playlist").val(song_id);
+        $(".modal_try").show();
     });
+
+    $(document).on("click", "#create_playlist", function () {
+        var song_id= $(this).val();
+        var playlist_name = $("#new_playlist_input").val();
+        var playlist_id = -1;
+        var url = "/api/add_new_playlist/?name=" + playlist_name;
+        $.getJSON(url, function (result) {
+                playlist_id=result;
+                console.log(result);
+                url = "/api/add_song_to_playlist/?playlist=" + playlist_id + "&song=" + song_id;
+                $.getJSON(url, function(result){
+                    $.each(result, function(i, field){
+                        console.log(field.id)
+                    })
+            });
+
+        });
+        $(".modal_try").hide();
+    });
+
+    $(document).on("click", "#cancel", function () {
+        $(".modal_try").hide();
+    })
 
     var album_list = document.getElementById("album_list");
     
@@ -72,28 +102,14 @@ $(document).ready(function() {
             $("#album_list").append('<li><button class="no_button" onclick="filter_table(\'/api/songs/?album=' + field.id + '\')">' + field.album_name + '</button></li>');
         })
     });
-
     $.getJSON("/api/artists", function(result){
         $.each(result, function(i, field){
             $("#artist_list").append('<li><button class="no_button" onclick="filter_table(\'/api/songs/?album=' + field.id + '\')">' + field.artist_name + '</button></li>');
         })
     });
-
-
-
-
-
-
     search = function () {
         keywords = document.getElementById('search_field');
         filter_table('/api/songs/?keywords=' + keywords.value);
-
-    };
-    
-    
-
-
+    }; 
     filter_table('/api/songs');
-
-
 });

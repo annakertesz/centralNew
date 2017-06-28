@@ -7,6 +7,7 @@ class PlaylistHandler:
     def add_new_playlist(cls, playlist_name, user):
         playlist = Playlist(playlist_name=playlist_name, user=user)
         playlist.save()
+        return playlist;
 
     @classmethod
     def add_song_to_playlist(cls, playlist, song):

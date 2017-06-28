@@ -25,7 +25,7 @@ show_song_of_playlist = function (id) {
             cell5.innerHTML = "<i class='glyphicon glyphicon-download'></i>";
             cell5.innerHTML = '<a href="/download/?path=' + field.path + '"><i class="glyphicon glyphicon-download"></a>';
             cell6.innerHTML = "<i class='glyphicon glyphicon-shopping-cart'></i>";
-            cell7.innerHTML = "<button class=\"no_button\" id=\"addtoplaylist\">add to playlist</button>";
+            cell7.innerHTML = "<button class=\"no_button\" id=\"addtoplaylist\">remove from playlist</button>";
         });
     });
 };

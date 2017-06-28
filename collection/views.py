@@ -58,6 +58,7 @@ class ArtistList(APIView):
 class AddToPlaylist(APIView):
 
     def get(self, request):
+        print("!!!!!!!! LOG " + request.GET.get('playlist') + " " + request.GET.get('song'))
         playlist = Playlist.objects.get(id=request.GET.get('playlist'))
         print(request.GET.get('song'))
         song = Song.objects.get(id=request.GET.get('song'))
@@ -65,6 +66,7 @@ class AddToPlaylist(APIView):
         PlaylistHandler.add_song_to_playlist(playlist, song)
         serializer = PlaylistSerializer(Playlist.objects.all(), many=True)
         return Response(serializer.data)
+
 
 class PlaylistList(APIView):
 
@@ -74,6 +76,16 @@ class PlaylistList(APIView):
             print(item.playlist_name)
         serializer = PlaylistSerializer(playlists, many=True)
         return Response(serializer.data)
+
+
+class AddNewPlaylist(APIView):
+
+    def get(self, request):
+        playlist_name = request.GET.get('name')
+        print("log " + playlist_name)
+        playlist = PlaylistHandler.add_new_playlist(playlist_name, request.user)
+        print(playlist.playlist_name + " added")
+        return Response(playlist.id)
 
 
 class SongListFromPlaylist(APIView):

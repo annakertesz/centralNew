@@ -10,6 +10,16 @@ body{
     color: black;
 }
 
+.modal_try{
+    border: solid snow 3px;
+    display: none;
+    padding: 5%;
+    position: fixed;
+    left: 30%;
+    top: 30%;
+    background: url("../imgs/noisy_net.png");
+}
+
 
 .playlist_name{
     text-transform: capitalize;
@@ -100,6 +110,10 @@ body{
     border: solid snow 2px;
 }
 
+
+#new_playlist_input{
+    color: black;
+}
 
 .no_button{
     border: none;
