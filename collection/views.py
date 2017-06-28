@@ -14,7 +14,7 @@ from django.http import HttpResponse
 from central_publishing_new.settings import MEDIA_ROOT
 from collection import CollectionDao
 from collection.forms import SignUpForm, SongAddForm
-from collection.models import Song, Album, Artist, MusicFile, Tag
+from collection.models import Song, Album, Artist, MusicFile, Tag, Playlist
 from collection.playlistHandler import PlaylistHandler
 from collection.serializers import SongSerializer, AlbumSerializer, ArtistSerializer, PlaylistSongSerializer, \
     PlaylistSerializer
@@ -55,10 +55,20 @@ class ArtistList(APIView):
         return Response(serializer.data)
 
 
+class AddToPlaylist(APIView):
+
+    def get(self, request):
+        playlist = Playlist.objects.get(id=request.GET.get('playlist'))
+        print(request.GET.get('song'))
+        song = Song.objects.get(id=request.GET.get('song'))
+        print("I added song " + song.name + " to playlist " + playlist.playlist_name)
+        PlaylistHandler.add_song_to_playlist(playlist, song)
+        serializer = PlaylistSerializer(Playlist.objects.all(), many=True)
+        return Response(serializer.data)
+
 class PlaylistList(APIView):
 
     def get(self, request):
-        print("log - I'm in the get request")
         playlists = PlaylistHandler.get_playlists_of_user(request.user)
         for item in playlists:
             print(item.playlist_name)

@@ -11,7 +11,7 @@ filter_table = function (url) {
         $("#song_table tr").remove();
         var table = document.getElementById("song_table");
         $.getJSON(url, function(result){
-            $.each(result, function(i, field){
+            $.each(result, function(i, song_field){
                 var row = table.insertRow(0);
                 var cell1 = row.insertCell(0);
                 var cell2 = row.insertCell(1);
@@ -21,22 +21,20 @@ filter_table = function (url) {
                 var cell6 = row.insertCell(5);
                 var cell7 = row.insertCell(6);
 
-                cell1.innerHTML = '<button id="play" class="btn btn-primary" onclick="play(\'' + field.path + '\')">' +
+                cell1.innerHTML = '<button id="play" class="btn btn-primary" onclick="play(\'' + song_field.path + '\')">' +
                     '<i class="glyphicon glyphicon-play"></i></button></td>';
-                cell2.innerHTML = field.name;
-                cell3.innerHTML = field.album.album_name;
-                cell4.innerHTML = field.artist.artist_name;
+                cell2.innerHTML = song_field.name;
+                cell3.innerHTML = song_field.album.album_name;
+                cell4.innerHTML = song_field.artist.artist_name;
                 cell5.innerHTML = "<i class='glyphicon glyphicon-download'></i>";
-                cell5.innerHTML = '<a href="/download/?path=' + field.path + '"><i class="glyphicon glyphicon-download"></a>';
+                cell5.innerHTML = '<a href="/download/?path=' + song_field.path + '"><i class="glyphicon glyphicon-download"></a>';
                 cell6.innerHTML = "<i class='glyphicon glyphicon-shopping-cart'></i>";
 
                 $.getJSON("/api/playlists/", function (result) {
-                    var alert = "please";
                     var str ="<ul>";
-                    $.each(result, function (i, field) {
-                        str += "<li><button class='popover_btn' value='"+field.id+"'>"+field.playlist_name+"</button></li>";
-                        // str += '<li onclick="filter_table(\'/api/songs/?album=' + field.id + '\')">' + field.playlist_name + '</li>';
-
+                    $.each(result, function (i, playlist_field) {
+                        var attribute_list = [playlist_field.id, song_field.id];
+                        str += "<li><button class='popover_btn' value='"+attribute_list+"'>"+playlist_field.playlist_name+"</button></li>";
                     });
                     str += "</ul>";
                     console.log(str);
@@ -53,7 +51,16 @@ filter_table = function (url) {
 $(document).ready(function() {
 
     $(document).on("click", ".popover_btn", function() {
-        alert($(this).val());
+        var playlist_id=$(this).val()[0];
+        var song_id=$(this).val()[2];
+        alert($(this).val()[2]);
+        var url = "/api/add_song_to_playlist/?playlist=" + playlist_id + "&song=" + song_id;
+        alert(url);
+        $.getJSON(url, function(result){
+        $.each(result, function(i, field){
+            // $("#album_list").append('<li><button class="no_button" onclick="filter_table(\'/api/songs/?album=' + field.id + '\')">' + field.album_name + '</button></li>');
+        })
+    });
     });
 
     var album_list = document.getElementById("album_list");
