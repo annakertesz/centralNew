@@ -32,7 +32,7 @@ $(document).ready(function() {
         container: '#waveform',
         waveColor: 'snow',
         progressColor: 'grey',
-        height: 64,
+        height: 30
     });
 
 });
