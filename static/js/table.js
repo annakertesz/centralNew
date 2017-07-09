@@ -14,21 +14,20 @@ filter_table = function (url) {
             $.each(result, function(i, song_field){
                 var row = table.insertRow(0);
                 var cell1 = row.insertCell(0);
+                cell1.className = "col-md-1";
                 var cell2 = row.insertCell(1);
+                cell2.className = "col-md-9";
                 var cell3 = row.insertCell(2);
+                cell3.className = "col-md-1";
                 var cell4 = row.insertCell(3);
-                var cell5 = row.insertCell(4);
-                var cell6 = row.insertCell(5);
-                var cell7 = row.insertCell(6);
+                cell4.className = "col-md-1";
+
 
                 cell1.innerHTML = '<button id="play" class="btn btn-primary" onclick="play(\'' + song_field.path + '\')">' +
                     '<i class="glyphicon glyphicon-play"></i></button></td>';
-                cell2.innerHTML = song_field.name;
-                cell3.innerHTML = song_field.album.album_name;
-                cell4.innerHTML = song_field.artist.artist_name;
-                cell5.innerHTML = "<i class='glyphicon glyphicon-download'></i>";
-                cell5.innerHTML = '<a href="/download/?path=' + song_field.path + '"><i class="glyphicon glyphicon-download"></a>';
-                cell6.innerHTML = "<i class='glyphicon glyphicon-shopping-cart'></i>";
+                cell2.innerHTML = '<p>'+song_field.artist.artist_name+'</br><strong>'+song_field.name+'</strong></p>';
+                cell3.innerHTML ='<a href="/download/?path=' + song_field.path + '"><i class="glyphicon glyphicon-download icon"></i></a>'+
+                        "<i class='glyphicon glyphicon-shopping-cart icon'></i>";
 
                 $.getJSON("/api/playlists/", function (result) {
                     var new_playlist_str = "<button class='new_playlist_btn no_button' value='"+song_field.id+"'>new playlist</button>";
@@ -39,7 +38,7 @@ filter_table = function (url) {
                     });
                     popover_str += "</ul>";
                     console.log(popover_str);
-                     cell7.innerHTML =
+                     cell4.innerHTML =
                         '<a tabindex="0" role="button" data-html="true" data-placement="left" data-toggle="popover" data-trigger="focus" ' +
                         'title="'+new_playlist_str+'" data-content="'+ popover_str + '">Add to playlist</a>';
                     $('[data-toggle="popover"]').popover();

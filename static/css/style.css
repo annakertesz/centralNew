@@ -77,6 +77,11 @@
     padding-left: 10px;
 }
 
+.icon{
+    font-size: 1.3em;
+    margin: 0.5em;
+}
+
 #search_field {
     margin-top: 10px;
     /*margin-left: 5%;*/
@@ -104,4 +109,12 @@
 
 #id_password{
     background-color: transparent; !important;
+}
+
+.player_btn{
+    background-color: transparent;
+    color: dimgrey;
+    margin: 0;
+    border: none;
+    font-size: 1.3em;
 }

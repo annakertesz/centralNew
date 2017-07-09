@@ -3,6 +3,11 @@
     src: url("../fonts/simple.ttf"); /*URL to font*/
 }
 
+@font-face {
+    font-family: 'bold'; /*a name to be used later*/
+    src: url("../fonts/bold.ttf"); /*URL to font*/
+}
+
 
 body{
     /*background-color: black;*/
@@ -11,6 +16,11 @@ body{
     height: 100%;
     color: black;
     overflow: hidden;
+}
+
+
+strong{
+    font-family: bold;
 }
 
 
@@ -53,6 +63,7 @@ body{
     margin-bottom:0;
     border-top: solid lightgrey 1px;
     background-color: snow;
+    padding-top: 10px;
 }
 
 #main_table{

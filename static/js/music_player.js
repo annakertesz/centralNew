@@ -1,5 +1,8 @@
 play = function (filename) {
+        $("#play_btn").hide();
+        $("#stop_btn").show();
         console.log(filename);
+
         wavesurfer.load('/media/' + filename);
         wavesurfer.play();
     };
@@ -27,12 +30,16 @@ play_playlist = function (id) {
 };
 
 $(document).ready(function() {
-
+    $("#play_btn").show();
+    $("#stop_btn").hide();
     wavesurfer = WaveSurfer.create({
         container: '#waveform',
-        waveColor: 'snow',
-        progressColor: 'grey',
-        height: 30
+        waveColor: 'lightgrey',
+        progressColor: 'dimgrey',
+        height: 30,
+        barHeight: 0.5,
+        barWidth: 1,
+        hideScrollbar: true
     });
 
 });
