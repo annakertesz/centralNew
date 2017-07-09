@@ -106,20 +106,6 @@ def get_artwork(request):
     return HttpResponse(im, content_type='image/JPG')
 
 
-def add_song(request):
-    if request.method == 'POST':
-        data = SongAddForm(request.POST, request.FILES)
-        if data.is_valid():
-            instance = MusicFile(music_file=request.FILES['song'])
-            file_name = request.FILES['song'].name
-            instance.save()
-            CollectionDao.CollectionDao.add_song(instance, file_name)
-            return HttpResponseRedirect('/')
-        else: print('fokkyuuu')
-    else:
-        form = SongAddForm()
-        return render(request, 'collection/browser/add_song.html', {'form': form})
-
 
 def home(request):
     if not request.user.is_authenticated:

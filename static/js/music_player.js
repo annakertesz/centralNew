@@ -23,19 +23,8 @@ play_playlist = function (id) {
             cell3.innerHTML = field.artist.artist_name;
 
         });
-        // console.log("before play");
-        // console.log(songs_to_play);
-        // for (song in songs_to_play){
-        //     console.log(song);
-        //     play(song);
-        // }
-        // console.log("after play");
     });
 };
-
-
-
-
 
 $(document).ready(function() {
 
@@ -43,10 +32,7 @@ $(document).ready(function() {
         container: '#waveform',
         waveColor: 'snow',
         progressColor: 'grey',
-        backend: 'MediaElement',
-        // barWidth: 50,
-        height: 75,
-        hideScrollbar: true
+        height: 64,
     });
 
 });

@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'collection'
+    'collection',
+    'custom_admin'
 ]
 
 MIDDLEWARE = [
@@ -114,8 +115,8 @@ WSGI_APPLICATION = 'central_publishing_new.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/home/centralpublishing/centralNew/central',
-        # 'NAME': 'central',
+        # 'NAME': '/home/centralpublishing/centralNew/central',
+        'NAME': 'central',
 
     }
 }

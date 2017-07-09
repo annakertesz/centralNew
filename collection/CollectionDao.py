@@ -7,7 +7,7 @@ class CollectionDao:
 
     @classmethod
     def add_song(cls, file, file_name):
-        print(file_name)
+        print("ADD SONG")
         song = eyed3.load(MEDIA_ROOT + '/' + file_name)
         try:
             album = Album.objects.get(album_name=song.tag.album)

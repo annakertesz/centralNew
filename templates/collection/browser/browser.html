@@ -1,13 +1,29 @@
-<div class="container-fluid col-md-12">
-{#            <form id="forms" method="post">#}
-{#                {% csrf_token %}#}
-{#                {{ form }}#}
-{#                <input type="submit" value="Submit"/>#}
-{#            </form>#}
+<div class="container-fluid col-md-12" id="main_table">
+    <div class="container-fluid">
+        <table class="table table-condensed">
+            <tbody id="song_table">
+            </tbody>
+        </table>
+    </div>
+</div>
 
-{#        </div>#}
+<div class="modal_try">
+    <p><input id="new_playlist_input" type="text"></p>
+    <p>
+        <button class=no_button id="create_playlist">OK</button>
+        <button class=no_button id="cancel">Cancel</button>
+    </p>
+</div>
 
-        <div class="col-md-2 side_bar">
+
+{#    <input type="text" id="search_field">#}
+{#    <button class="menu_button" id="search_button" onclick="search()">#}
+{#        search#}
+{#    </button>#}
+{#    <button class="menu_button" id="search_button" onclick="filter_table('/api/songs')">all</button>#}
+
+
+{# <div class="col-md-2 side_bar">#}
 {#            <ul>#}
 {#                <li>#}
 {#                    <button class="no_button" onclick="filter_table('/api/songs')"> all</button>#}
@@ -26,23 +42,4 @@
 {#                    {% endfor %}#}
 {#                </ul>#}
 {#            </ul>#}
-        </div>
-    <input type="text" id="search_field">
-    <button class="menu_button" id="search_button" onclick="search()">
-        search
-    </button>
-    <button class="menu_button" id="search_button" onclick="filter_table('/api/songs')">all</button>
-        <div class="container col-md-10 table_div">
-            <table class="table table-condensed">
-                <tbody id="song_table">
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="modal_try">
-        <p><input id="new_playlist_input" type="text"></p>
-        <p>
-            <button class=no_button id="create_playlist">OK</button>
-            <button class=no_button id="cancel">Cancel</button>
-        </p>
-    </div>
+{#        </div>#}

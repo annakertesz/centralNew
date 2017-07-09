@@ -1,6 +1,3 @@
-/**
- * Created by annakertesz on 6/25/17.
- */
 
 show_song_of_playlist = function (id) {
     $("#playlist_table tr").remove();

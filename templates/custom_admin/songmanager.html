@@ -1,0 +1,66 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+    <body>
+         <div class="container-fluid col-md-12">
+        <form id="forms" method="post">
+            {% csrf_token %}
+             {{ search_form }}
+            <input type="submit" value="Submit" />
+        </form>
+
+        </div>
+
+    <div class="col-md-2">
+        <ul>
+            <li><a href="/youradmin/songmanager">all</a></li>
+            <li id="albums_button">albums</li>
+                <ul id="albums_list">
+                    {% for album in albums %}
+                        <li><a href="/youradmin/songmanager/?album={{ album.id }}">{{ album.album_name }} </a></li>
+                    {% endfor %}
+                </ul>
+
+            <li id="artists_button">artists</li>
+                <ul id="artists_list">
+                    {% for artist in artists %}
+                        <li><a href="/youradmin/songmanager/?artist={{ artist.id }}">{{ artist.artist_name }} </a></li>
+                    {% endfor %}
+                </ul>
+            <li id="tags_button">tags</li>
+                <ul id="tags_list">
+                    {% for tag in tags %}
+                        <li><a href="/admin/songs/?tag={{ tag.id }}">{{ tag.name }} </a></li>
+                    {% endfor %}
+                </ul>
+        </ul>
+    </div>
+        <div class="container col-md-10">
+            <h2>All songs in database</h2>
+            <button class="btn">Add new</button>
+            <form id="forms" method="post">
+                {% csrf_token %}
+                 {{ add_form }}
+                <input type="submit" value="Submit" />
+            </form>
+            <table class="table">
+                <tbody>
+                    {% for song in all_song %}
+                        <tr>
+                            <td>{{ song.name }}</td>
+                            <td>{{ song.album.album_name }}</td>
+                            <td>{{ song.artist.artist_name }}</td>
+                            <td><a href="/songdetails/?song={{ song.id }}">edit</a></td>
+                            <td><a href="/delete/?song={{ song.id }}">delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

@@ -39,21 +39,3 @@ class Playlist(models.Model):
 class PlaylistSongMap(models.Model):
     playlist = models.ForeignKey(Playlist)
     song = models.ForeignKey(Song)
-
-
-def add_song(cls, file):
-    song = eyed3.load(file)
-    try:
-        album = Album.objects.get(album_name=song.tag.album)
-    except Album.DoesNotExist:
-        album = Album(album_name=song.tag.album)
-        album.save()
-
-    try:
-        artist = Artist.objects.get(artist_name=song.tag.artist)
-    except Artist.DoesNotExist:
-        artist = Artist(artist_name=song.tag.artist)
-        artist.save()
-
-    song = Song(name=song.tag.title, artist=artist, album=album, path=file.name)
-    song.save()
