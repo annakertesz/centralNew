@@ -23,11 +23,11 @@ filter_table = function (url) {
                 cell4.className = "col-md-1";
 
 
-                cell1.innerHTML = '<button id="play" class="btn btn-primary" onclick="play(\'' + song_field.path + '\')">' +
-                    '<i class="glyphicon glyphicon-play"></i></button></td>';
+                cell1.innerHTML = '<button class="btn btn-primary" onclick="onPlayStopClick(\'' + song_field.path + '\', this)">' +
+                    '<div class="table_play_icon glyphicon glyphicon-play"></div></button></td>';
                 cell2.innerHTML = '<p>'+song_field.artist.artist_name+'</br><strong>'+song_field.name+'</strong></p>';
                 cell3.innerHTML ='<a href="/download/?path=' + song_field.path + '"><i class="glyphicon glyphicon-download icon"></i></a>'+
-                        "<i class='glyphicon glyphicon-shopping-cart icon'></i>";
+                        "<div class='glyphicon glyphicon-shopping-cart icon'></div>";
 
                 $.getJSON("/api/playlists/", function (result) {
                     var new_playlist_str = "<button class='new_playlist_btn no_button' value='"+song_field.id+"'>new playlist</button>";
@@ -45,8 +45,21 @@ filter_table = function (url) {
                 });
             });
         });
-
     };
+
+onPlayStopClick = function (filename, hostingDiv) {
+    play(filename);
+    resetTableIcons();
+    // set the current icon to buffer
+    $(hostingDiv).find(".table_play_icon").attr("class","table_play_icon glyphicon glyphicon glyphicon-transfer");
+};
+
+// find all icons and set them to the play graphic. This is to reset any other previous icons when the user clicks quickly
+resetTableIcons = function () {
+    $(".table_play_icon").each(function (i, el) {
+        $(el).attr("class","table_play_icon glyphicon glyphicon-play");
+     });
+};
 
 $(document).ready(function() {
 

@@ -43,6 +43,7 @@ $(document).ready(function() {
 
     wavesurfer.on('ready', function () {
         wavesurfer.play();
+        resetTableIcons();
     });
 
 });
