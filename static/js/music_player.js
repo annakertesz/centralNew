@@ -1,10 +1,23 @@
-play = function (filename) {
-        $("#play_btn").hide();
-        $("#stop_btn").show();
-        console.log('loading ' + filename);
+var isWaveSurferLoading = false;
 
-        wavesurfer.load('/media/' + filename);
-    };
+play = function (filename) {
+    console.log('loading ' + filename);
+    $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-transfer");
+    wavesurfer.load('/media/' + filename);
+    isWaveSurferLoading = true;
+};
+
+onPlayPauseClick = function () {
+    if (!isWaveSurferLoading) { // do not change icons if its currently loading
+        if (wavesurfer.isPlaying()) {
+            $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-play");
+        }
+        else {
+            $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-pause");
+        }
+        wavesurfer.playPause();
+    }
+};
 
 play_playlist = function (id) {
     $("#musicplayer_list tr").remove();
@@ -29,8 +42,6 @@ play_playlist = function (id) {
 };
 
 $(document).ready(function() {
-    $("#play_btn").show();
-    $("#stop_btn").hide();
     wavesurfer = WaveSurfer.create({
         container: '#waveform',
         waveColor: 'lightgrey',
@@ -40,10 +51,14 @@ $(document).ready(function() {
         barWidth: 1,
         hideScrollbar: true
     });
+    $('#music_player').css('opacity', '0'); //need to set opacity, Wavesurfer breaks if I use hide() :(
 
     wavesurfer.on('ready', function () {
+        $('#music_player').css('opacity', '1');
         wavesurfer.play();
+        $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-pause");
         resetTableIcons();
+        isWaveSurferLoading = false;
     });
 
 });

@@ -51,7 +51,7 @@ onPlayStopClick = function (filename, hostingDiv) {
     play(filename);
     resetTableIcons();
     // set the current icon to buffer
-    $(hostingDiv).find(".table_play_icon").attr("class","table_play_icon glyphicon glyphicon glyphicon-transfer");
+    $(hostingDiv).find(".table_play_icon").attr("class","table_play_icon glyphicon glyphicon-transfer");
 };
 
 // find all icons and set them to the play graphic. This is to reset any other previous icons when the user clicks quickly
