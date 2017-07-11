@@ -1,10 +1,9 @@
 play = function (filename) {
         $("#play_btn").hide();
         $("#stop_btn").show();
-        console.log(filename);
+        console.log('loading ' + filename);
 
         wavesurfer.load('/media/' + filename);
-        wavesurfer.play();
     };
 
 play_playlist = function (id) {
@@ -40,6 +39,10 @@ $(document).ready(function() {
         barHeight: 0.5,
         barWidth: 1,
         hideScrollbar: true
+    });
+
+    wavesurfer.on('ready', function () {
+        wavesurfer.play();
     });
 
 });
