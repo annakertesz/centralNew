@@ -15,6 +15,7 @@
         <li class="menu-li"><button class="menu_button" onclick="show_browser()">Browse</button></li>
         <li class="menu-li"><button class="menu_button" onclick="show_playlists()">Playlists</button></li>
 
+
       </ul>
             <input type="text" id="search_field">
             <button  id="search_button" onclick="search()">
@@ -22,6 +23,9 @@
             </button>
 {#        <button class="menu_button btn-primary" id="search_button" onclick="filter_table('/api/songs')">all</button>#}
       <ul class="nav navbar-nav navbar-right" id="logout">
+        {% if user.is_staff %}
+          <li class="menu-li"><a class="menu_button" href="#">Manage users</a></li>
+        {% endif %}
         <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
       </ul>
     </div>
