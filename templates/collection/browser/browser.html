@@ -1,4 +1,7 @@
 <div class="container-fluid col-md-12" id="main_table">
+    {% if user.is_staff %}
+      <a  href="#"><span class="glyphicon glyphicon-plus icon"></span></a>
+    {% endif %}
     <div class="container-fluid">
         <table class="table table-condensed">
             <tbody id="song_table">
