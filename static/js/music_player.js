@@ -51,6 +51,7 @@ $(document).ready(function() {
         barWidth: 1,
         hideScrollbar: true
     });
+
     $('#music_player').css('opacity', '0'); //need to set opacity, Wavesurfer breaks if I use hide() :(
 
     wavesurfer.on('ready', function () {
@@ -59,6 +60,16 @@ $(document).ready(function() {
         $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-pause");
         resetTableIcons();
         isWaveSurferLoading = false;
+
+        jsmediatags = window.jsmediatags;
+        jsmediatags.read(wavesurfer.backend.buffer, {
+          onSuccess: function(tag) {
+            console.log(tag);
+          },
+          onError: function(error) {
+            console.log(':(', error.type, error.info);
+          }
+        });
     });
 
 });
