@@ -1,9 +1,11 @@
 var isWaveSurferLoading = false;
+var musicPlayerMediaURL;
 
 play = function (filename) {
     console.log('loading ' + filename);
     $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-transfer");
-    wavesurfer.load('/media/' + filename);
+    musicPlayerMediaURL = '/media/' + filename;
+    wavesurfer.load(musicPlayerMediaURL);
     isWaveSurferLoading = true;
 };
 
@@ -62,13 +64,29 @@ $(document).ready(function() {
         isWaveSurferLoading = false;
 
         jsmediatags = window.jsmediatags;
-        jsmediatags.read(wavesurfer.backend.buffer, {
-          onSuccess: function(tag) {
-            console.log(tag);
-          },
-          onError: function(error) {
-            console.log(':(', error.type, error.info);
-          }
+        // it would be much nicer to read the binary loaded by Wavesurfer, but it might not be possible
+        // jsmediatags requires that I enter the full URL!! (http://blabla)
+        jsmediatags.read(window.location.origin + musicPlayerMediaURL, {
+            onSuccess: function(tag) {
+                console.log("ID tag loaded :)");
+                console.log("ID tag:" + tag.tags.album + " " + tag.tags.artist);
+
+                 var image = tag.tags.picture;
+                 if (image) {
+                     var base64String = "";
+                     for (var i = 0; i < image.data.length; i++) {
+                         base64String += String.fromCharCode(image.data[i]);
+                     }
+                     var base64 = "data:image/jpeg;base64," + window.btoa(base64String);
+                     $('#music-player-artwork').attr('src',base64);
+                     $('#music-player-artwork').show();
+                 } else {
+                     $('#music-player-artwork').hide();
+                 }
+            },
+            onError: function(error) {
+                console.log('ID tag load error :(', error.type, error.info);
+            }
         });
     });
 
