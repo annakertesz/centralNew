@@ -3,8 +3,8 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class MusicFile(models.Model):
-    music_file = models.FileField(upload_to='')
+# class MusicFile(models.Model):
+#     music_file = models.FileField(upload_to='')
 
 
 class Album(models.Model):

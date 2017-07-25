@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from collection import CollectionDao
-from collection.models import Song, MusicFile, Album, Artist, Tag
+from collection.models import Song, Album, Artist, Tag
 from custom_admin.forms import SongAddForm, SearchForm
 
 

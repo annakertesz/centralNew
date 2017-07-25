@@ -1,4 +1,4 @@
-from fileupload.models import Picture
+from fileupload.models import MusicFile
 from django.contrib import admin
 
-admin.site.register(Picture)
+admin.site.register(MusicFile)

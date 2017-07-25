@@ -14,7 +14,7 @@ from django.http import HttpResponse
 from central_publishing_new.settings import MEDIA_ROOT
 from collection import CollectionDao
 from collection.forms import SignUpForm, SongAddForm
-from collection.models import Song, Album, Artist, MusicFile, Tag, Playlist
+from collection.models import Song, Album, Artist, Tag, Playlist
 from collection.playlistHandler import PlaylistHandler
 from collection.serializers import SongSerializer, AlbumSerializer, ArtistSerializer, PlaylistSongSerializer, \
     PlaylistSerializer
