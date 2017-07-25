@@ -32,4 +32,5 @@ urlpatterns = [
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^media/(?P<path>.*)$', django.views.static.serve, {'document_root': settings.MEDIA_ROOT}),
     url(r'^admin/', admin.site.urls),
+    url(r'^upload/', include('fileupload.urls')),
 ]

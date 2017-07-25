@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'fileupload.apps.FileuploadConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -115,8 +116,8 @@ WSGI_APPLICATION = 'central_publishing_new.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/home/centralpublishing/centralNew/central',
-        # 'NAME': 'central',
+        # 'NAME': '/home/centralpublishing/centralNew/central',
+        'NAME': 'central',
 
     }
 }
