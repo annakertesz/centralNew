@@ -3,91 +3,92 @@ from collection.models import Album, Artist, Song, Tag
 import eyed3
 
 
-class CollectionDao:
 
-    @classmethod
-    def add_song(cls, file, file_name):
-        print("ADD SONG")
-        song = eyed3.load(MEDIA_ROOT + '/' + file_name)
-        try:
-            album = Album.objects.get(album_name=song.tag.album)
-        except Album.DoesNotExist:
-            album = Album(album_name=song.tag.album)
-            album.save()
+def add_song(file_name):
+    print("ADD SONG")
+    song = eyed3.load(MEDIA_ROOT + '/' + file_name)
 
-        try:
-            artist = Artist.objects.get(artist_name=song.tag.artist)
-        except Artist.DoesNotExist:
-            artist = Artist(artist_name=song.tag.artist)
-            artist.save()
 
-        song = Song(name=song.tag.title, artist=artist, album=album, path=file_name)
-        song.save()
+    try:
+        artist = Artist.objects.get(artist_name=song.tag.artist)
+    except Artist.DoesNotExist:
+        artist = Artist(artist_name=song.tag.artist)
+        artist.save()
 
-    @classmethod
-    def simple_search(cls, string, isExact):
-        print(string)
-        was_filtered = False
-        keyword_list = string.split(' ')
-        artist_list = []
-        album_list = []
-        tag_list = []
-        name_list = []
+    try:
+        album = Album.objects.get(album_name=song.tag.album)
+    except Album.DoesNotExist:
+        album = Album(album_name=song.tag.album, artist=artist)
+        album.save()
 
-        for keyword in keyword_list:
+    song = Song(name=song.tag.title, artist=artist, album=album, path=file_name)
+    song.save()
 
-            objects = Artist.objects.filter(artist_name__icontains=keyword)
-            for item in objects:
-                artist_list.append(item.id)
 
-            objects = Song.objects.filter(name__icontains=keyword)
-            for item in objects:
-                name_list.append(item.name)
 
-            objects = Album.objects.filter(album_name__icontains=keyword)
-            for item in objects:
-                album_list.append(item.id)
+def simple_search(string, isExact):
+    print(string)
+    was_filtered = False
+    keyword_list = string.split(' ')
+    artist_list = []
+    album_list = []
+    tag_list = []
+    name_list = []
 
-            objects = Tag.objects.filter(tag_name__icontains=keyword)
-            for item in objects:
-                tag_list.append(item.id)
+    for keyword in keyword_list:
 
-        if isExact:
+        objects = Artist.objects.filter(artist_name__icontains=keyword)
+        for item in objects:
+            artist_list.append(item.id)
 
-            result = Song.objects.all()
+        objects = Song.objects.filter(name__icontains=keyword)
+        for item in objects:
+            name_list.append(item.name)
 
-            artist_result = []
-            for artist in artist_list:
-                artist_result += result.filter(artist=artist)
-                was_filtered = True
+        objects = Album.objects.filter(album_name__icontains=keyword)
+        for item in objects:
+            album_list.append(item.id)
 
-            album_result = []
-            for album in album_list:
-                album_result += result.filter(album=album)
-                was_filtered = True
+        objects = Tag.objects.filter(tag_name__icontains=keyword)
+        for item in objects:
+            tag_list.append(item.id)
 
-            name_result =[]
-            for name in name_list:
-                name_result += result.filter(name=name)
-                was_filtered = True
+    if isExact:
 
-            if len(artist_result) == 0: artist_result = Song.objects.all()
-            if len(album_result) == 0: album_result = Song.objects.all()
-            if len(name_result) == 0: name_result = Song.objects.all()
-            if was_filtered: return set(name_result).intersection(set(artist_result).intersection(album_result))
-            return None
+        result = Song.objects.all()
 
-        else:
-            result = []
-            for artist in artist_list:
-                result += Song.objects.filter(artist=artist)
-                was_filtered = True
-            for album in album_list:
-                result += Song.objects.filter(album=album)
-                was_filtered = True
-            for name in name_list:
-                result += Song.objects.filter(name=name)
-                was_filtered = True
-        if was_filtered: return set(result)
+        artist_result = []
+        for artist in artist_list:
+            artist_result += result.filter(artist=artist)
+            was_filtered = True
+
+        album_result = []
+        for album in album_list:
+            album_result += result.filter(album=album)
+            was_filtered = True
+
+        name_result =[]
+        for name in name_list:
+            name_result += result.filter(name=name)
+            was_filtered = True
+
+        if len(artist_result) == 0: artist_result = Song.objects.all()
+        if len(album_result) == 0: album_result = Song.objects.all()
+        if len(name_result) == 0: name_result = Song.objects.all()
+        if was_filtered: return set(name_result).intersection(set(artist_result).intersection(album_result))
         return None
+
+    else:
+        result = []
+        for artist in artist_list:
+            result += Song.objects.filter(artist=artist)
+            was_filtered = True
+        for album in album_list:
+            result += Song.objects.filter(album=album)
+            was_filtered = True
+        for name in name_list:
+            result += Song.objects.filter(name=name)
+            was_filtered = True
+    if was_filtered: return set(result)
+    return None
 

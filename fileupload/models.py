@@ -1,4 +1,7 @@
 # encoding: utf-8
+import random
+from string import ascii_uppercase
+
 from django.db import models
 
 
@@ -9,7 +12,7 @@ class MusicFile(models.Model):
     problems installing pillow, use a more generic FileField instead.
 
     """
-    file = models.FileField(upload_to="pictures")
+    file = models.FileField(upload_to="")
     slug = models.SlugField(max_length=50, blank=True)
 
     def __str__(self):

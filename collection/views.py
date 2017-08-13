@@ -42,7 +42,10 @@ class SongList(APIView):
 class AlbumList(APIView):
 
     def get(self, request):
-        albums = Album.objects.all()
+        if request.GET.get('artist') != None:
+            albums = Album.objects.filter(artist=request.GET.get('artist'))
+        else:
+            albums = Album.objects.all()
         serializer = AlbumSerializer(albums, many=True)
         return Response(serializer.data)
 
@@ -110,7 +113,7 @@ def get_artwork(request):
 def home(request):
     if not request.user.is_authenticated:
         return redirect(reverse('login'))
-    return render(request, 'collection/home.html', {'user': request.user})
+    return render(request, 'collection/index.html', {'user': request.user})
 
 
 def signup(request):

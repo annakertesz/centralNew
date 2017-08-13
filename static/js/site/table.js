@@ -17,13 +17,21 @@ filter_table = function (url) {
                 var cell1 = row.insertCell(0);
                 cell1.className = "col-md-1";
                 var cell2 = row.insertCell(1);
-                if (is_staff) cell2.className = "col-md-8";
-                else cell2.className = "col-md-9";
-
                 var cell3 = row.insertCell(2);
-                cell3.className = "col-md-1";
                 var cell4 = row.insertCell(3);
-                cell4.className = "col-md-1";
+                if (is_staff){
+                    cell2.className = "col-md-8";
+                    cell4.className = "col-md-2";
+                }
+                else {
+                    cell2.className = "col-md-9";
+                    cell4.className = "col-md-1";
+                }
+
+
+                cell3.className = "col-md-1";
+
+
 
                 cell1.innerHTML = '<button class="btn btn-primary" onclick="onPlayStopClick(\'' + song_field.path + '\', this)">' +
                     '<div class="table_play_icon glyphicon glyphicon-play"></div></button></td>';
@@ -71,7 +79,7 @@ resetTableIcons = function () {
 
 $(document).ready(function() {
 
-    // alert(is_staff);
+    // alert("ops");
     $(document).on("click", ".popover_btn", function() {
             attributes = $(this).val().split(",");
             var playlist_id=attributes[0];

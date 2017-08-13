@@ -7,13 +7,15 @@ from django.contrib.auth.models import User
 #     music_file = models.FileField(upload_to='')
 
 
-class Album(models.Model):
-    album_name = models.CharField(max_length=30)
+
 
 
 class Artist(models.Model):
     artist_name = models.CharField(max_length=30)
 
+class Album(models.Model):
+    album_name = models.CharField(max_length=30)
+    artist = models.ForeignKey(Artist, related_name='artist')
 
 class Song(models.Model):
     path = models.CharField(max_length=150)

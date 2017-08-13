@@ -24,7 +24,6 @@ from collection import views
 
 urlpatterns = [
     url(r'^api/', include('collection.urls')),
-    url(r'^youradmin/', include('custom_admin.urls')),
     url(r'^home/$', views.home, name='home'),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),

@@ -31,6 +31,10 @@ strong{
     margin: 0;
 }
 
+#browser_table_container{
+    overflow: scroll;
+}
+
 .table_div{
     overflow-y: scroll;
     overflow-x: hidden;
@@ -64,8 +68,4 @@ strong{
     border-top: solid lightgrey 1px;
     background-color: snow;
     padding-top: 10px;
-}
-
-#main_table{
-    margin-top: 100px;
 }
