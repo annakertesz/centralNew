@@ -5,11 +5,11 @@ import os
 from django.http import HttpResponse
 from django.views.generic import CreateView, DeleteView, ListView
 
-from central_publishing_new import settings
 from .models import MusicFile
 from .response import JSONResponse, response_mimetype
 from .serialize import serialize
 from collection import CollectionDao
+import django.utils.text
 
 
 class PictureCreateView(CreateView):
@@ -18,49 +18,36 @@ class PictureCreateView(CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
-        print(self.object.file.path)
+        print("uploaded file path: " + self.object.file.path)
 
         files = [serialize(self.object)]
-        path = self.create_new_filename()
-        os.rename(self.object.file.path, path)
+        path = self.create_good_path()
+        # rename the file to this one
+        os.rename(self.object.file.path, path) # TODO handle if rename fails, e.g. file with such name exists
 
         data = {'files': files}
         response = JSONResponse(data, mimetype=response_mimetype(self.request))
         response['Content-Disposition'] = 'inline; filename=files.json'
-        print(self.get_file_name(path))
-        CollectionDao.add_song(self.get_file_name(path))
+        print("final path: " + os.path.basename(path))
+        CollectionDao.add_song(os.path.basename(path))
         return response
 
     def form_invalid(self, form):
         data = json.dumps(form.errors)
         return HttpResponse(content=data, status=400, content_type='application/json')
 
-    def create_new_filename(self):
-        path = list(self.object.file.path)
-        for i in range(len(path)-4, 0, -1):
-            l = path[i-1]
-            if l == " " or l == "." or l == "'":
-                path[i - 1] = "_"
-            elif l== "_" and path[i-2] == "_":
-                path[i-1] = "-"
-                path[i-2] = ""
-            elif l == "/":
-                break
-        return "".join(path)
-
-    def get_file_name(self, path):
-        index = 0
-        for i in range(len(path), 0, -1):
-            l = path[i - 1]
-            if l == "/":
-                index = i
-                break
-        return "".join(path[index:])
-
+    def create_good_path(self):
+        curr_path = self.object.file.path
+        curr_filename = os.path.basename(curr_path)
+        curr_filename_arr = os.path.splitext(curr_filename)
+        good_filename_no_ext = django.utils.text.slugify(curr_filename_arr[0])
+        #      path                                     filename                extension
+        return os.path.join(os.path.dirname(curr_path), good_filename_no_ext) + curr_filename_arr[1]
 
 
 class BasicVersionCreateView(PictureCreateView):
     template_name_suffix = '_basic_form'
+
 
 class PictureDeleteView(DeleteView):
     model = MusicFile
