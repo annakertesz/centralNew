@@ -27,17 +27,19 @@ strong{
 
 #main_container{
     background-color: snow;
-     height:100vh;
+     height:90vh;
     margin: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
 }
 
 #browser_table_container{
-    overflow: scroll;
+    overflow: hidden;
 }
 
+
 .table_div{
-    overflow-y: scroll;
-    overflow-x: hidden;
     margin-top: 200px;
 }
 
@@ -68,4 +70,9 @@ strong{
     border-top: solid lightgrey 1px;
     background-color: snow;
     padding-top: 10px;
+}
+
+.album_container{
+    display: inline-block;
+    float: left;
 }
