@@ -5,7 +5,7 @@ from collection.models import Song, Album, Artist, Playlist, PlaylistSongMap
 class AlbumSerializer(serializers.ModelSerializer):
     class Meta:
         model = Album
-        fields = ('id', 'album_name')
+        fields = ('id', 'album_name', 'cover')
 
 
 class ArtistSerializer(serializers.ModelSerializer):

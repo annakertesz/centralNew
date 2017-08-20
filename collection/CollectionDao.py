@@ -1,14 +1,23 @@
+import PIL
+import io
+
+from django.utils.text import slugify
+
 from central_publishing_new.settings import MEDIA_ROOT
 from collection.models import Album, Artist, Song, Tag
 import eyed3
-
-
+from eyed3.utils import art
+from PIL import Image
+import base64
 
 def add_song(file_name):
     print("ADD SONG")
     song = eyed3.load(MEDIA_ROOT + '/' + file_name)
-
-
+    # if song.tag.album == None or song.tag.artist == None or song.tag.title != None:
+    #     print("missing arg:")
+        # print(song.tag.album + " " + song.tag.artist + " " + song.tag.title)
+        # TODO: delete files
+    # else:
     try:
         artist = Artist.objects.get(artist_name=song.tag.artist)
     except Artist.DoesNotExist:
@@ -16,13 +25,24 @@ def add_song(file_name):
         artist.save()
 
     try:
-        album = Album.objects.get(album_name=song.tag.album)
+       album = Album.objects.get(album_name=song.tag.album)
     except Album.DoesNotExist:
-        album = Album(album_name=song.tag.album, artist=artist)
+
+        images = art.getArtFromTag(song.tag)
+        # image_tag = ''  # default
+        for image in images: # an mp3 file can  have multiple images
+            mime = image.mime_type # string, has values like "image/JPG"
+            basewidth = 300
+            img = Image.open(io.BytesIO(image.image_data))
+            wpercent = (basewidth / float(img.size[0]))
+            hsize = int((float(img.size[1]) * float(wpercent)))
+            img = img.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
+            img.save(MEDIA_ROOT+"/covers/"+ slugify(song.tag.album)+".jpg")
+        album = Album(album_name=song.tag.album, artist=artist, cover=slugify(song.tag.album))
         album.save()
 
-    song = Song(name=song.tag.title, artist=artist, album=album, path=file_name)
-    song.save()
+        song = Song(name=song.tag.title, artist=artist, album=album, path=file_name)
+        song.save()
 
 
 

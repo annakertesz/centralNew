@@ -13,6 +13,7 @@ from django.http import HttpResponse
 
 from central_publishing_new.settings import MEDIA_ROOT
 from collection import CollectionDao
+from collection.CollectionDao import simple_search
 from collection.forms import SignUpForm, SongAddForm
 from collection.models import Song, Album, Artist, Tag, Playlist
 from collection.playlistHandler import PlaylistHandler
@@ -30,7 +31,7 @@ class SongList(APIView):
             songs = Song.objects.filter(artist=request.GET.get('artist'))
 
         elif request.GET.get('keywords') != None:
-            songs = CollectionDao.CollectionDao.simple_search(request.GET.get('keywords'), True)
+            songs = simple_search(request.GET.get('keywords'), True)
 
         else:
             songs = Song.objects.all()

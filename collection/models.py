@@ -16,6 +16,7 @@ class Artist(models.Model):
 class Album(models.Model):
     album_name = models.CharField(max_length=30)
     artist = models.ForeignKey(Artist, related_name='artist')
+    cover = models.CharField(max_length=30, default='default_image')
 
 class Song(models.Model):
     path = models.CharField(max_length=150)

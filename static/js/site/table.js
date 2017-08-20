@@ -137,6 +137,7 @@ $(document).ready(function() {
     });
     search = function () {
         keywords = document.getElementById('search_field');
+        console.log(keywords);
         filter_table('/api/songs/?keywords=' + keywords.value);
     }; 
     filter_table('/api/songs');
