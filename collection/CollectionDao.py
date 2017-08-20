@@ -14,32 +14,21 @@ def add_song(file_name):
     # TODO: iterate through albums and artists
     print("ADD SONG")
     song = eyed3.load(MEDIA_ROOT + '/' + file_name)
-    # if song.tag.album == None or song.tag.artist == None or song.tag.title != None:
-    #     print("missing arg:")
-        # print(song.tag.album + " " + song.tag.artist + " " + song.tag.title)
-        # TODO: delete files
-    # else:
     try:
         artist = Artist.objects.get(artist_name=song.tag.artist)
     except Artist.DoesNotExist:
         artist = Artist(artist_name=song.tag.artist)
         artist.save()
 
-
     try:
-       album = Album.objects.get(album_name=song.tag.album)
+        album = Album.objects.get(album_name=song.tag.album)
     except Album.DoesNotExist:
 
         images = art.getArtFromTag(song.tag)
-        # image_tag = ''  # default
         for image in images: # an mp3 file can  have multiple images
-            mime = image.mime_type # string, has values like "image/JPG"
-            # basewidth = 300
             img = Image.open(io.BytesIO(image.image_data))
-            # wpercent = (basewidth / float(img.size[0]))
-            # hsize = int((float(img.size[1]) * float(wpercent)))
             img = img.resize((300, 300), PIL.Image.ANTIALIAS)
-            img.save(MEDIA_ROOT+"/covers/"+ slugify(song.tag.album)+".jpg")
+            img.save(MEDIA_ROOT+"/covers/" + slugify(song.tag.album)+".jpg")
         album = Album(album_name=song.tag.album, artist=artist, cover=slugify(song.tag.album))
         album.save()
 
