@@ -8,7 +8,7 @@ from collection.models import Album, Artist, Song, Tag
 import eyed3
 from eyed3.utils import art
 from PIL import Image
-import base64
+
 
 def add_song(file_name):
     # TODO: iterate through albums and artists
@@ -23,18 +23,17 @@ def add_song(file_name):
     try:
         album = Album.objects.get(album_name=song.tag.album)
     except Album.DoesNotExist:
+        album = Album(album_name=song.tag.album, artist=artist, cover=slugify(song.tag.album))
+        album.save()
 
         images = art.getArtFromTag(song.tag)
         for image in images: # an mp3 file can  have multiple images
             img = Image.open(io.BytesIO(image.image_data))
             img = img.resize((300, 300), PIL.Image.ANTIALIAS)
-            img.save(MEDIA_ROOT+"/covers/" + slugify(song.tag.album)+".jpg")
-        album = Album(album_name=song.tag.album, artist=artist, cover=slugify(song.tag.album))
-        album.save()
+            img.save(MEDIA_ROOT+"/covers/"+ slugify(song.tag.album)+".jpg")
 
     song = Song(name=song.tag.title, artist=artist, album=album, path=file_name)
     song.save()
-
 
 
 def simple_search(string, isExact):

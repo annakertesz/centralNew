@@ -10,15 +10,26 @@ from .response import JSONResponse, response_mimetype
 from .serialize import serialize
 from collection import CollectionDao
 import django.utils.text
-
+import datetime
 
 class PictureCreateView(CreateView):
     model = MusicFile
     fields = "__all__"
 
+    # TODO
+    # put form/self.object? into upload_queue
+    # if is_busy == false:
+    #    is_busy = true
+    #    while (len(upload_queue) > 0)
+    #        do_stuff( upload_queue.pop() )
+    #    is_busy = false
+
+    is_busy = False
+    upload_queue = []
+
     def form_valid(self, form):
         self.object = form.save()
-        print("uploaded file path: " + self.object.file.path)
+        print("uploaded file path: " + self.object.file.path + " " + str(datetime.datetime.now()))
 
         files = [serialize(self.object)]
         path = self.create_good_path()
