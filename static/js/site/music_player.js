@@ -2,7 +2,6 @@ var isWaveSurferLoading = false;
 var musicPlayerMediaURL;
 
 play = function (filename) {
-    console.log('loading ' + filename);
     $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-transfer");
     musicPlayerMediaURL = '/media/' + filename;
     wavesurfer.load(musicPlayerMediaURL);
@@ -29,7 +28,6 @@ play_playlist = function (id) {
     $.getJSON(url, function(result){
         $.each(result, function(i, field){
             songs_to_play.push(field.path);
-            console.log(songs_to_play);
             var row = table.insertRow(0);
             var cell1 = row.insertCell(0);
             var cell2 = row.insertCell(1);
@@ -68,8 +66,6 @@ $(document).ready(function() {
         // jsmediatags requires that I enter the full URL!! (http://blabla)
         jsmediatags.read(window.location.origin + musicPlayerMediaURL, {
             onSuccess: function(tag) {
-                console.log("ID tag loaded :)");
-                console.log("ID tag:" + tag.tags.album + " " + tag.tags.artist);
 
                  var image = tag.tags.picture;
                  if (image) {

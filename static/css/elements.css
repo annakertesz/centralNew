@@ -35,14 +35,14 @@
     color: black;
 }
 
-.modal_try{
-    border: solid lightgray 3px;
+.playlist_modal{
+    border: solid #000000 3px;
     display: none;
     padding: 5%;
     position: fixed;
     left: 30%;
     top: 30%;
-    background: url("../img/noisy_net.png");
+    background-color: white;
 }
 
 

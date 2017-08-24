@@ -17,10 +17,14 @@ class PlaylistHandler:
     @classmethod
     def get_songs_from_playlist(cls, playlist_id):
         songs = []
-        playlist = Playlist.objects.get(id=playlist_id)
-        for song in PlaylistSongMap.objects.filter(playlist=playlist).values('song'):
-            songs.append(Song.objects.get(id=song['song']))
-        return songs
+        try:
+            playlist = Playlist.objects.get(id=playlist_id)
+            for song in PlaylistSongMap.objects.filter(playlist=playlist).values('song'):
+                songs.append(Song.objects.get(id=song['song']))
+            return songs
+        except Playlist.DoesNotExist:
+            print("log Playlist doesn't exist")
+
 
     @classmethod
     def get_playlists_of_user(cls, user):

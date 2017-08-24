@@ -14,7 +14,6 @@ from PIL import Image
 
 def add_song(self, file_name):
     # TODO: iterate through albums and artists
-    print("ADD SONG")
     song = eyed3.load(MEDIA_ROOT + '/' + file_name)
     try:
         artist = Artist.objects.get(artist_name=song.tag.artist)
@@ -39,7 +38,6 @@ def add_song(self, file_name):
 
 
 def simple_search(string, isExact):
-    print(string)
     was_filtered = False
     keyword_list = string.split(' ')
     artist_list = []

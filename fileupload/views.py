@@ -27,14 +27,44 @@ class PictureCreateView(CreateView):
 
     dao = CollectionDao()
     upload_queue = []
+    form_queue = []
 
     def form_valid(self, form):
+        try:
+            self.object = form.save()
+            files = [serialize(self.object)]
+            path = self.create_good_path()
+            # rename the file to this one
+            os.rename(self.object.file.path, path)  # TODO handle if rename fails, e.g. file with such name exists
+
+            data = {'files': files}
+            response = JSONResponse(data, mimetype=response_mimetype(self.request))
+            response['Content-Disposition'] = 'inline; filename=files.json'
+            if self.dao.is_busy:
+                self.upload_queue.append(os.path.basename(path))
+            else:
+                self.dao.add_song(os.path.basename(path))
+                while (len(self.upload_queue) > 0):
+                    self.dao.add_song(self.upload_queue.pop())
+                while (len(self.upload_queue) > 0):
+                    self.save_without_response(self.form_queue.pop())
+            return response
+        except db.utils.OperationalError:
+            self.form_queue.append(form)
+            return JSONResponse("error")
+
+
+
+
+
+
+    def save_without_response(self, form):
         self.object = form.save()
 
         files = [serialize(self.object)]
         path = self.create_good_path()
         # rename the file to this one
-        os.rename(self.object.file.path, path) # TODO handle if rename fails, e.g. file with such name exists
+        os.rename(self.object.file.path, path)  # TODO handle if rename fails, e.g. file with such name exists
 
         data = {'files': files}
         response = JSONResponse(data, mimetype=response_mimetype(self.request))
@@ -43,10 +73,6 @@ class PictureCreateView(CreateView):
             self.upload_queue.append(os.path.basename(path))
         else:
             self.dao.add_song(os.path.basename(path))
-            while (len(self.upload_queue)>0):
-                self.dao.add_song(self.upload_queue.pop())
-
-        return response
 
     def form_invalid(self, form):
         data = json.dumps(form.errors)

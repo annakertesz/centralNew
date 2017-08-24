@@ -24,6 +24,10 @@ class Song(models.Model):
     artist = models.ForeignKey(Artist)
     name = models.CharField(max_length=60)
 
+class SongToEdit(models.Model):
+    path = models.CharField(max_length=150)
+    name = models.CharField(max_length=60)
+
 
 class Tag(models.Model):
     tag_name = models.CharField(max_length=20, default='DEFAULT')

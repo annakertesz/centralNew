@@ -45,7 +45,6 @@ filter_table = function (url) {
                         popover_str += "<button class='popover_btn no_button' value='"+attribute_list+"'>"+playlist_field.playlist_name+"</button>";
                     });
                     popover_str += "</ul>";
-                    console.log(popover_str);
                      cell3.innerHTML =
                         '<a tabindex="0" role="button" data-html="true" data-placement="left" data-toggle="popover" data-trigger="focus" ' +
                         'title="'+new_playlist_str+'" data-content="'+ popover_str + '">Add to playlist</a>';
@@ -94,7 +93,7 @@ $(document).ready(function() {
     $(document).on("click", ".new_playlist_btn", function () {
         var song_id= $(this).val();
         $("#create_playlist").val(song_id);
-        $(".modal_try").show();
+        $(".playlist_modal").show();
     });
 
     $(document).on("click", "#create_playlist", function () {
@@ -104,7 +103,6 @@ $(document).ready(function() {
         var url = "/api/add_new_playlist/?name=" + playlist_name;
         $.getJSON(url, function (result) {
                 playlist_id=result;
-                console.log(result);
                 url = "/api/add_song_to_playlist/?playlist=" + playlist_id + "&song=" + song_id;
                 $.getJSON(url, function(result){
                     $.each(result, function(i, field){
@@ -113,11 +111,11 @@ $(document).ready(function() {
             });
 
         });
-        $(".modal_try").hide();
+        $(".playlist_modal").hide();
     });
 
     $(document).on("click", "#cancel", function () {
-        $(".modal_try").hide();
+        $(".playlist_modal").hide();
     })
 
     var album_list = document.getElementById("album_list");
@@ -137,7 +135,6 @@ $(document).ready(function() {
     });
     search = function () {
         keywords = document.getElementById('search_field');
-        console.log(keywords);
         filter_table('/api/songs/?keywords=' + keywords.value);
     }; 
     filter_table('/api/songs');

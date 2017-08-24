@@ -62,11 +62,8 @@ class ArtistList(APIView):
 class AddToPlaylist(APIView):
 
     def get(self, request):
-        print("!!!!!!!! LOG " + request.GET.get('playlist') + " " + request.GET.get('song'))
         playlist = Playlist.objects.get(id=request.GET.get('playlist'))
-        print(request.GET.get('song'))
         song = Song.objects.get(id=request.GET.get('song'))
-        print("I added song " + song.name + " to playlist " + playlist.playlist_name)
         PlaylistHandler.add_song_to_playlist(playlist, song)
         serializer = PlaylistSerializer(Playlist.objects.all(), many=True)
         return Response(serializer.data)
@@ -76,8 +73,6 @@ class PlaylistList(APIView):
 
     def get(self, request):
         playlists = PlaylistHandler.get_playlists_of_user(request.user)
-        for item in playlists:
-            print(item.playlist_name)
         serializer = PlaylistSerializer(playlists, many=True)
         return Response(serializer.data)
 
@@ -86,9 +81,7 @@ class AddNewPlaylist(APIView):
 
     def get(self, request):
         playlist_name = request.GET.get('name')
-        print("log " + playlist_name)
         playlist = PlaylistHandler.add_new_playlist(playlist_name, request.user)
-        print(playlist.playlist_name + " added")
         return Response(playlist.id)
 
 
@@ -106,7 +99,6 @@ def get_artwork(request):
     song_data = eyed3.load(MEDIA_ROOT + '/' + song.path)
     image = song_data.tag.images[0]
     im = io.BytesIO(image.render())
-    print(image.mime_type)
     return HttpResponse(im, content_type='image/JPG')
 
 
