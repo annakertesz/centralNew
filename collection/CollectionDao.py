@@ -10,7 +10,9 @@ from eyed3.utils import art
 from PIL import Image
 
 
-def add_song(file_name):
+
+
+def add_song(self, file_name):
     # TODO: iterate through albums and artists
     print("ADD SONG")
     song = eyed3.load(MEDIA_ROOT + '/' + file_name)

@@ -5,10 +5,11 @@ import os
 from django.http import HttpResponse
 from django.views.generic import CreateView, DeleteView, ListView
 
+from .CollectionDao import *
 from .models import MusicFile
 from .response import JSONResponse, response_mimetype
 from .serialize import serialize
-from collection import CollectionDao
+
 import django.utils.text
 import datetime
 
@@ -24,12 +25,11 @@ class PictureCreateView(CreateView):
     #        do_stuff( upload_queue.pop() )
     #    is_busy = false
 
-    is_busy = False
+    dao = CollectionDao()
     upload_queue = []
 
     def form_valid(self, form):
         self.object = form.save()
-        print("uploaded file path: " + self.object.file.path + " " + str(datetime.datetime.now()))
 
         files = [serialize(self.object)]
         path = self.create_good_path()
@@ -39,8 +39,13 @@ class PictureCreateView(CreateView):
         data = {'files': files}
         response = JSONResponse(data, mimetype=response_mimetype(self.request))
         response['Content-Disposition'] = 'inline; filename=files.json'
-        print("final path: " + os.path.basename(path))
-        CollectionDao.add_song(os.path.basename(path))
+        if self.dao.is_busy:
+            self.upload_queue.append(os.path.basename(path))
+        else:
+            self.dao.add_song(os.path.basename(path))
+            while (len(self.upload_queue)>0):
+                self.dao.add_song(self.upload_queue.pop())
+
         return response
 
     def form_invalid(self, form):
