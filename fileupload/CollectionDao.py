@@ -9,6 +9,8 @@ from collection.models import Album, Artist, Song, Tag, SongToEdit
 import eyed3
 from eyed3.utils import art
 from PIL import Image
+import pathlib
+
 
 
 class CollectionDao:
@@ -45,7 +47,8 @@ class CollectionDao:
             for image in images: # an mp3 file can  have multiple images
                 img = Image.open(io.BytesIO(image.image_data))
                 img = img.resize((300, 300), PIL.Image.ANTIALIAS)
-                img.save(MEDIA_ROOT+"/covers/"+ slugify(song.tag.album)+".jpg")
+                pathlib.Path(MEDIA_ROOT + "/covers/").mkdir(parents=True, exist_ok=True)
+                img.save(MEDIA_ROOT + "/covers/" + slugify(song.tag.album)+".jpg")
                 print("saved image of " + song.tag.album)
 
         if success:
@@ -53,8 +56,6 @@ class CollectionDao:
             song.save()
         else:
             song = SongToEdit(name=file_name, path=file_name)
-
+            song.save()
         self.is_busy=False
-
-
 
