@@ -1,14 +1,10 @@
-{#<div class="container-fluid col-md-12" id="main_table">#}
     {% if user.is_staff %}
       <a  href="/upload/basic"><span class="glyphicon glyphicon-plus icon"></span></a>
     {% endif %}
-{#    <div class="container" id="browser_table_container">#}
         <table class="table table-condensed">
             <tbody id="song_table">
             </tbody>
         </table>
-{#    </div>#}
-{#</div>#}
 
 <div class="playlist_modal">
     <p><input id="new_playlist_input" type="text"></p>
@@ -17,32 +13,3 @@
         <button class=no_button id="cancel">Cancel</button>
     </p>
 </div>
-
-
-{#    <input type="text" id="search_field">#}
-{#    <button class="menu_button" id="search_button" onclick="search()">#}
-{#        search#}
-{#    </button>#}
-{#    <button class="menu_button" id="search_button" onclick="filter_table('/api/songs')">all</button>#}
-
-
-{# <div class="col-md-2 side_bar">#}
-{#            <ul>#}
-{#                <li>#}
-{#                    <button class="no_button" onclick="filter_table('/api/songs')"> all</button>#}
-{#                </li>#}
-{#                <li> <button class="no_button" onclick="show_album()">albums </button></li>#}
-{#                <ul id="album_list">#}
-{#                </ul>#}
-{##}
-{#                <li> <button class="no_button" onclick="show_artists()">artists </button></li>#}
-{#                <ul id="artist_list">#}
-{#                </ul>#}
-{#                <li id="tag_button">tags</li>#}
-{#                <ul id="tag_list">#}
-{#                    {% for tag in tags %}#}
-{#                        <li><a href="/browse/?tag={{ tag.id }}">{{ tag.tag_name }} </a></li>#}
-{#                    {% endfor %}#}
-{#                </ul>#}
-{#            </ul>#}
-{#        </div>#}

@@ -56,7 +56,7 @@ filter_table = function (url) {
                     cell4.innerHTML = '<a href="/download/?path=' + song_field.path + '"><i class="glyphicon glyphicon-download icon"></i></a>'+
                         "<i class='glyphicon glyphicon-shopping-cart icon'></i>"+
                         '<a href="#"><i class="glyphicon glyphicon-edit icon"></i></a>' +
-                        '<a href="#"><i class="glyphicon glyphicon-trash icon"></i></a>';
+                        '<a href="/api/delete/?id='+song_field.id+'"><i class="glyphicon glyphicon-trash icon"></i></a>';
                 }
             });
         });

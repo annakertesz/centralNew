@@ -1,6 +1,7 @@
 import eyed3
 import io
 
+import os
 from PIL import Image
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect
@@ -122,3 +123,10 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+
+def delete_song(request):
+    song = Song.objects.get(id=request.GET.get('id'))
+    os.remove(MEDIA_ROOT +"/" + song.path)
+    Song.objects.filter(id=request.GET.get('id')).delete()
+    return render(request, 'collection/index.html', {'user': request.user})
