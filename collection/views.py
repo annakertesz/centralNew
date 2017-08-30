@@ -1,3 +1,5 @@
+import json
+
 import eyed3
 import io
 
@@ -15,7 +17,6 @@ from django.http import HttpResponse
 from central_publishing_new.settings import MEDIA_ROOT
 from collection import CollectionDao
 from collection.CollectionDao import simple_search
-from collection.forms import SignUpForm, SongAddForm
 from collection.models import Song, Album, Artist, Tag, Playlist
 from collection.playlistHandler import PlaylistHandler
 from collection.serializers import SongSerializer, AlbumSerializer, ArtistSerializer, PlaylistSongSerializer, \
@@ -102,7 +103,14 @@ def get_artwork(request):
     im = io.BytesIO(image.render())
     return HttpResponse(im, content_type='image/JPG')
 
+class EditSong(APIView):
 
+    def get(self, request):
+        json_data = request.GET.get('data')
+        data = json.loads(json_data)
+        print(data["title"])
+        CollectionDao.edit_song(data["id"], data["title"], data["album"], data["artist"], data["tags"])
+        return Response("success")
 
 def home(request):
     if not request.user.is_authenticated:
@@ -110,19 +118,6 @@ def home(request):
     return render(request, 'collection/index.html', {'user': request.user})
 
 
-def signup(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('home')
-    else:
-        form = SignUpForm()
-    return render(request, 'registration/signup.html', {'form': form})
 
 
 def delete_song(request):

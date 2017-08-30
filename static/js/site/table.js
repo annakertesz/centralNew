@@ -53,10 +53,16 @@ filter_table = function (url) {
                 cell4.innerHTML ='<a href="/download/?path=' + song_field.path + '"><i class="glyphicon glyphicon-download icon"></i></a>'+
                         "<i class='glyphicon glyphicon-shopping-cart icon'></i>";
                 if (is_staff){
-                    cell4.innerHTML = '<a href="/download/?path=' + song_field.path + '"><i class="glyphicon glyphicon-download icon"></i></a>'+
-                        "<i class='glyphicon glyphicon-shopping-cart icon'></i>"+
-                        '<a href="#"><i class="glyphicon glyphicon-edit icon"></i></a>' +
-                        '<a href="/api/delete/?id='+song_field.id+'"><i class="glyphicon glyphicon-trash icon"></i></a>';
+                    cell4.innerHTML = `
+                        <a href="/download/?path=` + song_field.path + `">
+                            <i class="glyphicon glyphicon-download icon"></i>
+                        </a>
+                        <i class='glyphicon glyphicon-shopping-cart icon'></i>
+                        <button type="button" class="no_style" data-toggle="modal" data-target="#edit_song" onclick="
+                            edit_modal_data('` + song_field.name + `', '` + song_field.artist.artist_name + `', '` + song_field.album.album_name + `', '` + song_field.id + `')">
+                            <i class="glyphicon glyphicon-edit icon"></i>
+                        </button>
+                        <a href="/api/delete/?" id="`+song_field.id+`"><i class="glyphicon glyphicon-trash icon"></i></a>`;
                 }
             });
         });
@@ -74,6 +80,36 @@ resetTableIcons = function () {
     $(".table_play_icon").each(function (i, el) {
         $(el).attr("class","table_play_icon glyphicon glyphicon-play");
      });
+};
+
+
+edit_modal_data = function (title, artist, album, id) {
+    document.getElementById("edit_modal_title").append(title);
+    $("#edit_title").attr("value", title);
+    $("#edit_song_id").attr("value", id);
+    $("#edit_album").attr("value", album);
+    $('#edit_artist').attr("value", artist);
+};
+
+edit_modal_send_data = function(){
+     var data = JSON.stringify({
+        "id": $("#edit_song_id").val(),
+        "title": $("#edit_title").val(),
+        "album": $("#edit_album").val(),
+        "artist": $("#edit_artist").val(),
+        "tags": $("#edit_tags").val()});
+    console.log(data);
+    var xhr = new XMLHttpRequest();
+    var url = "/api/edit_song/?data=" + encodeURIComponent(data);
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var json = JSON.parse(xhr.responseText);
+        }
+    };
+
+    xhr.send(data);
 };
 
 $(document).ready(function() {

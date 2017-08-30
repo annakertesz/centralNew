@@ -28,7 +28,6 @@ urlpatterns = [
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^$', RedirectView.as_view(url='/home')),
-    url(r'^signup/$', views.signup, name='signup'),
     url(r'^media/(?P<path>.*)$', django.views.static.serve, {'document_root': settings.MEDIA_ROOT}),
     url(r'^admin/', admin.site.urls),
     url(r'^upload/', include('fileupload.urls')),
