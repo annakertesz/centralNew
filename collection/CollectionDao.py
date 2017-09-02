@@ -1,7 +1,7 @@
 from collection.models import Album, Artist, Song, Tag
 
 
-def simple_search(string, isExact):
+def simple_search(string, isExact): #TODO: exact mode returns everything
     was_filtered = False
     keyword_list = string.split(' ')
     artist_list = []

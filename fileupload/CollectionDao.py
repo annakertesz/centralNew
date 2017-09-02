@@ -49,7 +49,7 @@ class CollectionDao:
                 img = img.resize((300, 300), PIL.Image.ANTIALIAS)
                 pathlib.Path(MEDIA_ROOT + "/covers/").mkdir(parents=True, exist_ok=True)
                 img.save(MEDIA_ROOT + "/covers/" + slugify(song.tag.album)+".jpg")
-                print("saved image of " + song.tag.album)
+                # print("saved image of " + song.tag.album)
 
         if success:
             song = Song(name=song.tag.title, artist=artist, album=album, path=file_name)
