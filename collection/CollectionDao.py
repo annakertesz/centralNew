@@ -1,4 +1,7 @@
-from collection.models import Album, Artist, Song, Tag
+import eyed3
+
+from central_publishing_new.settings import MEDIA_ROOT
+from collection.models import Album, Artist, Song, Tag, TagSongMap
 
 
 def simple_search(string, isExact): #TODO: exact mode returns everything
@@ -66,9 +69,28 @@ def simple_search(string, isExact): #TODO: exact mode returns everything
     if was_filtered: return set(result)
     return None
 
+def add_tags_for_songs():
+    songs = Song.objects.all()
+    for song in songs:
+        file = eyed3.load(MEDIA_ROOT + '/' + song.path)
+        try:
+            for t in file.tag.genre._name.split(' / '):
+                try:
+                    tag = Tag.objects.get(tag_name=t)
+                except Tag.DoesNotExist:
+                    print("new tag: "+t)
+                    tag = Tag(tag_name=t)
+                    tag.save()
+                relation = TagSongMap(tag=tag, song=song)
+                relation.save()
+        except AttributeError:
+            print("has no genre")
+
+
 def edit_song(id, title, album, artist, tags):
     song = Song.objects.get(id=id)
     print("from database: " + song.name)
+
     if song.name != title:
         song.name = title
     if song.album.album_name != album:

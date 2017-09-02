@@ -106,15 +106,20 @@ def get_artwork(request):
 class EditSong(APIView):
 
     def get(self, request):
+
+        #TODO: delete this experiment!
+
         json_data = request.GET.get('data')
         data = json.loads(json_data)
         print(data["title"])
+
         CollectionDao.edit_song(data["id"], data["title"], data["album"], data["artist"], data["tags"])
         return Response("success")
 
 def home(request):
     if not request.user.is_authenticated:
         return redirect(reverse('login'))
+    CollectionDao.add_tags_for_songs()
     return render(request, 'collection/index.html', {'user': request.user})
 
 
