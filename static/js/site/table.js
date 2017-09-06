@@ -85,10 +85,10 @@ resetTableIcons = function () {
 edit_modal_data = function (id) {
     var song_field = loaded_songs[id];
     document.getElementById("edit_modal_title").innerHTML = song_field.name;
-    $("#edit_title").attr("value", song_field.name);
-    $("#edit_song_id").attr("value", id);
-    $("#edit_album").attr("value", song_field.album.album_name);
-    $('#edit_artist').attr("value", song_field.artist.artist_name);
+    $('input[name="edit_title"]').val(song_field.name);
+    $('input[name="edit_song_id"]').val(id);
+    $('input[name="edit_album"]').val(song_field.album.album_name);
+    $('input[name="edit_artist"]').val(song_field.artist.artist_name);
 };
 
 edit_modal_send_data = function(){
