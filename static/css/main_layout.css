@@ -50,16 +50,6 @@ strong{
     overflow-x: hidden;
 }
 
-
-.central_form{
-    border: solid;
-    width: 400px;
-    padding: 2%;
-    margin: auto;
-    margin-top: 10%;
-}
-
-
 #music_player{
     position:fixed;
     height:50px;

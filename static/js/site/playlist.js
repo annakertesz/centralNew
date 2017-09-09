@@ -1,6 +1,5 @@
 
-show_song_of_playlist = function (id) {
-    // alert('0');
+showSongsOfPlaylist = function (id) {
     $("#playlist_table tr").remove();
     url = "/api/songs_of_playlists/?playlist=" + id;
     var table = document.getElementById("playlist_table");
@@ -18,7 +17,7 @@ show_song_of_playlist = function (id) {
             var cell5 = row.insertCell(4);
             cell5.className = "col-md-1";
 
-            cell1.innerHTML = '<button id="play" class="table_btn" onclick="play(\'' + field.path + '\')">' +
+            cell1.innerHTML = '<button id="play" class="table_btn" onclick="playSingleSong(\'' + field.path + '\')">' +
                 '<div class="glyphicon glyphicon-play"></div></button></td>';
             cell2.innerHTML = field.name;
             cell3.innerHTML = field.album.album_name;
@@ -39,13 +38,11 @@ $(document).ready(function() {
             cell1.className = "col-md-1";
             var cell2 = row.insertCell(1);
             cell1.className = "col-md-2";
-            cell1.innerHTML = '<button id="play" class="table_btn" onclick="play_playlist('+ field.id +')">' +
+            cell1.innerHTML = '<button id="play" class="table_btn" onclick="playPlaylist('+ field.id +')">' +
                 '<div class="glyphicon glyphicon-play"></div></button>';
-            cell2.innerHTML = '<button class="no_button playlist_name" onclick="show_song_of_playlist('+ field.id + ')">' + field.playlist_name;
+            cell2.innerHTML = '<button class="no_button playlist_name" onclick="showSongsOfPlaylist('+ field.id + ')">' + field.playlist_name;
 
         })
     });
-
-    show_song_of_playlist(1);
-
+    showSongsOfPlaylist(1);
 });

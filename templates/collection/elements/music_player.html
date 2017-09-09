@@ -4,21 +4,15 @@
         <img id="music-player-artwork" src="" style="width: 38px; height: 38px;">
     </div>
     <div class="btn-group col-md-1" style="min-width: 130px;">
-        <button class="player_btn" type="button">
+        <button class="player_btn" type="button" onclick="playPrevOnPlaylist()" id="music-player-prev-song">
             <i class="glyphicon glyphicon-step-backward"></i>
         </button>
         <button id="play_btn" class="player_btn" onclick="onPlayPauseClick()">
             <i class="player_play_btn_graphic glyphicon glyphicon-pause" ></i>
         </button>
-        <button type="button" class="player_btn">
+        <button type="button" class="player_btn" onclick="playNextOnPlaylist()" id="music-player-next-song">
             <i class="glyphicon glyphicon-step-forward"></i>
         </button>
     </div>
     <div id="waveform" class="col-md-8"></div>
-{#    <div class="col-md-5" id="player_playlist">#}
-{#        <table class="table table-condensed">#}
-{#            <tbody id="musicplayer_list">#}
-{#            </tbody>#}
-{#        </table>#}
-{#    </div>#}
 </div>

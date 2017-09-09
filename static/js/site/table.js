@@ -67,7 +67,7 @@ filter_table = function (url) {
     };
 
 onPlayStopClick = function (filename, hostingDiv) {
-    play(filename);
+    playSingleSong(filename);
     resetTableIcons();
     // set the current icon to buffer
     $(hostingDiv).find(".table_play_icon").attr("class","table_play_icon glyphicon glyphicon-transfer");
