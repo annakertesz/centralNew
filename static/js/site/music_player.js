@@ -8,12 +8,12 @@ playSingleSong = function(filename) {
     playlist = [];
     playlistPos = 0;
     _loadAndPlaySong(filename);
-    $("#music-player-next-song").hide();
-    $("#music-player-prev-song").hide();
 };
 
 // do not call this from other files!
 _loadAndPlaySong = function (filename) {
+    $("#music-player-next-song").hide();
+    $("#music-player-prev-song").hide();
     $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-transfer");
     musicPlayerMediaURL = '/media/' + filename;
     wavesurfer.load(musicPlayerMediaURL);
@@ -46,8 +46,12 @@ $(document).ready(function() {
 
     wavesurfer.on('ready', function () {
         $('#music_player').css('opacity', '1');
-        wavesurfer.play();
+        if (playlist.length >0) {
+            $("#music-player-next-song").show();
+            $("#music-player-prev-song").show();
+        }
         $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-pause");
+        wavesurfer.play();
         resetTableIcons();
         isWaveSurferLoading = false;
 
@@ -56,7 +60,6 @@ $(document).ready(function() {
         // jsmediatags requires that I enter the full URL!! (http://blabla)
         jsmediatags.read(window.location.origin + musicPlayerMediaURL, {
             onSuccess: function(tag) {
-
                  var image = tag.tags.picture;
                  if (image) {
                      var base64String = "";
@@ -91,8 +94,6 @@ playPlaylist = function (id) {
         });
         playlist.reverse(); // it comes from the server in reverse order
         _loadAndPlaySong(playlist[playlistPos]);
-        $("#music-player-next-song").show();
-        $("#music-player-prev-song").show();
     });
 };
 
