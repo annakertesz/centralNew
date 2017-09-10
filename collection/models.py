@@ -40,7 +40,11 @@ class TagSongMap(models.Model):
 
 class Playlist(models.Model):
     playlist_name = models.CharField(max_length=60)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="playlists")
+
+
+class PlaylistUserMap(models.Model):
+    playlist = models.ForeignKey(Playlist)
+    user = models.ForeignKey(User)
 
 
 class PlaylistSongMap(models.Model):

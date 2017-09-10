@@ -38,10 +38,13 @@ $(document).ready(function() {
             var cell1 = row.insertCell(0);
             cell1.className = "col-md-1";
             var cell2 = row.insertCell(1);
-            cell1.className = "col-md-2";
+            cell1.className = "col-md-1";
             cell1.innerHTML = '<button id="play" class="table_btn" onclick="play_playlist('+ field.id +')">' +
                 '<div class="glyphicon glyphicon-play"></div></button>';
             cell2.innerHTML = '<button class="no_button playlist_name" onclick="show_song_of_playlist('+ field.id + ')">' + field.playlist_name;
+             var cell3 = row.insertCell(2);
+            cell3.className = "col-md-1";
+            cell3.innerHTML = '<button  class="no_style" onclick="add_user('+ field.id +')"><i class="glyphicon glyphicon-user"></i></button>'
 
         })
     });

@@ -4,11 +4,9 @@ import eyed3
 import io
 
 import os
-from PIL import Image
-from django.contrib.auth import login, authenticate
-from django.http import HttpResponseRedirect
+
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-# from django.urls import reverse
 from django.urls import reverse
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -18,7 +16,7 @@ from central_publishing_new.settings import MEDIA_ROOT
 from collection import CollectionDao
 from collection.CollectionDao import simple_search
 from collection.models import Song, Album, Artist, Tag, Playlist
-from collection.playlistHandler import PlaylistHandler
+from collection.PlaylistHandler import PlaylistHandler
 from collection.serializers import SongSerializer, AlbumSerializer, ArtistSerializer, PlaylistSongSerializer, \
     PlaylistSerializer
 
@@ -119,7 +117,7 @@ class EditSong(APIView):
 def home(request):
     if not request.user.is_authenticated:
         return redirect(reverse('login'))
-    CollectionDao.add_tags_for_songs()
+    # CollectionDao.add_tags_for_songs()
     return render(request, 'collection/index.html', {'user': request.user})
 
 
@@ -130,3 +128,9 @@ def delete_song(request):
     os.remove(MEDIA_ROOT +"/" + song.path)
     Song.objects.filter(id=request.GET.get('id')).delete()
     return render(request, 'collection/index.html', {'user': request.user})
+
+
+def add_user_to_playlist(request):
+    playlist = Playlist.objects.get(id=request.get('playlist_id'))
+    user = User.objects.get(id=request.get('user_id'))
+    PlaylistHandler.add_user_to_playlist(playlist, user)

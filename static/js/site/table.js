@@ -8,6 +8,8 @@ var show_album = function () {
 var loaded_songs;
 
 filter_table = function (url) {
+    console.log("updated");
+    actual_url = url;
         var is_staff = $("#is_staff").val();
         $("#song_table tr").remove();
         var table = document.getElementById("song_table");
@@ -83,12 +85,15 @@ resetTableIcons = function () {
 
 
 edit_modal_data = function (id) {
-    var song_field = loaded_songs[id];
-    document.getElementById("edit_modal_title").innerHTML = song_field.name;
-    $("#edit_title").attr("value", song_field.name);
+    console.log(id);
+    alert("Fix title bug on the edit_title input field");
+    var my_song_field = loaded_songs[id];
+    console.log(my_song_field.name);
+    document.getElementById("edit_modal_title").innerHTML = my_song_field.name;
+    $("#edit_title").attr("value", my_song_field.name);
     $("#edit_song_id").attr("value", id);
-    $("#edit_album").attr("value", song_field.album.album_name);
-    $('#edit_artist').attr("value", song_field.artist.artist_name);
+    $("#edit_album").attr("value", my_song_field.album.album_name);
+    $('#edit_artist').attr("value", my_song_field.artist.artist_name);
 };
 
 edit_modal_send_data = function(){
@@ -106,13 +111,17 @@ edit_modal_send_data = function(){
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             var json = JSON.parse(xhr.responseText);
+            filter_table(actual_url);
         }
     };
 
     xhr.send(data);
+
 };
 
 $(document).ready(function() {
+
+    actual_url = '/api/songs';
 
     // alert("ops");
     $(document).on("click", ".popover_btn", function() {
@@ -171,7 +180,8 @@ $(document).ready(function() {
     });
     search = function () {
         keywords = document.getElementById('search_field');
-        filter_table('/api/songs/?keywords=' + keywords.value);
+        actual_url = '/api/songs/?keywords=' + keywords.value;
+        filter_table(actual_url);
     }; 
-    filter_table('/api/songs');
+    filter_table(actual_url);
 });
