@@ -38,10 +38,10 @@
 .playlist_modal{
     border: solid #000000 3px;
     display: none;
-    padding: 5%;
+    padding: 3%;
     position: fixed;
     left: 30%;
-    top: 30%;
+    top: 20%;
     background-color: white;
 }
 

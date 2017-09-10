@@ -7,9 +7,19 @@ var show_album = function () {
 };
 var loaded_songs;
 
+//from https://stackoverflow.com/questions/11703093/how-to-dismiss-a-twitter-bootstrap-popover-by-clicking-outside
+$(document).on('click', function (e) {
+    $('[data-toggle="popover"],[data-original-title]').each(function () {
+        //the 'is' for buttons that trigger popups
+        //the 'has' for icons within a button that triggers a popup
+        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+            (($(this).popover('hide').data('bs.popover')||{}).inState||{}).click = false  // fix for BS 3.3.6
+        }
+    });
+});
 filter_table = function (url) {
-    console.log("updated");
-    actual_url = url;
+        console.log("updated");
+        actual_url = url;
         var is_staff = $("#is_staff").val();
         $("#song_table tr").remove();
         var table = document.getElementById("song_table");
@@ -39,17 +49,18 @@ filter_table = function (url) {
                 cell2.innerHTML = '<p>'+song_field.artist.artist_name+'</br><strong>'+song_field.name+'</strong></p>';
 
                 $.getJSON("/api/playlists/", function (result) {
-                    var new_playlist_str = "<button class='new_playlist_btn no_button' value='"+song_field.id+"'>new playlist</button>";
-                    var popover_str ="<ul>";
+                    var popover_str = "<button class='new_playlist_btn btn btn-default' value='"+song_field.id+"'>new playlist</button><br><br>";
                     $.each(result, function (i, playlist_field) {
                         var attribute_list = playlist_field.id + "," + song_field.id;
-                        popover_str += "<button class='popover_btn no_button' value='"+attribute_list+"'>"+playlist_field.playlist_name+"</button>";
+                        popover_str += "<button class='popover_btn no_button' value='"+attribute_list+"'>"+playlist_field.playlist_name+"</button><br>";
                     });
-                    popover_str += "</ul>";
-                     cell3.innerHTML =
-                        '<a tabindex="0" role="button" data-html="true" data-placement="left" data-toggle="popover" data-trigger="focus" ' +
-                        'title="'+new_playlist_str+'" data-content="'+ popover_str + '">Add to playlist</a>';
-                    $('[data-toggle="popover"]').popover();
+                    cell3.innerHTML =
+                        '<button role="button" data-placement="left" data-container="body" data-toggle="popover" data-placement="bottom" ' +
+                        ' class="no_button">Add to playlist</button>';
+                    $('[data-toggle="popover"]').popover({
+                        html: true,
+                        content: popover_str
+                    });
                 });
                 cell4.innerHTML ='<a href="/download/?path=' + song_field.path + '"><i class="glyphicon glyphicon-download icon"></i></a>'+
                         "<i class='glyphicon glyphicon-shopping-cart icon'></i>";
@@ -122,6 +133,7 @@ $(document).ready(function() {
 
     // alert("ops");
     $(document).on("click", ".popover_btn", function() {
+            $('[data-toggle="popover"]').popover('hide');
             attributes = $(this).val().split(",");
             var playlist_id=attributes[0];
             var song_id=attributes[1];
@@ -133,6 +145,7 @@ $(document).ready(function() {
     });
     
     $(document).on("click", ".new_playlist_btn", function () {
+        $('[data-toggle="popover"]').popover('hide');
         var song_id= $(this).val();
         $("#create_playlist").val(song_id);
         $(".playlist_modal").show();
@@ -158,7 +171,7 @@ $(document).ready(function() {
 
     $(document).on("click", "#cancel", function () {
         $(".playlist_modal").hide();
-    })
+    });
 
     var album_list = document.getElementById("album_list");
     
