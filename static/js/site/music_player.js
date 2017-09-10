@@ -1,7 +1,19 @@
 var isWaveSurferLoading = false;
 var musicPlayerMediaURL;
+var playlist = [];
+var playlistPos;
+var wavesurfer;
 
-play = function (filename) {
+playSingleSong = function(filename) {
+    playlist = [];
+    playlistPos = 0;
+    _loadAndPlaySong(filename);
+};
+
+// do not call this from other files!
+_loadAndPlaySong = function (filename) {
+    $("#music-player-next-song").hide();
+    $("#music-player-prev-song").hide();
     $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-transfer");
     musicPlayerMediaURL = '/media/' + filename;
     wavesurfer.load(musicPlayerMediaURL);
@@ -12,33 +24,11 @@ onPlayPauseClick = function () {
     if (!isWaveSurferLoading) { // do not change icons if its currently loading
         if (wavesurfer.isPlaying()) {
             $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-play");
-        }
-        else {
+        } else {
             $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-pause");
         }
         wavesurfer.playPause();
     }
-};
-
-play_playlist = function (id) {
-    $("#musicplayer_list tr").remove();
-    var url = "/api/songs_of_playlists/?playlist=" + id;
-    var songs_to_play = [];
-    var table = document.getElementById("musicplayer_list");
-    $.getJSON(url, function(result){
-        $.each(result, function(i, field){
-            songs_to_play.push(field.path);
-            var row = table.insertRow(0);
-            var cell1 = row.insertCell(0);
-            var cell2 = row.insertCell(1);
-            var cell3 = row.insertCell(2);
-            
-            cell1.innerHTML = field.name;
-            cell2.innerHTML = field.album.album_name;
-            cell3.innerHTML = field.artist.artist_name;
-
-        });
-    });
 };
 
 $(document).ready(function() {
@@ -56,17 +46,20 @@ $(document).ready(function() {
 
     wavesurfer.on('ready', function () {
         $('#music_player').css('opacity', '1');
-        wavesurfer.play();
+        if (playlist.length >0) {
+            $("#music-player-next-song").show();
+            $("#music-player-prev-song").show();
+        }
         $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-pause");
+        wavesurfer.play();
         resetTableIcons();
         isWaveSurferLoading = false;
 
-        jsmediatags = window.jsmediatags;
+        var jsmediatags = window.jsmediatags;
         // it would be much nicer to read the binary loaded by Wavesurfer, but it might not be possible
         // jsmediatags requires that I enter the full URL!! (http://blabla)
         jsmediatags.read(window.location.origin + musicPlayerMediaURL, {
             onSuccess: function(tag) {
-
                  var image = tag.tags.picture;
                  if (image) {
                      var base64String = "";
@@ -85,5 +78,41 @@ $(document).ready(function() {
             }
         });
     });
-
+    // Go to the next track if there is a playlist
+    wavesurfer.on('finish', function () {
+        playNextOnPlaylist();
+    });
 });
+
+playPlaylist = function (id) {
+    var url = "/api/songs_of_playlists/?playlist=" + id;
+    playlist = [];
+    playlistPos = 0;
+    $.getJSON(url, function(result){
+        $.each(result, function(i, field){
+            playlist.push(field.path);
+        });
+        playlist.reverse(); // it comes from the server in reverse order
+        _loadAndPlaySong(playlist[playlistPos]);
+    });
+};
+
+playNextOnPlaylist = function () {
+    if (playlist.length > 0) {
+        playlistPos++;
+        if (playlistPos === playlist.length) {
+            playlistPos = 0;
+        }
+        _loadAndPlaySong(playlist[playlistPos]);
+    }
+};
+
+playPrevOnPlaylist = function () {
+    if (playlist.length > 0) {
+        playlistPos--;
+        if (playlistPos < 0) {
+            playlistPos = playlist.length - 1;
+        }
+        _loadAndPlaySong(playlist[playlistPos]);
+    }
+};

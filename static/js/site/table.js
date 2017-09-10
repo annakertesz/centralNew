@@ -69,7 +69,7 @@ filter_table = function (url) {
     };
 
 onPlayStopClick = function (filename, hostingDiv) {
-    play(filename);
+    playSingleSong(filename);
     resetTableIcons();
     // set the current icon to buffer
     $(hostingDiv).find(".table_play_icon").attr("class","table_play_icon glyphicon glyphicon-transfer");
@@ -85,15 +85,12 @@ resetTableIcons = function () {
 
 
 edit_modal_data = function (id) {
-    console.log(id);
-    alert("Fix title bug on the edit_title input field");
-    var my_song_field = loaded_songs[id];
-    console.log(my_song_field.name);
-    document.getElementById("edit_modal_title").innerHTML = my_song_field.name;
-    $("#edit_title").attr("value", my_song_field.name);
-    $("#edit_song_id").attr("value", id);
-    $("#edit_album").attr("value", my_song_field.album.album_name);
-    $('#edit_artist').attr("value", my_song_field.artist.artist_name);
+    var song_field = loaded_songs[id];
+    document.getElementById("edit_modal_title").innerHTML = song_field.name;
+    $('input[name="edit_title"]').val(song_field.name);
+    $('input[name="edit_song_id"]').val(id);
+    $('input[name="edit_album"]').val(song_field.album.album_name);
+    $('input[name="edit_artist"]').val(song_field.artist.artist_name);
 };
 
 edit_modal_send_data = function(){
