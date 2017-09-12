@@ -30,5 +30,6 @@ urlpatterns = [
     url(r'^$', RedirectView.as_view(url='/home')),
     url(r'^media/(?P<path>.*)$', django.views.static.serve, {'document_root': settings.MEDIA_ROOT}),
     url(r'^admin/', admin.site.urls),
+    url(r'^download/(?P<file_name>.+)$', views.download, name='download'),
     url(r'^upload/', include('fileupload.urls')),
 ]

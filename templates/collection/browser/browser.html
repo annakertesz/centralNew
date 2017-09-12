@@ -16,6 +16,7 @@
     </p>
 </div>
 
+{% if user.is_staff %}
 <!-- Modal -->
 <div id="edit_song" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -42,3 +43,4 @@
 
   </div>
 </div>
+{% endif %}

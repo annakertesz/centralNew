@@ -17,10 +17,12 @@ $(document).on('click', function (e) {
         }
     });
 });
+
+
 filter_table = function (url) {
         console.log("updated");
         actual_url = url;
-        var is_staff = $("#is_staff").val();
+        var is_staff = $("#is_staff").val() == "true";
         $("#song_table tr").remove();
         var table = document.getElementById("song_table");
         loaded_songs = {};
@@ -62,8 +64,7 @@ filter_table = function (url) {
                         content: popover_str
                     });
                 });
-                cell4.innerHTML ='<a href="/download/?path=' + song_field.path + '"><i class="glyphicon glyphicon-download icon"></i></a>'+
-                        "<i class='glyphicon glyphicon-shopping-cart icon'></i>";
+
                 if (is_staff){
                     cell4.innerHTML = `
                         <a href="/download/?path=` + song_field.path + `">
@@ -75,9 +76,28 @@ filter_table = function (url) {
                         </button>
                         <a href="/api/delete/?" id="`+song_field.id+`"><i class="glyphicon glyphicon-trash icon"></i></a>`;
                 }
+
+                else {
+                    cell4.innerHTML =
+                        `<a href="/download/` + song_field.path + `"><i class="glyphicon glyphicon-download icon"></i></a>
+                        <button class='glyphicon glyphicon-shopping-cart no_style icon' data-toggle='modal' data-target='#email_sender' 
+                        onclick="set_email_message('`+song_field.id+`')"></button> `;
+                }
             });
         });
     };
+
+set_email_message = function(id){
+     $('input[name="email_sender_song_id"]').val(id);
+};
+
+send_email = function () {
+
+    url = "/api/send_mail/?id=" + $('input[name="email_sender_song_id"]').val();
+    alert(url);
+    $.getJSON(url, function(result){
+            $.each(result, function(i, song_field){})})
+};
 
 onPlayStopClick = function (filename, hostingDiv) {
     playSingleSong(filename);
@@ -133,15 +153,16 @@ $(document).ready(function() {
 
     // alert("ops");
     $(document).on("click", ".popover_btn", function() {
-            $('[data-toggle="popover"]').popover('hide');
-            attributes = $(this).val().split(",");
-            var playlist_id=attributes[0];
-            var song_id=attributes[1];
-            var url = "/api/add_song_to_playlist/?playlist=" + playlist_id + "&song=" + song_id;
-            $.getJSON(url, function(result){
-                $.each(result, function(i, field){
-                })
+        $('[data-toggle="popover"]').popover('hide');
+        attributes = $(this).val().split(",");
+        var playlist_id=attributes[0];
+        var song_id=attributes[1];
+        var url = "/api/add_song_to_playlist/?playlist=" + playlist_id + "&song=" + song_id;
+        $.getJSON(url, function(result){
+            $.each(result, function(i, field){
+            })
         });
+        load_playlists();
     });
     
     $(document).on("click", ".new_playlist_btn", function () {
@@ -167,6 +188,8 @@ $(document).ready(function() {
 
         });
         $(".playlist_modal").hide();
+        filter_table(actual_url);
+        load_playlists();
     });
 
     $(document).on("click", "#cancel", function () {

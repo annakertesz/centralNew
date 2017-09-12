@@ -1,4 +1,6 @@
 import json
+import mimetypes
+from wsgiref.util import FileWrapper
 
 import eyed3
 import io
@@ -6,19 +8,23 @@ import io
 import os
 
 from django.contrib.auth.models import User
+from django.core.files import File
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.utils.encoding import smart_str
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 
+from central_publishing_new import settings
 from central_publishing_new.settings import MEDIA_ROOT
 from collection import CollectionDao
 from collection.CollectionDao import simple_search
 from collection.models import Song, Album, Artist, Tag, Playlist
 from collection.PlaylistHandler import PlaylistHandler
 from collection.serializers import SongSerializer, AlbumSerializer, ArtistSerializer, PlaylistSongSerializer, \
-    PlaylistSerializer
+    PlaylistSerializer, UserSerializer
+from django.core.mail import send_mail
 
 
 class SongList(APIView):
@@ -38,6 +44,14 @@ class SongList(APIView):
         serializer = SongSerializer(songs, many=True)
         return Response(serializer.data)
 
+
+class UserList(APIView):
+
+    def get(self, request):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        print(serializer.data)
+        return Response(serializer.data)
 
 
 class AlbumList(APIView):
@@ -94,12 +108,14 @@ class SongListFromPlaylist(APIView):
         return Response(serializer.data)
 
 
-def get_artwork(request):
-    song = Song.objects.get(id= request.GET.get('id'))
-    song_data = eyed3.load(MEDIA_ROOT + '/' + song.path)
-    image = song_data.tag.images[0]
-    im = io.BytesIO(image.render())
-    return HttpResponse(im, content_type='image/JPG')
+def download(request, file_name):
+    file_path = os.path.join(settings.MEDIA_ROOT, file_name)
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as fh:
+            response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
+            response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+            return response
+    raise Http404
 
 class EditSong(APIView):
 
@@ -124,13 +140,29 @@ def home(request):
 
 
 def delete_song(request):
-    song = Song.objects.get(id=request.GET.get('id'))
-    os.remove(MEDIA_ROOT +"/" + song.path)
-    Song.objects.filter(id=request.GET.get('id')).delete()
+    if request.user.is_authenticated:
+        song = Song.objects.get(id=request.GET.get('id'))
+        os.remove(MEDIA_ROOT +"/" + song.path)
+        Song.objects.filter(id=request.GET.get('id')).delete()
     return render(request, 'collection/index.html', {'user': request.user})
+
 
 
 def add_user_to_playlist(request):
     playlist = Playlist.objects.get(id=request.get('playlist_id'))
     user = User.objects.get(id=request.get('user_id'))
     PlaylistHandler.add_user_to_playlist(playlist, user)
+
+def send_email(request):
+    song = Song.objects.get(id=request.GET.get('id'))
+    user = request.user
+    print("start mail")
+    send_mail(
+        'Licence',
+        'Dear Admin, \n user.username wants to buy a song. \n data of the song: \n' + song.name + '\n-' + song.album.album_name + '\n-' + song.artist.artist_name +
+        '\n\n And the user: \n' + user.username + '\n' + user.first_name+' ' + user.last_name + '\n' + user.email,
+        'kerteszannanak@gmail.com',
+        ['kerteszannanak@gmail.com'],
+        fail_silently=False,
+    )
+    print("sent")

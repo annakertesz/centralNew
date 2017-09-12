@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
 from collection.models import Song, Album, Artist, Playlist, PlaylistSongMap
 
@@ -39,3 +40,9 @@ class PlaylistSongSerializer(serializers.ModelSerializer):
     class Meta:
         model = PlaylistSongMap
         fields = ('playlist', 'song')
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('username', 'id')
