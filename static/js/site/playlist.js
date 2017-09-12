@@ -30,7 +30,7 @@ showSongsOfPlaylist = function (id) {
 };
 
 load_playlists = function () {
-     var is_staff = $("#is_staff").val() == "true";
+     var is_staff = $("#is_staff").val() == "True";
     $("#playlist_list tr").remove();
     var list_table = document.getElementById("playlist_list");
     $.getJSON("/api/playlists", function(result){
@@ -47,7 +47,7 @@ load_playlists = function () {
             if (is_staff){
                 var cell3 = row.insertCell(2);
                 cell3.className = "col-md-1";
-                cell3.innerHTML = '<button class="no_style glyphicon glyphicon-user" data-toggle="modal" data-target="#user_selector" onclick="addUserToPlaylist('+ field.id + ')"></button>'
+                cell3.innerHTML = '<button class="no_style glyphicon glyphicon-user" data-toggle="modal" data-target="#user_selector" onclick="setPlaylistId('+ field.id + ')"></button>'
             }
 
 
@@ -55,20 +55,27 @@ load_playlists = function () {
     });
 };
 
-addUserToPlaylist = function (id){
+setPlaylistId = function (id) {
+    $('input[name="song_id"]').val(id);
+};
 
+addUserToPlaylist = function (user_id){
+    playlist_id=$('input[name="song_id"]').val();
+    $.getJSON("/api/add_user_to_playlist/?playlist_id="+playlist_id+"&user_id="+ user_id, function(result) {});
+    $("#"+ user_id).attr("class","user_btn_selected").button('refresh');
 };
 
 list_users = function (){
+    $("#all_user_list tr").remove();
     var users_table = document.getElementById("all_user_list");
+    playlist_id=$('input[name="song_id"]').val();
+
     $.getJSON("/api/users", function(result) {
         $.each(result, function (i, field) {
             console.log(field);
             var row = users_table.insertRow(0);
             var cell1 = row.insertCell(0);
-            var cell2 = row.insertCell(1);
-            cell1.innerHTML = '<input type="checkbox" name="vehicle" value="Bike">';
-            cell2.innerHTML = '<h4>' + field.username + '</h4>'
+            cell1.innerHTML = '<button class="user_btn" id="'+field.id+'" onclick="addUserToPlaylist('+field.id+')"><strong>' + field.username + '</strong></button>'
         })
     })
 };

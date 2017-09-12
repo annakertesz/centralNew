@@ -79,6 +79,19 @@
     margin: 0.5em;
 }
 
+.user_btn {
+    font-size: 1.3em;
+    background-color: white;
+    border: none;
+}
+
+.user_btn_selected {
+    font-size: 1.3em;
+    background-color: white;
+    color: #9b9b9b;
+    border: none;
+}
+
 #search_field {
     margin-top: 10px;
     /*margin-left: 5%;*/

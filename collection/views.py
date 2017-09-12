@@ -149,9 +149,10 @@ def delete_song(request):
 
 
 def add_user_to_playlist(request):
-    playlist = Playlist.objects.get(id=request.get('playlist_id'))
-    user = User.objects.get(id=request.get('user_id'))
+    playlist = Playlist.objects.get(id=request.GET.get('playlist_id'))
+    user = User.objects.get(id=request.GET.get('user_id'))
     PlaylistHandler.add_user_to_playlist(playlist, user)
+    return Response("success")
 
 def send_email(request):
     song = Song.objects.get(id=request.GET.get('id'))

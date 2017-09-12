@@ -22,7 +22,7 @@ $(document).on('click', function (e) {
 filter_table = function (url) {
         console.log("updated");
         actual_url = url;
-        var is_staff = $("#is_staff").val() == "true";
+        var is_staff = $("#is_staff").val() == "True";
         $("#song_table tr").remove();
         var table = document.getElementById("song_table");
         loaded_songs = {};
