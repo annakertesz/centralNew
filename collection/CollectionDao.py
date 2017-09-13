@@ -49,10 +49,20 @@ def simple_search(string, isExact): #TODO: exact mode returns everything
             name_result += result.filter(name=name)
             was_filtered = True
 
+        tag_result=[]
+        for tag in tag_list:
+            rel_list = TagSongMap.objects.filter(tag=tag)
+            for item in rel_list:
+                tag_result += result.filter(id=item.song.id)
+            # for item in rel_list:
+            #     tag_result += item.song
+            was_filtered = True
+
         if len(artist_result) == 0: artist_result = Song.objects.all()
         if len(album_result) == 0: album_result = Song.objects.all()
         if len(name_result) == 0: name_result = Song.objects.all()
-        if was_filtered: return set(name_result).intersection(set(artist_result).intersection(album_result))
+        if len(tag_result) == 0: tag_result = Song.objects.all()
+        if was_filtered: return set(tag_result).intersection(set(name_result).intersection(set(artist_result).intersection(album_result)))
         return None
 
     else:
