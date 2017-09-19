@@ -1,10 +1,11 @@
-    {% if user.is_staff %}
-      <a  href="/upload/basic"><span class="glyphicon glyphicon-plus icon"></span></a>
-    {% endif %}
-        <table class="table table-condensed">
-            <tbody id="song_table">
-            </tbody>
-        </table>
+{% if user.is_staff %}
+    <br>
+    <a class="btn btn-primary" href="/upload/basic" role="button">UPLOAD NEW SONGS</a>
+    <br><br>
+{% endif %}
+<table class="table table-condensed">
+    <tbody id="song_table"></tbody>
+</table>
 
 <div class="playlist_modal">
     <h4>Enter title for new playlist</h4>

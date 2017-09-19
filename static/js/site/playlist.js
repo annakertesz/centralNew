@@ -1,11 +1,18 @@
 
-showSongsOfPlaylist = function (id) {
+showSongsOfPlaylist = function (id, name) {
     $("#playlist_table tr").remove();
-    url = "/api/songs_of_playlists/?playlist=" + id;
+    var url = "/api/songs_of_playlists/?playlist=" + id;
     var table = document.getElementById("playlist_table");
+
+    var row = table.insertRow(-1);
+    var cell = row.insertCell(0);
+    cell.colSpan = 5;
+    cell.innerHTML = '<h3>' + name + '</h3>';
+
     $.getJSON(url, function(result){
-        $.each(result, function(i, field){
-            var row = table.insertRow(0);
+        $.each(result, function(num, field){
+            var row = table.insertRow(-1); // always insert at the end
+
             var cell1 = row.insertCell(0);
             cell1.className = "col-md-1";
             var cell2 = row.insertCell(1);
@@ -17,42 +24,42 @@ showSongsOfPlaylist = function (id) {
             var cell5 = row.insertCell(4);
             cell5.className = "col-md-1";
 
-            cell1.innerHTML = '<button id="play" class="table_btn" onclick="playSingleSong(\'' + field.path + '\')">' +
-                '<div class="glyphicon glyphicon-play"></div></button></td>';
+            cell1.innerHTML = '<button class="table_btn" onclick="playPlaylist(' + id + ',' + num + ')">' +
+                '<div class="glyphicon glyphicon-play"></div></button>';
             cell2.innerHTML = field.name;
             cell3.innerHTML = field.album.album_name;
             cell4.innerHTML = field.artist.artist_name;
             cell5.innerHTML = '<a href="/download/' + field.path + '"><i class="glyphicon glyphicon-download"></i></a>'+
-            '<button class="no_style" id="addtoplaylist"><i class="glyphicon glyphicon-shopping-cart" data-toggle="modal" data-target="#email_sender"></i></button>'+
-            '<button class="no_style" id="addtoplaylist"><i class="glyphicon glyphicon-trash"></i></button>';
+            '<button class="no_style"><i class="glyphicon glyphicon-shopping-cart" data-toggle="modal" data-target="#email_sender"></i></button>'+
+            '<button class="no_style"><i class="glyphicon glyphicon-trash"></i></button>';
         });
     });
 };
 
 load_playlists = function () {
-     var is_staff = $("#is_staff").val() == "True";
+    var is_staff = $("#is_staff").val() == "True";
     $("#playlist_list tr").remove();
     var list_table = document.getElementById("playlist_list");
     $.getJSON("/api/playlists", function(result){
         $.each(result, function(i, field){
             var row = list_table.insertRow(0);
+
             var cell1 = row.insertCell(0);
-            cell1.className = "col-md-1";
-            var cell2 = row.insertCell(1);
-            cell2.className = "col-md-2";
-
-            cell1.innerHTML = '<button id="play" class="table_btn" onclick="playPlaylist('+ field.id +')">' +
-                '<div class="glyphicon glyphicon-play"></div></button>';
-            cell2.innerHTML = '<button class="no_button playlist_name" onclick="showSongsOfPlaylist('+ field.id + ')">' + field.playlist_name + '</button>';
+            cell1.innerHTML = '<button class="no_button playlist_name" ' +
+                'onclick="showSongsOfPlaylist('+ field.id + ', \'' + field.playlist_name + '\')">' + field.playlist_name +
+                '</button><br><button class="btn btn-outline-secondary btn-sm btn-block" ' +
+                'onclick="showAndPlayPlaylist('+ field.id + ', \'' + field.playlist_name + '\')">Play playlist</button>';
             if (is_staff){
-                var cell3 = row.insertCell(2);
-                cell3.className = "col-md-1";
-                cell3.innerHTML = '<button class="no_style glyphicon glyphicon-user" data-toggle="modal" data-target="#user_selector" onclick="setPlaylistId('+ field.id + ')"></button>'
+                cell1.innerHTML += '<button class="btn btn-outline-secondary btn-sm btn-block" data-toggle="modal" ' +
+                    'data-target="#user_selector" onclick="setPlaylistId('+ field.id + ')">Add playlist to user</button>';
             }
-
-
         })
     });
+};
+
+showAndPlayPlaylist = function (id, name) {
+    showSongsOfPlaylist(id, name);
+    playPlaylist(id, 0);
 };
 
 setPlaylistId = function (id) {

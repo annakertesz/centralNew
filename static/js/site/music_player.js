@@ -60,6 +60,7 @@ $(document).ready(function() {
         // jsmediatags requires that I enter the full URL!! (http://blabla)
         jsmediatags.read(window.location.origin + musicPlayerMediaURL, {
             onSuccess: function(tag) {
+                 var artwork = $('#music-player-artwork');
                  var image = tag.tags.picture;
                  if (image) {
                      var base64String = "";
@@ -67,10 +68,11 @@ $(document).ready(function() {
                          base64String += String.fromCharCode(image.data[i]);
                      }
                      var base64 = "data:image/jpeg;base64," + window.btoa(base64String);
-                     $('#music-player-artwork').attr('src',base64);
-                     $('#music-player-artwork').show();
+                     artwork.attr('src', base64);
+                     artwork.attr('title', tag.tags.title);
+                     artwork.show();
                  } else {
-                     $('#music-player-artwork').hide();
+                     artwork.hide();
                  }
             },
             onError: function(error) {
@@ -84,15 +86,14 @@ $(document).ready(function() {
     });
 });
 
-playPlaylist = function (id) {
+playPlaylist = function (id, from) {
     var url = "/api/songs_of_playlists/?playlist=" + id;
     playlist = [];
-    playlistPos = 0;
+    playlistPos = from;
     $.getJSON(url, function(result){
         $.each(result, function(i, field){
             playlist.push(field.path);
         });
-        playlist.reverse(); // it comes from the server in reverse order
         _loadAndPlaySong(playlist[playlistPos]);
     });
 };
