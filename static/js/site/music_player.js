@@ -89,7 +89,7 @@ $(document).ready(function() {
 });
 
 playPlaylist = function (id, from) {
-    var url = "/api/songs_of_playlists/?playlist=" + id;
+    const url = "/api/songs_of_playlists/?playlist=" + id;
     playlist = [];
     playlistPos = from;
     $.getJSON(url, function(result){

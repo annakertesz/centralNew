@@ -14,19 +14,12 @@
         <li class="menu-li"><button id="home_btn" class="btn-primary" onclick="show_home()"><img id="logo" src="{% static "img/logo_white.png" %}"></button></li>
         <li class="menu-li"><button class="menu_button" onclick="show_browser()">Browse</button></li>
         <li class="menu-li"><button class="menu_button" onclick="show_playlists()">Playlists</button></li>
-
-
       </ul>
-            <input type="text" id="search_field">
-            <button  id="search_button" onclick="search()">
-                <span class="glyphicon glyphicon-search" id></span>
-            </button>
-{#        <button class="menu_button btn-primary" id="search_button" onclick="filter_table('/api/songs')">all</button>#}
+        <input type="text" id="search_field" title="Song search" placeholder="Search for songs, albums, moods, tags,..">
+        <button  id="search_button" onclick="searchForSongs()">
+            <span class="glyphicon glyphicon-search" id></span>
+        </button>
       <ul class="nav navbar-nav navbar-right" id="logout">
-{#        {% if user.is_staff %}#}
-{#            <li class="menu-li"><a class="menu_button" href="#">Manage users</a></li>#}
-{#            <li class="menu-li"><button class="menu_button">Edit incomplete tags</button></li>#}
-{#        {% endif %}#}
         <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
       </ul>
     </div>

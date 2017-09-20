@@ -17,6 +17,7 @@ body{
     background: url("../img/ticks.png");
     font-family: simple;
     color: black;
+    overflow: hidden;
 }
 
 #main_flexBox{
