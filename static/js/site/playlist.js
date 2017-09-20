@@ -1,13 +1,17 @@
 let playlists;
 let usersArray;
+let currentPlaylistId;
+let currentPlaylistName;
 
 const showSongsOfPlaylist = function (id, name) {
+    currentPlaylistId = id;
+    currentPlaylistName = name;
     $("#playlist_table").find("tr").remove();
-    let url = "/api/songs_of_playlists/?playlist=" + id;
-    let table = document.getElementById("playlist_table");
+    const url = "/api/songs_of_playlists/?playlist=" + id;
+    const table = document.getElementById("playlist_table");
 
-    let row = table.insertRow(-1);
-    let cell = row.insertCell(0);
+    const row = table.insertRow(-1);
+    const cell = row.insertCell(0);
     cell.colSpan = 5;
     cell.innerHTML = '<h3>' + name + '</h3>';
 
@@ -42,7 +46,6 @@ const showSongsOfPlaylist = function (id, name) {
 };
 
 // Reload the list of playlists
-let isFirstLoad = true;
 const load_playlists = function () {
     const is_staff = $("#is_staff").val() === "True";
     $("#playlist_list").find("tr").remove();
@@ -64,10 +67,18 @@ const load_playlists = function () {
             }
             cell.innerHTML += '<br>';
         });
-        if (isFirstLoad && playlists.length > 0) {
-            isFirstLoad = false;
-            // TODO refresh in other cases too, e.g. a song was added to the playlist
-            showSongsOfPlaylist(playlists[0].id, playlists[0].playlist_name);
+        if (playlists.length > 0) {
+            // show the first playlist if the current one was deleted
+            let plId = playlists[0].id;
+            let plName = playlists[0].playlist_name;
+            for (let pl of playlists) {
+                if (pl.id === currentPlaylistId) {
+                    plId = currentPlaylistId;
+                    plName = currentPlaylistName;
+                    break;
+                }
+            }
+            showSongsOfPlaylist(plId, plName);
         }
     });
 };

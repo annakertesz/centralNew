@@ -55,6 +55,7 @@ const filter_table = function (url) {
     };
 
 const showAddToPlaylistPopover = function (songId) {
+    // TODO not working. Use function calls inststead of popover crap
     let popover_str = `<div class="modal-header">
                            <h4 class="modal-title">Select playlist</h4>
                        </div>`;
