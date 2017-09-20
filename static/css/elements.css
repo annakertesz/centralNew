@@ -3,8 +3,8 @@
     background-color: transparent;
     border: thin;
     color: white;
-    padding-left: 20%;
-    padding-right: 20%;
+    padding-left: 3vh;
+    padding-right: 3vh;
 }
 
 .menu_button:hover{
