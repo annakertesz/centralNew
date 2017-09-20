@@ -41,11 +41,13 @@ $(document).ready(function() {
         barWidth: 1,
         hideScrollbar: true
     });
-
-    $('#music_player').css('opacity', '0'); //need to set opacity, Wavesurfer breaks if I use hide() :(
+    var musicPlayer = $('#music_player');
+    musicPlayer.css('flex-basis', '0px'); //need to set opacity, Wavesurfer breaks if I use hide() :(
+    musicPlayer.css('padding-top', '0px'); //need to set opacity, Wavesurfer breaks if I use hide() :(
 
     wavesurfer.on('ready', function () {
-        $('#music_player').css('opacity', '1');
+        musicPlayer.css('flex-basis', '50px');
+        musicPlayer.css('padding-top', '10px');
         if (playlist.length >0) {
             $("#music-player-next-song").show();
             $("#music-player-prev-song").show();

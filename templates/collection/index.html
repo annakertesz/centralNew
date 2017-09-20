@@ -21,24 +21,20 @@
     </head>
 
     <body>
-        <input type="hidden" id="is_staff" value="{{ user.is_staff }}">
-        {% include "collection/elements/navbar.html" %}
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="container col-md-10" id="main_container">
-                <div id="home">{% include "collection/homepage.html" %}</div>
-                <div id = "browser">{% include "collection/browser/browser.html" %}</div>
-                <div id = "playlists">{% include "collection/playlists/playlist.html" %}</div>
+        <div id="main_flexBox">
+            <input type="hidden" id="is_staff" value="{{ user.is_staff }}">
+            {% include "collection/elements/navbar.html" %}
+            <div class="row" id="content_flexBox">
+                <div class="col-md-1"></div>
+                <div class="container col-md-10" id="main_container">
+                    <div id="home">{% include "collection/homepage.html" %}</div>
+                    <div id="browser">{% include "collection/browser/browser.html" %}</div>
+                    <div id="playlists">{% include "collection/playlists/playlist.html" %}</div>
+                </div>
+                <div class="col-md-1"></div>
             </div>
-            <div class="col-md-1"></div>
-
+            {% include "collection/elements/music_player.html" %}
         </div>
-
-        {% include "collection/elements/music_player.html" %}
-
         {% include "collection/elements/email_sender.html" %}
-
-
-
     </body>
 </html>

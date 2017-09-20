@@ -44,15 +44,16 @@ load_playlists = function () {
         $.each(result, function(i, field){
             var row = list_table.insertRow(0);
 
-            var cell1 = row.insertCell(0);
-            cell1.innerHTML = '<button class="no_button playlist_name" ' +
+            var cell = row.insertCell(0);
+            cell.innerHTML = '<button class="no_button playlist_name" ' +
                 'onclick="showSongsOfPlaylist('+ field.id + ', \'' + field.playlist_name + '\')">' + field.playlist_name +
                 '</button><br><button class="btn btn-outline-secondary btn-sm btn-block" ' +
                 'onclick="showAndPlayPlaylist('+ field.id + ', \'' + field.playlist_name + '\')">Play playlist</button>';
             if (is_staff){
-                cell1.innerHTML += '<button class="btn btn-outline-secondary btn-sm btn-block" data-toggle="modal" ' +
+                cell.innerHTML += '<button class="btn btn-outline-secondary btn-sm btn-block" data-toggle="modal" ' +
                     'data-target="#user_selector" onclick="setPlaylistId('+ field.id + ')">Add playlist to user</button>';
             }
+            cell.innerHTML += '<br>';
         })
     });
 };

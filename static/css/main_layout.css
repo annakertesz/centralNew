@@ -8,36 +8,64 @@
     src: url("../fonts/bold.ttf"); /*URL to font*/
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+}
 
 body{
-    /*background-color: black;*/
     background: url("../img/ticks.png");
     font-family: simple;
-    height: 100%;
     color: black;
     overflow: hidden;
 }
 
+#main_flexBox{
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+#custom-navbar{
+    background-color: #000000;
+    margin: 0;
+    padding-left: 5.5%;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: auto;
+}
+
+#content_flexBox{
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+    overflow-y: auto;
+}
+
+#music_player{
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 50px;
+    border-top: solid lightgrey 1px;
+    background-color: snow;
+    padding-top: 10px;
+    overflow: hidden;
+}
 
 strong{
     font-family: bold;
 }
 
-
-
 #main_container{
     background-color: snow;
-     height:90vh;
-    margin: 0;
     overflow-y: scroll;
     overflow-x: hidden;
-
 }
 
 #browser_table_container{
     overflow: hidden;
 }
-
 
 .table_div{
     margin-top: 200px;
@@ -48,18 +76,6 @@ strong{
     /*height:400px;*/
     overflow-y: hidden;
     overflow-x: hidden;
-}
-
-#music_player{
-    position:fixed;
-    height:50px;
-    bottom:0;
-    left:0;
-    right:0;
-    margin-bottom:0;
-    border-top: solid lightgrey 1px;
-    background-color: snow;
-    padding-top: 10px;
 }
 
 .artist_albums_container{
