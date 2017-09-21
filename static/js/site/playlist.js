@@ -63,7 +63,7 @@ const load_playlists = function () {
                     onclick="showAndPlayPlaylist('${field.id}', '${field.playlist_name}')">Play playlist</button>`;
             if (is_staff){
                 cell.innerHTML += `<button class="btn btn-outline-secondary btn-sm btn-block" data-toggle="addPlaylistToggle" 
-                     data-trigger="manual" data-container="body" onclick="showUserSelector('${field.id}')">Add playlist to user</button>`;
+                     data-trigger="manual" data-container="body" onclick="showUserSelector('${field.id}')">Add user to playlist</button>`;
             }
             cell.innerHTML += '<br>';
         });

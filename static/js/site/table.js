@@ -55,20 +55,35 @@ const filter_table = function (url) {
     };
 
 const showAddToPlaylistPopover = function (songId) {
-    // TODO not working. Use function calls inststead of popover crap
+    // TODO not working. Use function calls like in showUserSelector instead of popover crap
     let popover_str = `<div class="modal-header">
                            <h4 class="modal-title">Select playlist</h4>
                        </div>`;
     popover_str += `<div class="modal-body">
-                    <button class='btn btn-success' value='${songId}'>New playlist</button><br><br>`;
+                    <button class='btn btn-success' onclick="showCreatePlaylistPopup('${songId}')">New playlist</button><br><br>`;
     $.each(playlists, function (i, playlist_field) {
-        popover_str += `<button class='btn btn-default' value='${playlist_field.id}, ${songId}'>${playlist_field.playlist_name}</button><br>`;
+        popover_str += `<button class='btn btn-default' onclick="addSongToPlaylist('${playlist_field.id}', '${songId}')">${playlist_field.playlist_name}</button><br>`;
     });
     popover_str += '</div>';
 
     const popovers = $('[data-toggle="popover"]');
     popovers.popover({html: true, content: popover_str });
     popovers.popover('show');
+};
+
+let newSongId;
+const showCreatePlaylistPopup = function (songId) {
+    $('[data-toggle="popover"]').popover('hide');
+    newSongId = songId;
+    $(".playlist_modal").show();
+};
+
+const addSongToPlaylist = function (playlistId, songId) {
+    $('[data-toggle="popover"]').popover('hide');
+    const url = "/api/add_song_to_playlist/?playlist=" + playlistId + "&song=" + songId;
+    $.getJSON(url, function(result){
+        load_playlists();
+    });
 };
 
 const set_email_message = function(id){
@@ -134,44 +149,11 @@ const searchForSongs = function () {
 };
 
 $(document).ready(function() {
-    // Make auto hiding popovers play nice with buttons inside them
-    //from https://stackoverflow.com/questions/11703093/how-to-dismiss-a-twitter-bootstrap-popover-by-clicking-outside
-    $(document).on('click', function (e) {
-        $('[data-toggle="popover"],[data-original-title]').each(function () {
-            //the 'is' for buttons that trigger popups
-            //the 'has' for icons within a button that triggers a popup
-            if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
-                (($(this).popover('hide').data('bs.popover')||{}).inState||{}).click = false  // fix for BS 3.3.6
-            }
-        });
-    });
-
-    // Add song to playlist
-    $(document).on("click", ".popover_btn", function() {
-        $('[data-toggle="popover"]').popover('hide');
-        const attributes = $(this).val().split(",");
-        const playlist_id = attributes[0];
-        const song_id = attributes[1];
-        const url = "/api/add_song_to_playlist/?playlist=" + playlist_id + "&song=" + song_id;
-        $.getJSON(url, function(result){
-            load_playlists();
-        });
-    });
-
-    // Create playlist
-    let newSongId;
-    $(document).on("click", ".new_playlist_btn", function () {
-        $('[data-toggle="popover"]').popover('hide');
-        newSongId = $(this).val(); // from the button in showAddToPlaylistPopover()
-        $(".playlist_modal").show();
-    });
-
     $(document).on("click", "#create_playlist", function () {
-        const song_id = newSongId;
         const playlist_name = $("#new_playlist_input").val();
         let url = "/api/add_new_playlist/?name=" + playlist_name;
         $.getJSON(url, function (result) {
-            const addUrl = "/api/add_song_to_playlist/?playlist=" + result + "&song=" + song_id;
+            const addUrl = "/api/add_song_to_playlist/?playlist=" + result + "&song=" + newSongId;
             $.getJSON(addUrl, function(result){
                 load_playlists();
                 filter_table(actual_url);
@@ -182,6 +164,18 @@ $(document).ready(function() {
 
     $(document).on("click", "#cancel", function () {
         $(".playlist_modal").hide();
+    });
+
+    // Make auto hiding popovers play nice with buttons inside them
+    //from https://stackoverflow.com/questions/11703093/how-to-dismiss-a-twitter-bootstrap-popover-by-clicking-outside
+    $(document).on('click', function (e) {
+        $('[data-toggle="popover"],[data-original-title]').each(function () {
+            //the 'is' for buttons that trigger popups
+            //the 'has' for icons within a button that triggers a popup
+            if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                (($(this).popover('hide').data('bs.popover')||{}).inState||{}).click = false  // fix for BS 3.3.6
+            }
+        });
     });
 
     // init
