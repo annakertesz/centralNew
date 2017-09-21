@@ -1,37 +1,10 @@
-var isWaveSurferLoading = false;
-var musicPlayerMediaURL;
-var playlist = [];
-var playlistPos;
-var wavesurfer;
+let isWaveSurferLoading = false;
+let musicPlayerMediaURL;
+let playlist = [];
+let playlistPos;
+let wavesurfer;
 
-playSingleSong = function(filename) {
-    playlist = [];
-    playlistPos = 0;
-    _loadAndPlaySong(filename);
-};
-
-// do not call this from other files!
-_loadAndPlaySong = function (filename) {
-    $("#music-player-next-song").hide();
-    $("#music-player-prev-song").hide();
-    $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-transfer");
-    musicPlayerMediaURL = '/media/' + filename;
-    wavesurfer.load(musicPlayerMediaURL);
-    isWaveSurferLoading = true;
-};
-
-onPlayPauseClick = function () {
-    if (!isWaveSurferLoading) { // do not change icons if its currently loading
-        if (wavesurfer.isPlaying()) {
-            $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-play");
-        } else {
-            $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-pause");
-        }
-        wavesurfer.playPause();
-    }
-};
-
-$(document).ready(function() {
+const initMusicPlayer = function() {
     wavesurfer = WaveSurfer.create({
         container: '#waveform',
         waveColor: 'lightgrey',
@@ -41,7 +14,7 @@ $(document).ready(function() {
         barWidth: 1,
         hideScrollbar: true
     });
-    var musicPlayer = $('#music_player');
+    const musicPlayer = $('#music_player');
     musicPlayer.css('flex-basis', '0px'); //need to set opacity, Wavesurfer breaks if I use hide() :(
     musicPlayer.css('padding-top', '0px'); //need to set opacity, Wavesurfer breaks if I use hide() :(
 
@@ -86,9 +59,36 @@ $(document).ready(function() {
     wavesurfer.on('finish', function () {
         playNextOnPlaylist();
     });
-});
+};
 
-playPlaylist = function (id, from) {
+const playSingleSong = function(filename) {
+    playlist = [];
+    playlistPos = 0;
+    _loadAndPlaySong(filename);
+};
+
+// do not call this from other files!
+const _loadAndPlaySong = function (filename) {
+    $("#music-player-next-song").hide();
+    $("#music-player-prev-song").hide();
+    $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-transfer");
+    musicPlayerMediaURL = '/media/' + filename;
+    wavesurfer.load(musicPlayerMediaURL);
+    isWaveSurferLoading = true;
+};
+
+const onPlayPauseClick = function () {
+    if (!isWaveSurferLoading) { // do not change icons if its currently loading
+        if (wavesurfer.isPlaying()) {
+            $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-play");
+        } else {
+            $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-pause");
+        }
+        wavesurfer.playPause();
+    }
+};
+
+const playPlaylist = function (id, from) {
     const url = "/api/songs_of_playlists/?playlist=" + id;
     playlist = [];
     playlistPos = from;
@@ -100,7 +100,7 @@ playPlaylist = function (id, from) {
     });
 };
 
-playNextOnPlaylist = function () {
+const playNextOnPlaylist = function () {
     if (playlist.length > 0) {
         playlistPos++;
         if (playlistPos === playlist.length) {
@@ -110,7 +110,7 @@ playNextOnPlaylist = function () {
     }
 };
 
-playPrevOnPlaylist = function () {
+const playPrevOnPlaylist = function () {
     if (playlist.length > 0) {
         playlistPos--;
         if (playlistPos < 0) {

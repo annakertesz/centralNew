@@ -1,5 +1,67 @@
-var loaded_songs;
-var actual_url;
+let loaded_songs;
+let actual_url;
+let newSongId;
+
+const initTable = function() {
+    $(document).on("click", "#create_playlist", function () {
+        const playlist_name = $("#new_playlist_input").val();
+        let url = "/api/add_new_playlist/?name=" + playlist_name;
+        $.getJSON(url, function (result) {
+            const addUrl = "/api/add_song_to_playlist/?playlist=" + result + "&song=" + newSongId;
+            $.getJSON(addUrl, function(result){
+                load_playlists();
+                filter_table(actual_url);
+            });
+        });
+        $(".playlist_modal").hide();
+    });
+
+    $(document).on("click", "#cancel", function () {
+        $(".playlist_modal").hide();
+    });
+
+    // Make auto hiding popovers play nice with buttons inside them
+    //from https://stackoverflow.com/questions/11703093/how-to-dismiss-a-twitter-bootstrap-popover-by-clicking-outside
+    $(document).on('click', function (e) {
+        $('[data-toggle="popover"],[data-original-title]').each(function () {
+            //the 'is' for buttons that trigger popups
+            //the 'has' for icons within a button that triggers a popup
+            if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                (($(this).popover('hide').data('bs.popover')||{}).inState||{}).click = false  // fix for BS 3.3.6
+            }
+        });
+    });
+
+    // init
+    actual_url = '/api/songs';
+    $("#search_field").keyup(function(event){
+        if (event.keyCode === 13){ // Enter
+            searchForSongs();
+        }
+    });
+
+    $("#artist_list").hide();
+    $("#album_list").hide();
+
+    $.getJSON("/api/albums", function(result){
+        $.each(result, function(i, field){
+            $("#album_list").append('<li><button class="no_button" onclick="filter_table(\'/api/songs/?album=' +
+                                     field.id + '\')">' + field.album_name + '</button></li>');
+        })
+    });
+    $.getJSON("/api/artists", function(result){
+        $.each(result, function(i, field){
+            $("#artist_list").append('<li><button class="no_button" onclick="filter_table(\'/api/songs/?album=' +
+                                      field.id + '\')">' + field.artist_name + '</button></li>');
+        })
+    });
+    filter_table(actual_url);
+    load_playlists();
+
+     $.getJSON("/api/users", function(result) {
+        usersArray = result;
+    })
+};
 
 const filter_table = function (url) {
         actual_url = url;
@@ -71,7 +133,6 @@ const showAddToPlaylistPopover = function (songId) {
     popovers.popover('show');
 };
 
-let newSongId;
 const showCreatePlaylistPopup = function (songId) {
     $('[data-toggle="popover"]').popover('hide');
     newSongId = songId;
@@ -147,64 +208,3 @@ const searchForSongs = function () {
     const actual_url = '/api/songs/?keywords=' + keywords.value;
     filter_table(actual_url);
 };
-
-$(document).ready(function() {
-    $(document).on("click", "#create_playlist", function () {
-        const playlist_name = $("#new_playlist_input").val();
-        let url = "/api/add_new_playlist/?name=" + playlist_name;
-        $.getJSON(url, function (result) {
-            const addUrl = "/api/add_song_to_playlist/?playlist=" + result + "&song=" + newSongId;
-            $.getJSON(addUrl, function(result){
-                load_playlists();
-                filter_table(actual_url);
-            });
-        });
-        $(".playlist_modal").hide();
-    });
-
-    $(document).on("click", "#cancel", function () {
-        $(".playlist_modal").hide();
-    });
-
-    // Make auto hiding popovers play nice with buttons inside them
-    //from https://stackoverflow.com/questions/11703093/how-to-dismiss-a-twitter-bootstrap-popover-by-clicking-outside
-    $(document).on('click', function (e) {
-        $('[data-toggle="popover"],[data-original-title]').each(function () {
-            //the 'is' for buttons that trigger popups
-            //the 'has' for icons within a button that triggers a popup
-            if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
-                (($(this).popover('hide').data('bs.popover')||{}).inState||{}).click = false  // fix for BS 3.3.6
-            }
-        });
-    });
-
-    // init
-    actual_url = '/api/songs';
-    $("#search_field").keyup(function(event){
-        if (event.keyCode === 13){ // Enter
-            searchForSongs();
-        }
-    });
-
-    $("#artist_list").hide();
-    $("#album_list").hide();
-
-    $.getJSON("/api/albums", function(result){
-        $.each(result, function(i, field){
-            $("#album_list").append('<li><button class="no_button" onclick="filter_table(\'/api/songs/?album=' +
-                                     field.id + '\')">' + field.album_name + '</button></li>');
-        })
-    });
-    $.getJSON("/api/artists", function(result){
-        $.each(result, function(i, field){
-            $("#artist_list").append('<li><button class="no_button" onclick="filter_table(\'/api/songs/?album=' +
-                                      field.id + '\')">' + field.artist_name + '</button></li>');
-        })
-    });
-    filter_table(actual_url);
-    load_playlists();
-
-     $.getJSON("/api/users", function(result) {
-        usersArray = result;
-    })
-});
