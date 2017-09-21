@@ -15,6 +15,6 @@ urlpatterns = [
     url(r'^edit_song/$', views.EditSong.as_view(), name='edit_song'),
     url(r'^delete/$', views.delete_song, name='id'),
     url(r'^send_mail/$', views.send_email, name='email'),
-    url(r'^add_user_to_playlist/$', views.add_user_to_playlist, name='id')
+    url(r'^add_user_to_playlist/$', views.AddUserToPlaylist.as_view(), name='id')
 
 ]

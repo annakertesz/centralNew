@@ -32,7 +32,6 @@ const initTable = function() {
         });
     });
 
-    // init
     actual_url = '/api/songs';
     $("#search_field").keyup(function(event){
         if (event.keyCode === 13){ // Enter
@@ -61,6 +60,12 @@ const initTable = function() {
      $.getJSON("/api/users", function(result) {
         usersArray = result;
     })
+};
+
+const searchForSongs = function () {
+    const keywords = document.getElementById('search_field');
+    const actual_url = '/api/songs/?keywords=' + keywords.value;
+    filter_table(actual_url);
 };
 
 const filter_table = function (url) {
@@ -116,8 +121,8 @@ const filter_table = function (url) {
         });
     };
 
+// Add to playlist/create playlist
 const showAddToPlaylistPopover = function (songId) {
-    // TODO not working. Use function calls like in showUserSelector instead of popover crap
     let popover_str = `<div class="modal-header">
                            <h4 class="modal-title">Select playlist</h4>
                        </div>`;
@@ -147,6 +152,7 @@ const addSongToPlaylist = function (playlistId, songId) {
     });
 };
 
+// email
 const set_email_message = function(id){
      $('input[name="email_sender_song_id"]').val(id);
 };
@@ -159,6 +165,7 @@ const send_email = function () {
     })
 };
 
+// play/pause songs
 const onPlayStopClick = function (filename, hostingDiv) {
     playSingleSong(filename);
     resetTableIcons();
@@ -166,15 +173,16 @@ const onPlayStopClick = function (filename, hostingDiv) {
     $(hostingDiv).find(".table_play_icon").attr("class","table_play_icon glyphicon glyphicon-transfer");
 };
 
-// find all icons and set them to the play graphic. This is to reset any other previous icons when the user clicks quickly
 const resetTableIcons = function () {
+    // find all icons and set them to the play graphic. This is to reset any other previous icons when the user clicks quickly
     $(".table_play_icon").each(function (i, el) {
         $(el).attr("class","table_play_icon glyphicon glyphicon-play");
      });
 };
 
+// edit song
 const edit_modal_data = function (id) {
-    let song_field = loaded_songs[id];
+    const song_field = loaded_songs[id];
     document.getElementById("edit_modal_title").innerHTML = song_field.name;
     $('input[name="edit_title"]').val(song_field.name);
     $('input[name="edit_song_id"]').val(id);
@@ -189,7 +197,7 @@ const edit_modal_send_data = function(){
         "album": $("#edit_album").val(),
         "artist": $("#edit_artist").val(),
         "tags": $("#edit_tags").val()});
-    console.log(data);
+
     let xhr = new XMLHttpRequest();
     let url = "/api/edit_song/?data=" + encodeURIComponent(data);
     xhr.open("GET", url, true);
@@ -199,12 +207,7 @@ const edit_modal_send_data = function(){
             //let json = JSON.parse(xhr.responseText);
             filter_table(actual_url);
         }
+        console.log("song data edit " + data);
     };
     xhr.send(data);
-};
-
-const searchForSongs = function () {
-    const keywords = document.getElementById('search_field');
-    const actual_url = '/api/songs/?keywords=' + keywords.value;
-    filter_table(actual_url);
 };

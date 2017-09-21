@@ -17,17 +17,17 @@ const showSongsOfPlaylist = function (id, name) {
 
     $.getJSON(url, function(result){
         $.each(result, function(num, field){
-            let row = table.insertRow(-1); // always insert at the end
+            const row = table.insertRow(-1); // always insert at the end
 
-            let cell1 = row.insertCell(0);
+            const cell1 = row.insertCell(0);
             cell1.className = "col-md-1";
-            let cell2 = row.insertCell(1);
+            const cell2 = row.insertCell(1);
             cell2.className = "col-md-3";
-            let cell3 = row.insertCell(2);
+            const cell3 = row.insertCell(2);
             cell3.className = "col-md-2";
-            let cell4 = row.insertCell(3);
+            const cell4 = row.insertCell(3);
             cell4.className = "col-md-2";
-            let cell5 = row.insertCell(4);
+            const cell5 = row.insertCell(4);
             cell5.className = "col-md-1";
 
             cell1.innerHTML = `<button class="table_btn" onclick="playPlaylist('${id}','${num}')">

@@ -137,9 +137,8 @@ def home(request):
     return render(request, 'collection/index.html', {'user': request.user})
 
 
-
-
 def delete_song(request):
+    # TODO: Only allow this call for admins!
     if request.user.is_authenticated:
         song = Song.objects.get(id=request.GET.get('id'))
         os.remove(MEDIA_ROOT +"/" + song.path)
@@ -147,14 +146,16 @@ def delete_song(request):
     return render(request, 'collection/index.html', {'user': request.user})
 
 
-
-def add_user_to_playlist(request):
-    playlist = Playlist.objects.get(id=request.GET.get('playlist_id'))
-    user = User.objects.get(id=request.GET.get('user_id'))
-    PlaylistHandler.add_user_to_playlist(playlist, user)
-    return Response("success")
+class AddUserToPlaylist(APIView):
+    def get(self, request):
+        # TODO: Only allow this call for admins!
+        playlist = Playlist.objects.get(id=request.GET.get('playlist_id'))
+        user = User.objects.get(id=request.GET.get('user_id'))
+        PlaylistHandler.add_user_to_playlist(playlist, user)
+        return Response("success")
 
 def send_email(request):
+    # TODO: Only allow this call for admins!
     song = Song.objects.get(id=request.GET.get('id'))
     user = request.user
     print("start mail")
