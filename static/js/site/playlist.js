@@ -1,7 +1,8 @@
 let playlists;
-let usersArray;
+let usersArray = [];
 let currentPlaylistId;
 let currentPlaylistName;
+let addUserTooltip;
 
 const showSongsOfPlaylist = function (id, name) {
     currentPlaylistId = id;
@@ -9,13 +10,13 @@ const showSongsOfPlaylist = function (id, name) {
     $("#playlist_table").find("tr").remove();
     const url = "/api/songs_of_playlists/?playlist=" + id;
     const table = document.getElementById("playlist_table");
-
-    const row = table.insertRow(-1);
-    const cell = row.insertCell(0);
-    cell.colSpan = 5;
-    cell.innerHTML = '<h3>' + name + '</h3>';
-
     $.getJSON(url, function(result){
+        $("#playlist_table").find("tr").remove(); // remove again in case the user clicked very quickly
+        const row = table.insertRow(-1);
+        const cell = row.insertCell(0);
+        cell.colSpan = 5;
+        cell.innerHTML = '<h3>' + name + '</h3>';
+
         $.each(result, function(num, field){
             const row = table.insertRow(-1); // always insert at the end
 
@@ -62,8 +63,8 @@ const load_playlists = function () {
                 <button class="btn btn-outline-secondary btn-sm btn-block"
                     onclick="showAndPlayPlaylist('${field.id}', '${field.playlist_name}')">Play playlist</button>`;
             if (is_staff){
-                cell.innerHTML += `<button class="btn btn-outline-secondary btn-sm btn-block" data-toggle="addPlaylistToggle" 
-                     data-trigger="manual" data-container="body" onclick="showUserSelector('${field.id}')">Add user to playlist</button>`;
+                cell.innerHTML += `<button class="btn btn-outline-secondary btn-sm btn-block"
+                                   onclick="showUserSelector(event, '${field.id}')">Add user to playlist</button>`;
             }
             cell.innerHTML += '<br>';
         });
@@ -89,7 +90,7 @@ const showAndPlayPlaylist = function (id, name) {
 };
 
 // Add User to playlist
-const showUserSelector = function (playlistId) {
+const showUserSelector = function (event, playlistId) {
     let popoverContent =
         `<div>
             <div class="modal-header">
@@ -101,13 +102,23 @@ const showUserSelector = function (playlistId) {
                 onclick="addUserToPlaylist('${field.id}', '${playlistId}')">${field.username}</button>`;
     });
     popoverContent += '</div></div>';
-    const popover = $('[data-toggle="addPlaylistToggle"]');
-    popover.popover({html: true, content: popoverContent });
-    popover.popover('show');
+
+    addUserTooltip = new jBox('Tooltip', {
+        content: popoverContent,
+        target: $(event.target),
+        closeOnClick: 'body', // close if clicked anywhere but the toolip
+        position: {x: 'right', y: 'center'},
+        outside: 'x',
+        overlay:true,
+        onCloseComplete: function() {
+            addUserTooltip.destroy();
+        }
+    });
+    addUserTooltip.open();
 };
 
 const addUserToPlaylist = function (user_id, playlistId){
-    $('[data-toggle="addPlaylistToggle"]').popover('hide');
+    addUserTooltip.close();
     $.getJSON("/api/add_user_to_playlist/?playlist_id=" + playlistId + "&user_id="+ user_id,
         function(result) {});
 };

@@ -1,19 +1,21 @@
 <div id="music_player">
-    <div class="col-xs-1 col-md-1">
-        <img id="music-player-artwork" src="" style="height: 40px; margin-top: -5px; margin-left: 15px">
+    <div class="music_player_flex">
+        <div class="music_player_art">
+            <img id="music-player-artwork" src="" style="height: 40px; margin-top: -5px;">
+        </div>
+        <div class="music_player_controls">
+            <button class="player_btn" type="button" onclick="playPrevOnPlaylist()" id="music-player-prev-song"
+                    style="display: none;"  title="Previous track">
+                <i class="glyphicon glyphicon-step-backward"></i>
+            </button>
+            <button id="play_btn" class="player_btn" onclick="onPlayPauseClick()" title="Play/Pause">
+                <i class="player_play_btn_graphic glyphicon glyphicon-pause" ></i>
+            </button>
+            <button type="button" class="player_btn" onclick="playNextOnPlaylist()" id="music-player-next-song"
+                    style="display: none;" title="Next track">
+                <i class="glyphicon glyphicon-step-forward"></i>
+            </button>
+        </div>
+        <div id="waveform" class="music_player_wave"></div>
     </div>
-    <div class="col-xs-2 col-md-2" style="width: 130px;">
-        <button class="player_btn" type="button" onclick="playPrevOnPlaylist()" id="music-player-prev-song"
-                style="display: none;"  title="Previous track">
-            <i class="glyphicon glyphicon-step-backward"></i>
-        </button>
-        <button id="play_btn" class="player_btn" onclick="onPlayPauseClick()" title="Play/Pause">
-            <i class="player_play_btn_graphic glyphicon glyphicon-pause" ></i>
-        </button>
-        <button type="button" class="player_btn" onclick="playNextOnPlaylist()" id="music-player-next-song"
-                style="display: none;" title="Next track">
-            <i class="glyphicon glyphicon-step-forward"></i>
-        </button>
-    </div>
-    <div id="waveform" class="col-xs-9 col-md-9" style="background-color: #efefef"></div>
 </div>

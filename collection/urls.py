@@ -4,17 +4,17 @@ from collection import views
 
 urlpatterns = [
 
-    url(r'^songs/$', views.SongList.as_view(), name='songlist'),
-    url(r'^albums/$', views.AlbumList.as_view(), name='albumlist'),
-    url(r'^artists/$', views.ArtistList.as_view(), name='artistlist'),
-    url(r'^playlists/$', views.PlaylistList.as_view(), name='playlistlist'),
-    url(r'^songs_of_playlists/$', views.SongListFromPlaylist.as_view(), name='songs_from_playlists'),
-    url(r'^add_new_playlist/$', views.AddNewPlaylist.as_view(), name='add_new_playlist'),
-    url(r'^add_song_to_playlist/$', views.AddToPlaylist.as_view(), name='add_song_to_playlists'),
-    url(r'^users/$', views.UserList.as_view(), name='userlist'),
-    url(r'^edit_song/$', views.EditSong.as_view(), name='edit_song'),
-    url(r'^delete/$', views.delete_song, name='id'),
+    url(r'^songs/$', views.song_list, name='songlist'),
+    url(r'^albums/$', views.album_list, name='albumlist'),
+    url(r'^artists/$', views.artist_list, name='artistlist'),
+    url(r'^playlists/$', views.playlist_list, name='playlistlist'),
+    url(r'^songs_of_playlists/$', views.song_list_from_playlist, name='songs_from_playlists'),
+    url(r'^add_new_playlist/$', views.add_new_playlist, name='add_new_playlist'),
+    url(r'^add_song_to_playlist/$', views.add_to_playlist, name='add_song_to_playlists'),
+    url(r'^users/$', views.user_list, name='userlist'),
+    url(r'^edit_song/$', views.edit_song, name='edit_song'),
+    url(r'^delete/$', views.delete_song, name='delete_song'),
     url(r'^send_mail/$', views.send_email, name='email'),
-    url(r'^add_user_to_playlist/$', views.AddUserToPlaylist.as_view(), name='id')
+    url(r'^add_user_to_playlist/$', views.add_user_to_playlist, name='id')
 
 ]

@@ -1,6 +1,7 @@
 let loaded_songs;
 let actual_url;
 let newSongId;
+let addToPlaylistTooltip;
 
 const initTable = function() {
     $(document).on("click", "#create_playlist", function () {
@@ -18,18 +19,6 @@ const initTable = function() {
 
     $(document).on("click", "#cancel", function () {
         $(".playlist_modal").hide();
-    });
-
-    // Make auto hiding popovers play nice with buttons inside them
-    //from https://stackoverflow.com/questions/11703093/how-to-dismiss-a-twitter-bootstrap-popover-by-clicking-outside
-    $(document).on('click', function (e) {
-        $('[data-toggle="popover"],[data-original-title]').each(function () {
-            //the 'is' for buttons that trigger popups
-            //the 'has' for icons within a button that triggers a popup
-            if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
-                (($(this).popover('hide').data('bs.popover')||{}).inState||{}).click = false  // fix for BS 3.3.6
-            }
-        });
     });
 
     actual_url = '/api/songs';
@@ -57,9 +46,12 @@ const initTable = function() {
     filter_table(actual_url);
     load_playlists();
 
-     $.getJSON("/api/users", function(result) {
-        usersArray = result;
-    })
+    const is_staff = $("#is_staff").val() === "True";
+    if (is_staff) {
+        $.getJSON("/api/users", function(result) {
+            usersArray = result;
+        });
+    }
 };
 
 const searchForSongs = function () {
@@ -97,9 +89,8 @@ const filter_table = function (url) {
 
                 cell3.className = "col-md-1";
                 // This button only works if load_playlists() has run!
-                cell3.innerHTML = `<button role="button" data-placement="left" data-container="body" data-toggle="popover"
-                                           onclick="showAddToPlaylistPopover('${song_field.id}')"
-                                           data-placement="bottom" data-trigger="manual" class="no_button">Add to playlist</button>`;
+                cell3.innerHTML = `<button role="button" onclick="showAddToPlaylistPopover(event, '${song_field.id}')"
+                                           class="no_button">Add to playlist</button>`;
                 if (is_staff){
                     cell4.innerHTML =
                         `<a href="/download/?path=${song_field.path}">
@@ -122,30 +113,40 @@ const filter_table = function (url) {
     };
 
 // Add to playlist/create playlist
-const showAddToPlaylistPopover = function (songId) {
+const showAddToPlaylistPopover = function (event, songId) {
     let popover_str = `<div class="modal-header">
                            <h4 class="modal-title">Select playlist</h4>
                        </div>`;
     popover_str += `<div class="modal-body">
                     <button class='btn btn-success' onclick="showCreatePlaylistPopup('${songId}')">New playlist</button><br><br>`;
     $.each(playlists, function (i, playlist_field) {
-        popover_str += `<button class='btn btn-default' onclick="addSongToPlaylist('${playlist_field.id}', '${songId}')">${playlist_field.playlist_name}</button><br>`;
+        popover_str += `<button class='btn btn-default' 
+                        onclick="addSongToPlaylist('${playlist_field.id}', '${songId}')">${playlist_field.playlist_name}</button><br>`;
     });
     popover_str += '</div>';
 
-    const popovers = $('[data-toggle="popover"]');
-    popovers.popover({html: true, content: popover_str });
-    popovers.popover('show');
+    addToPlaylistTooltip = new jBox('Tooltip', {
+        content: popover_str,
+        target: $(event.target),
+        closeOnClick: 'body', // close if clicked anywhere but the toolip
+        position: {x: 'left', y: 'center'},
+        outside: 'x',
+        overlay:true,
+        onCloseComplete: function() {
+            addToPlaylistTooltip.destroy();
+        }
+    });
+    addToPlaylistTooltip.open();
 };
 
 const showCreatePlaylistPopup = function (songId) {
-    $('[data-toggle="popover"]').popover('hide');
+    addToPlaylistTooltip.close();
     newSongId = songId;
     $(".playlist_modal").show();
 };
 
 const addSongToPlaylist = function (playlistId, songId) {
-    $('[data-toggle="popover"]').popover('hide');
+    addToPlaylistTooltip.close();
     const url = "/api/add_song_to_playlist/?playlist=" + playlistId + "&song=" + songId;
     $.getJSON(url, function(result){
         load_playlists();

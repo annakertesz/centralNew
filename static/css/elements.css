@@ -123,3 +123,31 @@
     border: none;
     font-size: 1.3em;
 }
+
+.music_player_flex {
+    display: flex;
+    flex-flow: row;
+}
+
+.music_player_art {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 50px;
+    margin-left: 10px
+}
+
+.music_player_controls {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 115px;
+    margin-top: 3px;
+}
+
+.music_player_wave {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+    margin-right: 10px;
+    background-color: #efefef;
+    margin-bottom: 5px;
+}

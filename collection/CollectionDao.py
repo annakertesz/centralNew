@@ -79,6 +79,7 @@ def simple_search(string, isExact): #TODO: exact mode returns everything
     if was_filtered: return set(result)
     return None
 
+
 def add_tags_for_songs():
     songs = Song.objects.all()
     for song in songs:
@@ -99,8 +100,6 @@ def add_tags_for_songs():
 
 def edit_song(id, title, album, artist, tags):
     song = Song.objects.get(id=id)
-    print("from database: " + song.name)
-
     if song.name != title:
         song.name = title
     if song.album.album_name != album:
@@ -108,13 +107,13 @@ def edit_song(id, title, album, artist, tags):
             album_object = Album.objects.get(album_name=album)
             song.album = album_object
         except Album.DoesNotExist:
-            return "album"
+            return "album" # TODO save new album?
     if song.artist.artist_name != artist:
         try:
             artist_object = Artist.objects.get(artist_name=artist)
             song.artist = artist_object
         except Artist.DoesNotExist:
-            return "artist"
+            return "artist" # TODO save new artist?
     # if tags != "":
         # TODO: make tags
     song.save()
