@@ -59,6 +59,15 @@ const initMusicPlayer = function() {
     wavesurfer.on('finish', function () {
         playNextOnPlaylist();
     });
+
+    // Recalculate waweform on window resize
+    $(window).resize(function() {
+        if (musicPlayerMediaURL !== null && isWaveSurferLoading === false) {
+            wavesurfer.empty();
+            wavesurfer.drawBuffer();
+        }
+    });
+
 };
 
 const playSingleSong = function(filename) {
