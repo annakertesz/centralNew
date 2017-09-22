@@ -48,7 +48,6 @@ const showSongsOfPlaylist = function (id, name) {
 
 // Reload the list of playlists
 const load_playlists = function () {
-    const is_staff = $("#is_staff").val() === "True";
     $("#playlist_list").find("tr").remove();
     const list_table = document.getElementById("playlist_list");
     $.getJSON("/api/playlists", function(result){

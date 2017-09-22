@@ -46,7 +46,6 @@ const initTable = function() {
     filter_table(actual_url);
     load_playlists();
 
-    const is_staff = $("#is_staff").val() === "True";
     if (is_staff) {
         $.getJSON("/api/users", function(result) {
             usersArray = result;
@@ -56,25 +55,25 @@ const initTable = function() {
 
 const searchForSongs = function () {
     const keywords = document.getElementById('search_field');
-    const actual_url = '/api/songs/?keywords=' + keywords.value;
+    const actual_url = '/api/songs/?keywords=' + keywords.value; // TODO this might be better as a GET request here
     filter_table(actual_url);
+    show_browser();
 };
 
 const filter_table = function (url) {
         actual_url = url;
-        let is_staff = $("#is_staff").val() === "True";
         $("#song_table").find("tr").remove();
-        let table = document.getElementById("song_table");
+        const table = document.getElementById("song_table");
         loaded_songs = {};
         $.getJSON(url, function(result){
             $.each(result, function(i, song_field){
                 loaded_songs[song_field.id] = song_field;
-                let row = table.insertRow(0);
-                let cell1 = row.insertCell(0);
+                const row = table.insertRow(0);
+                const cell1 = row.insertCell(0);
                 cell1.className = "col-md-1";
-                let cell2 = row.insertCell(1);
-                let cell3 = row.insertCell(2);
-                let cell4 = row.insertCell(3);
+                const cell2 = row.insertCell(1);
+                const cell3 = row.insertCell(2);
+                const cell4 = row.insertCell(3);
                 if (is_staff){
                     cell2.className = "col-md-8";
                     cell4.className = "col-md-2";
@@ -192,15 +191,15 @@ const edit_modal_data = function (id) {
 };
 
 const edit_modal_send_data = function(){
-     let data = JSON.stringify({
+     const data = JSON.stringify({
         "id": $("#edit_song_id").val(),
         "title": $("#edit_title").val(),
         "album": $("#edit_album").val(),
         "artist": $("#edit_artist").val(),
         "tags": $("#edit_tags").val()});
 
-    let xhr = new XMLHttpRequest();
-    let url = "/api/edit_song/?data=" + encodeURIComponent(data);
+    const xhr = new XMLHttpRequest();
+    const url = "/api/edit_song/?data=" + encodeURIComponent(data);
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.onreadystatechange = function () {

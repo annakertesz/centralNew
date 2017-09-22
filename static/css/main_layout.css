@@ -58,12 +58,6 @@ strong{
 
 #main_container{
     background-color: snow;
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
-
-#browser_table_container{
-    overflow: hidden;
 }
 
 .table_div{
