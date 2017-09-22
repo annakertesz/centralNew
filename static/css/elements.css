@@ -116,6 +116,10 @@
     background-color: transparent; !important;
 }
 
+.edit_modal_input {
+    width: 100%;
+}
+
 .player_btn{
     background-color: transparent;
     color: dimgrey;

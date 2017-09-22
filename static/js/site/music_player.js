@@ -62,7 +62,7 @@ const initMusicPlayer = function() {
 
     // Recalculate waweform on window resize
     $(window).resize(function() {
-        if (musicPlayerMediaURL !== null && isWaveSurferLoading === false) {
+        if (musicPlayerMediaURL !== undefined && musicPlayerMediaURL !== null && isWaveSurferLoading === false) {
             wavesurfer.empty();
             wavesurfer.drawBuffer();
         }

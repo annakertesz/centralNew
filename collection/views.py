@@ -19,7 +19,7 @@ from collection.PlaylistHandler import PlaylistHandler
 from collection.serializers import SongSerializer, AlbumSerializer, ArtistSerializer, PlaylistSongSerializer, \
     PlaylistSerializer, UserSerializer
 from django.core.mail import send_mail
-
+from django.contrib.auth import logout
 
 def admin_check(user):
     return user.is_staff
@@ -117,6 +117,11 @@ def edit_song(request):
     print("edit song: " + str(data["title"]))
     CollectionDao.edit_song(data["id"], data["title"], data["album"], data["artist"], data["tags"])
     return Response("success")
+
+
+def log_user_out(request):
+    logout(request)
+    return redirect(reverse('login'))
 
 
 def home(request):
