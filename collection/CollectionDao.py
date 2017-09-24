@@ -15,20 +15,28 @@ def simple_search(string, isExact): #TODO: exact mode returns everything
     for keyword in keyword_list:
 
         objects = Artist.objects.filter(artist_name__icontains=keyword)
+        print("\nartists:")
         for item in objects:
             artist_list.append(item.id)
+            print(item.artist_name)
 
         objects = Song.objects.filter(name__icontains=keyword)
+        print('\ntitle:')
         for item in objects:
             name_list.append(item.name)
+            print(item.name)
 
         objects = Album.objects.filter(album_name__icontains=keyword)
+        print('\nalbum:')
         for item in objects:
             album_list.append(item.id)
+            print(item.album_name)
 
         objects = Tag.objects.filter(tag_name__icontains=keyword)
+        print('\ntag:')
         for item in objects:
             tag_list.append(item.id)
+            print(item.tag_name)
 
     if isExact:
 

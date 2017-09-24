@@ -183,3 +183,7 @@ FILEBROWSER_SELECT_FORMATS = getattr(settings, "FILEBROWSER_SELECT_FORMATS", {
 })
 
 FILEBROWSER_NORMALIZE_FILENAME = getattr(settings, "FILEBROWSER_NORMALIZE_FILENAME", False)
+
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 8001
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
