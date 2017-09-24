@@ -1,12 +1,10 @@
-<p>    <br></p>
+<p><br></p>
 <div class="row" >
     <div class="col-md-3 playlist_table_div">
         <table class="table table-condensed">
-            <tbody id="playlist_list">
-            </tbody>
+            <tbody id="playlist_list"></tbody>
         </table>
     </div>
-
     <div class="col-md-9 playlist_table_div">
         <table class="table table-condensed">
             <tbody id="playlist_table">
@@ -14,31 +12,3 @@
         </table>
     </div>
 </div>
-
-{% if user.is_staff %}
-<!-- Modal -->
-<div id="user_selector" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title" id="edit_modal_title"></h4>
-      </div>
-      <div class="modal-body" >
-          <input type="hidden", name="song_id">
-          <table>
-            <tbody id="all_user_list">
-            </tbody>
-          </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" onclick="list_users()" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-{% endif %}

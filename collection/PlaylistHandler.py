@@ -43,7 +43,7 @@ class PlaylistHandler:
     def add_user_to_playlist(cls, playlist, user):
         try:
             relation = PlaylistUserMap.objects.get(playlist=playlist, user=user)
-            print("relation already exists")
+            print("Adding user to playlist: relation already exists")
         except PlaylistUserMap.DoesNotExist:
             relation = PlaylistUserMap(playlist=playlist, user=user)
             print("relation created")

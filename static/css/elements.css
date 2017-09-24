@@ -1,16 +1,10 @@
-#custom-navbar{
-    background-color: #000000;
-    margin: 0;
-    padding-left: 5.5%;
-}
-
 .menu_button{
     height: 50px !important;
     background-color: transparent;
     border: thin;
     color: white;
-    padding-left: 20%;
-    padding-right: 20%;
+    padding-left: 3vh;
+    padding-right: 3vh;
 }
 
 .menu_button:hover{
@@ -71,6 +65,7 @@
     border: none;
     background-color: transparent;
     letter-spacing: 3px;
+    text-align: left;
 }
 
 
@@ -121,10 +116,42 @@
     background-color: transparent; !important;
 }
 
+.edit_modal_input {
+    width: 100%;
+}
+
 .player_btn{
     background-color: transparent;
     color: dimgrey;
     margin: 0;
     border: none;
     font-size: 1.3em;
+}
+
+.music_player_flex {
+    display: flex;
+    flex-flow: row;
+}
+
+.music_player_art {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 50px;
+    margin-left: 10px
+}
+
+.music_player_controls {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 115px;
+    margin-top: 3px;
+}
+
+.music_player_wave {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+    margin-right: 10px;
+    background-color: #efefef;
+    margin-bottom: 5px;
 }

@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^api/', include('collection.urls')),
     url(r'^home/$', views.home, name='home'),
     url(r'^login/$', auth_views.login, name='login'),
-    url(r'^logout/$', auth_views.logout, name='logout'),
+    url(r'^logout/$', views.log_user_out, name='logout'),
     url(r'^$', RedirectView.as_view(url='/home')),
     url(r'^media/(?P<path>.*)$', django.views.static.serve, {'document_root': settings.MEDIA_ROOT}),
     url(r'^admin/', admin.site.urls),
