@@ -21,6 +21,7 @@ from collection.serializers import SongSerializer, AlbumSerializer, ArtistSerial
 from django.core.mail import send_mail
 from django.contrib.auth import logout
 
+
 def admin_check(user):
     return user.is_staff
 
@@ -151,17 +152,18 @@ def add_user_to_playlist(request):
 
 
 @api_view(['GET'])
-@user_passes_test(admin_check)
 def send_email(request):
     song = Song.objects.get(id=request.GET.get('id'))
     user = request.user
-    print("start mail")
-    send_mail(
-        'Licence',
-        'Dear Admin, \n user.username wants to buy a song. \n data of the song: \n' + song.name + '\n-' + song.album.album_name + '\n-' + song.artist.artist_name +
-        '\n\n And the user: \n' + user.username + '\n' + user.first_name+' ' + user.last_name + '\n' + user.email,
-        'kerteszannanak@gmail.com',
-        ['kerteszannanak@gmail.com'],
-        fail_silently=False,
+    print("Trying to send mail")
+    resp = send_mail(
+        'Licence', # subject
+        'Dear Admin, \n' + user.username + 'wants to buy a song. \nData of the song: \n' + song.name +
+        '\n-' + song.album.album_name + '\n-' + song.artist.artist_name +
+        '\n\n And the user: \n' + user.username + '\nname: ' + user.first_name + ' ' + user.last_name + '\nemail:' + user.email,
+        'centralpublishingemail@gmail.com', # from_email
+        ['kerteszannanak@gmail.com'], # recipient list
+        fail_silently = False
     )
     print("Email sent")
+    return Response("Number of emails sent: " + str(resp) )

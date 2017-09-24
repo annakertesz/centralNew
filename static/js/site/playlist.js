@@ -38,10 +38,9 @@ const showSongsOfPlaylist = function (id, name) {
             cell4.innerHTML = field.artist.artist_name;
             cell5.innerHTML =
                 `<a href="/download/${field.path}"><i class="glyphicon glyphicon-download"></i></a>
-                <button class="no_style">
-                    <i class="glyphicon glyphicon-shopping-cart" data-toggle="modal" data-target="#email_sender"></i>
-                </button>
-                <button class="no_style"><i class="glyphicon glyphicon-trash"></i></button>`;
+                <button class="glyphicon glyphicon-shopping-cart no_style icon" data-toggle="modal" 
+                        data-target="#email_sender" onclick="set_email_message('${field.id}')"></button>
+                <a href="/api/delete_from_playlist/?id=${field.id}"><i class="glyphicon glyphicon-trash icon"></i></a>`;
         });
     });
 };

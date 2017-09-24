@@ -90,22 +90,17 @@ const filter_table = function (url) {
                 // This button only works if load_playlists() has run!
                 cell3.innerHTML = `<button role="button" onclick="showAddToPlaylistPopover(event, '${song_field.id}')"
                                            class="no_button">Add to playlist</button>`;
-                if (is_staff){
-                    cell4.innerHTML =
-                        `<a href="/download/?path=${song_field.path}">
-                            <i class="glyphicon glyphicon-download icon"></i>
-                        </a>
-                        <i class="glyphicon glyphicon-shopping-cart icon"></i>
-                        <button type="button" class="no_style" data-toggle="modal" data-target="#edit_song" 
-                                onclick="edit_modal_data('${song_field.id}')"><i class="glyphicon glyphicon-edit icon"></i>
-                        </button>
-                        <a href="/api/delete/?" id="${song_field.id}"><i class="glyphicon glyphicon-trash icon"></i></a>`;
-                }
-                else {
-                    cell4.innerHTML =
+
+                cell4.innerHTML =
                         `<a href="/download/${song_field.path}"><i class="glyphicon glyphicon-download icon"></i></a>
                          <button class="glyphicon glyphicon-shopping-cart no_style icon" data-toggle="modal" data-target="#email_sender"
                                  onclick="set_email_message('${song_field.id}')"></button>`;
+                if (is_staff){
+                    cell4.innerHTML +=
+                        `<button type="button" class="no_style" data-toggle="modal" data-target="#edit_song" 
+                                onclick="edit_modal_data('${song_field.id}')"><i class="glyphicon glyphicon-edit icon"></i>
+                        </button>
+                        <a href="/api/delete/?id=${song_field.id}"><i class="glyphicon glyphicon-trash icon"></i></a>`;
                 }
             });
         });
@@ -153,15 +148,15 @@ const addSongToPlaylist = function (playlistId, songId) {
 };
 
 // email
+let email_sender_song_id;
 const set_email_message = function(id){
-     $('input[name="email_sender_song_id"]').val(id);
+    email_sender_song_id = id;
 };
 
 const send_email = function () {
-    const url = "/api/send_mail/?id=" + $('input[name="email_sender_song_id"]').val();
-    alert(url);
+    const url = "/api/send_mail/?id=" + email_sender_song_id;
     $.getJSON(url, function(result){
-            $.each(result, function(i, song_field){})
+        console.log(result);
     })
 };
 
