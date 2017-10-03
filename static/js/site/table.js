@@ -99,12 +99,27 @@ const filter_table = function (url) {
                     cell4.innerHTML +=
                         `<button type="button" class="no_style" data-toggle="modal" data-target="#edit_song" 
                                 onclick="edit_modal_data('${song_field.id}')"><i class="glyphicon glyphicon-edit icon"></i>
-                        </button>
-                        <a href="/api/delete/?id=${song_field.id}"><i class="glyphicon glyphicon-trash icon"></i></a>`;
+                         </button>
+                         <button onclick="showDeleteSongModal('${song_field.id}','${song_field.name}')" class="no_style"><i class="glyphicon glyphicon-trash icon"></i></button>`;
                 }
             });
         });
     };
+
+const showDeleteSongModal = function(id, name) {
+    const delModal = $('#confirmDeleteModal');
+    delModal.modal('show');
+    delModal.find('#confirmDeleteModalText').text(`Are you sure you want to delete "${name}"?`);
+    delModal.find('#confirmDeleteModalDelButton').off('click').click(id, deleteSong);
+};
+
+const deleteSong = function(event) {
+     $.getJSON("/api/delete_song/?id=" + event.data, function(result){
+         console.log(result);
+         filter_table(actual_url);
+         load_playlists();
+    });
+};
 
 // Add to playlist/create playlist
 const showAddToPlaylistPopover = function (event, songId) {

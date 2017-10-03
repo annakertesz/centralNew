@@ -23,13 +23,13 @@ const showSongsOfPlaylist = function (id, name) {
             const cell1 = row.insertCell(0);
             cell1.className = "col-md-1";
             const cell2 = row.insertCell(1);
-            cell2.className = "col-md-3";
+            cell2.className = "col-md-4";
             const cell3 = row.insertCell(2);
-            cell3.className = "col-md-2";
+            cell3.className = "col-md-3";
             const cell4 = row.insertCell(3);
             cell4.className = "col-md-2";
             const cell5 = row.insertCell(4);
-            cell5.className = "col-md-1";
+            cell5.className = "col-md-2";
 
             cell1.innerHTML = `<button class="table_btn" onclick="playPlaylist('${id}','${num}')">
                                <div class="glyphicon glyphicon-play"></div></button>`;
@@ -38,10 +38,28 @@ const showSongsOfPlaylist = function (id, name) {
             cell4.innerHTML = field.artist.artist_name;
             cell5.innerHTML =
                 `<a href="/download/${field.path}"><i class="glyphicon glyphicon-download"></i></a>
-                <button class="glyphicon glyphicon-shopping-cart no_style icon" data-toggle="modal" 
-                        data-target="#email_sender" onclick="set_email_message('${field.id}')"></button>
-                <a href="/api/delete_from_playlist/?id=${field.id}"><i class="glyphicon glyphicon-trash icon"></i></a>`;
+                 <a href="" data-toggle="modal" data-target="#email_sender" onclick="set_email_message('${field.id}')">
+                    <i class="glyphicon glyphicon-shopping-cart icon"></i></a>
+                 <button onclick="showDeleteFromPlaylistModal('${id}','${num}','${field.name}')" class="no_style">
+                    <i class="glyphicon glyphicon-trash icon"></i></button>`;
         });
+    });
+};
+
+const showDeleteFromPlaylistModal = function (id, num, name) {
+    const delModal = $('#confirmDeleteModal');
+    delModal.modal('show');
+    delModal.find('#confirmDeleteModalText').text(`Are you sure you want to delete "${name}" from the playlist?`);
+    delModal.find('#confirmDeleteModalDelButton').off('click').click([id, num], deleteSongFromPlaylist);
+};
+
+const deleteSongFromPlaylist = function(event) {
+    const playlistId = event.data[0];
+    const songNum = event.data[1];
+    console.log("del from playlist " + playlistId + " num " + songNum);
+    $.getJSON("/api/delete_song_from_playlist/?playlist_id=" + playlistId + "&song_num=" + songNum, function(result){
+         console.log(result);
+         load_playlists(); // TODO delete playlist if empty
     });
 };
 
@@ -71,13 +89,13 @@ const load_playlists = function () {
             let plId = playlists[0].id;
             let plName = playlists[0].playlist_name;
             for (let pl of playlists) {
-                if (pl.id === currentPlaylistId) {
+                if (pl.id == currentPlaylistId) { // intentional type conversion!
                     plId = currentPlaylistId;
                     plName = currentPlaylistName;
                     break;
                 }
             }
-            showSongsOfPlaylist(plId, plName);
+            showSongsOfPlaylist(String(plId), String(plName));
         }
     });
 };

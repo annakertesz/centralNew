@@ -79,6 +79,14 @@ def add_to_playlist(request):
 
 
 @api_view(['GET'])
+def delete_song_from_playlist(request):
+    playlist = Playlist.objects.get(id=request.GET.get('playlist_id'))
+    song_num = request.GET.get('song_num')
+    print("TODO Deleting song number " + song_num + " from '" + playlist.playlist_name + "'")
+    return Response("Delete from playlist not implemented") # TODO
+
+
+@api_view(['GET'])
 def playlist_list(request):
     playlists = PlaylistHandler.get_playlists_of_user(request.user)
     serializer = PlaylistSerializer(playlists, many=True)
@@ -135,10 +143,11 @@ def home(request):
 @api_view(['GET'])
 @user_passes_test(admin_check)
 def delete_song(request):
-    song = Song.objects.get(id=request.GET.get('id'))
+    song_id = request.GET.get('id')
+    song = Song.objects.get(id=song_id)
     os.remove(MEDIA_ROOT + "/" + song.path)
-    Song.objects.filter(id=request.GET.get('id')).delete()
-    return render(request, 'collection/index.html', {'user': request.user})
+    Song.objects.filter(id=song_id).delete()
+    return Response("Deleted song " + str(song_id))
 
 
 @api_view(['GET'])
