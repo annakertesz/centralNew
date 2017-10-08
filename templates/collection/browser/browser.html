@@ -28,10 +28,10 @@
       <div class="modal-body">
         <input type="hidden" id="edit_song_id" name="edit_song_id" class="edit_modal_input"><br>
         Title:<br><input id="edit_title" name="edit_title" class="edit_modal_input"><br><br>
-        Artist:<br><input id="edit_artist" name="edit_artist" class="edit_modal_input"><br><br>
-        Album:<br><input id="edit_album" name="edit_album" class="edit_modal_input"><br><br>
-        Tags:<br><p id="current_tags">Tags are coming here</p>
-        <input id="edit_tags" name="edit_tags" class="edit_modal_input">
+          Artist:<br><span id="edit_artist"></span><br><br>
+          Album:<br><span id="edit_album"></span><br><br>
+        Tags:<br>
+          <textarea id="edit_tags" name="edit_tags" class="edit_modal_input"></textarea>
       </div>
       <div class="modal-footer">
         <button type="button" onclick="edit_modal_send_data()" class="btn btn-default" data-dismiss="modal">Ok</button>

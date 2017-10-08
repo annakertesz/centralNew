@@ -200,15 +200,15 @@ const edit_modal_data = function (id) {
     document.getElementById("edit_modal_title").innerHTML = song_field.name;
     $('input[name="edit_title"]').val(song_field.name);
     $('input[name="edit_song_id"]').val(id);
-    $('input[name="edit_album"]').val(song_field.album.album_name);
-    $('input[name="edit_artist"]').val(song_field.artist.artist_name);
+    $('#edit_album').text(song_field.album.album_name);
+    $('#edit_artist').text(song_field.artist.artist_name);
 
      $.getJSON('/api/tags/?id='+song_field.id, function(result){
         $.each(result, function(f, tag){
             tags += (tag.tag_name + ", ");
             console.log("tag: " + tag.tag_name);
         });
-        $('input[name="edit_tags"]').val(tags.slice(0, tags.length-2));
+        $('#edit_tags').val(tags.slice(0, tags.length-2));
     });
 };
 
@@ -216,8 +216,6 @@ const edit_modal_send_data = function(){
      const data = JSON.stringify({
         "id": $("#edit_song_id").val(),
         "title": $("#edit_title").val(),
-        "album": $("#edit_album").val(),
-        "artist": $("#edit_artist").val(),
         "tags": $("#edit_tags").val()});
 
     const xhr = new XMLHttpRequest();

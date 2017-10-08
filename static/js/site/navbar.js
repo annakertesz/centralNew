@@ -15,7 +15,7 @@ const show_home = function () {
     $("#home").show();
 };
 
-const show_browser = function () {
+const show_browser = function () {  //TODO: show all + remove search field cucc
     hide_all();
     $("#browser").show();
 };

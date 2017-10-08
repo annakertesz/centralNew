@@ -135,7 +135,7 @@ def edit_song(request):
     json_data = request.GET.get('data')
     data = json.loads(json_data)
     print("edit song: " + str(data["title"]))
-    CollectionDao.edit_song(data["id"], data["title"], data["album"], data["artist"], data["tags"])
+    CollectionDao.edit_song(data["id"], data["title"], data["tags"])
     return Response("success")
 
 
