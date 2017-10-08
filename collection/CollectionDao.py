@@ -5,6 +5,10 @@ from collection.models import Album, Artist, Song, Tag, TagSongMap
 
 
 def simple_search(string, isExact): #TODO: exact mode returns everything
+
+    if len(string) == 0:
+        return Song.objects.all()
+
     was_filtered = True
     keyword_list = string.split(' ')
     artist_list = []
