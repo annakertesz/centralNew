@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^add_song_to_playlist/$', views.add_to_playlist, name='add_song_to_playlists'),
     url(r'^delete_song_from_playlist/$', views.delete_song_from_playlist, name='delete_song_from_playlist'),
     url(r'^users/$', views.user_list, name='userlist'),
+    url(r'^tags/$', views.get_tags, name='taglist'),
     url(r'^edit_song/$', views.edit_song, name='edit_song'),
     url(r'^delete_song/$', views.delete_song, name='delete_song'),
     url(r'^send_mail/$', views.send_email, name='email'),
