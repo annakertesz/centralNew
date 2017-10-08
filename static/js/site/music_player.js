@@ -103,7 +103,7 @@ const playPlaylist = function (id, from) {
     playlistPos = from;
     $.getJSON(url, function(result){
         $.each(result, function(i, field){
-            playlist.push(field.path);
+            playlist.push(field.song.path);
         });
         _loadAndPlaySong(playlist[playlistPos]);
     });

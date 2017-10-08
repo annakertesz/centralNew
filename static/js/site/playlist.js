@@ -18,6 +18,8 @@ const showSongsOfPlaylist = function (id, name) {
         cell.innerHTML = '<h3>' + name + '</h3>';
 
         $.each(result, function(num, field){
+            const song = field.song;
+            const idInPlaylist = field.id;
             const row = table.insertRow(-1); // always insert at the end
 
             const cell1 = row.insertCell(0);
@@ -33,31 +35,30 @@ const showSongsOfPlaylist = function (id, name) {
 
             cell1.innerHTML = `<button class="table_btn" onclick="playPlaylist('${id}','${num}')">
                                <div class="glyphicon glyphicon-play"></div></button>`;
-            cell2.innerHTML = field.name;
-            cell3.innerHTML = field.album.album_name;
-            cell4.innerHTML = field.artist.artist_name;
+            cell2.innerHTML = song.name;
+            cell3.innerHTML = song.album.album_name;
+            cell4.innerHTML = song.artist.artist_name;
             cell5.innerHTML =
-                `<a href="/download/${field.path}"><i class="glyphicon glyphicon-download"></i></a>
-                 <a href="" data-toggle="modal" data-target="#email_sender" onclick="set_email_message('${field.id}')">
+                `<a href="/download/${song.path}"><i class="glyphicon glyphicon-download"></i></a>
+                 <a href="" data-toggle="modal" data-target="#email_sender" onclick="set_email_message('${song.id}')">
                     <i class="glyphicon glyphicon-shopping-cart icon"></i></a>
-                 <button onclick="showDeleteFromPlaylistModal('${id}','${num}','${field.name}')" class="no_style">
+                 <button onclick="showDeleteFromPlaylistModal('${idInPlaylist}','${song.name}')" class="no_style">
                     <i class="glyphicon glyphicon-trash icon"></i></button>`;
         });
     });
 };
 
-const showDeleteFromPlaylistModal = function (id, num, name) {
+const showDeleteFromPlaylistModal = function (idInPlaylist, name) {
     const delModal = $('#confirmDeleteModal');
     delModal.modal('show');
     delModal.find('#confirmDeleteModalText').text(`Are you sure you want to delete "${name}" from the playlist?`);
-    delModal.find('#confirmDeleteModalDelButton').off('click').click([id, num], deleteSongFromPlaylist);
+    delModal.find('#confirmDeleteModalDelButton').off('click').click([idInPlaylist], deleteSongFromPlaylist);
 };
 
 const deleteSongFromPlaylist = function(event) {
-    const playlistId = event.data[0];
-    const songNum = event.data[1];
-    console.log("del from playlist " + playlistId + " num " + songNum);
-    $.getJSON("/api/delete_song_from_playlist/?playlist_id=" + playlistId + "&song_num=" + songNum, function(result){
+    const idInPlaylist = event.data[0];
+    console.log("del from playlist with playlist_song_id: " + idInPlaylist);
+    $.getJSON("/api/delete_song_from_playlist/?playlist_song_id=" + idInPlaylist, function(result){
          console.log(result);
          load_playlists(); // TODO delete playlist if empty
     });

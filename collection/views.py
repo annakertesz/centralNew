@@ -14,7 +14,7 @@ from central_publishing_new import settings
 from central_publishing_new.settings import MEDIA_ROOT
 from collection import CollectionDao
 from collection.CollectionDao import simple_search
-from collection.models import Song, Album, Artist, Tag, Playlist
+from collection.models import Song, Album, Artist, Tag, Playlist, PlaylistSongMap
 from collection.PlaylistHandler import PlaylistHandler
 from collection.serializers import SongSerializer, AlbumSerializer, ArtistSerializer, PlaylistSongSerializer, \
     PlaylistSerializer, UserSerializer
@@ -80,10 +80,10 @@ def add_to_playlist(request):
 
 @api_view(['GET'])
 def delete_song_from_playlist(request):
-    playlist = Playlist.objects.get(id=request.GET.get('playlist_id'))
-    song_num = request.GET.get('song_num')
-    print("TODO Deleting song number " + song_num + " from '" + playlist.playlist_name + "'")
-    return Response("Delete from playlist not implemented") # TODO
+    playlist_song_id = request.GET.get('playlist_song_id')
+    print("Deleting from playlist with id:" + playlist_song_id)
+    PlaylistSongMap.objects.filter(id=playlist_song_id).delete()
+    return Response("success")
 
 
 @api_view(['GET'])
@@ -104,7 +104,7 @@ def add_new_playlist(request):
 def song_list_from_playlist(request):
     playlist_id = request.GET.get('playlist')
     songlist = PlaylistHandler.get_songs_from_playlist(playlist_id)
-    serializer = SongSerializer(songlist, many=True)
+    serializer = PlaylistSongSerializer(songlist, many=True)
     return Response(serializer.data)
 
 

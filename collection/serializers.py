@@ -34,12 +34,13 @@ class PlaylistSerializer(serializers.ModelSerializer):
 
 class PlaylistSongSerializer(serializers.ModelSerializer):
 
-    playlist = PlaylistSerializer
     song = SongSerializer
 
     class Meta:
         model = PlaylistSongMap
-        fields = ('playlist', 'song')
+        fields = ('id', 'song')
+        depth = 2  # Depth of serialization. Dunno why its needed here
+
 
 class UserSerializer(serializers.ModelSerializer):
 
