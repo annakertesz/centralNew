@@ -3,7 +3,8 @@ let usersArray = [];
 let currentPlaylistId;
 let currentPlaylistName;
 let addUserTooltip;
-
+// TODO add a new playlist button
+// TODO add function to download a playlist as a .zip file
 const showSongsOfPlaylist = function (id, name) {
     currentPlaylistId = id;
     currentPlaylistName = name;
