@@ -14,10 +14,10 @@ from central_publishing_new import settings
 from central_publishing_new.settings import MEDIA_ROOT
 from collection import CollectionDao
 from collection.CollectionDao import simple_search
-from collection.models import Song, Album, Artist, Tag, Playlist
+from collection.models import Song, Album, Artist, Tag, Playlist, TagSongMap
 from collection.PlaylistHandler import PlaylistHandler
 from collection.serializers import SongSerializer, AlbumSerializer, ArtistSerializer, PlaylistSongSerializer, \
-    PlaylistSerializer, UserSerializer
+    PlaylistSerializer, UserSerializer, TagSerializer
 from django.core.mail import send_mail
 from django.contrib.auth import logout
 
@@ -99,6 +99,16 @@ def add_new_playlist(request):
     playlist = PlaylistHandler.add_new_playlist(playlist_name, request.user)
     return Response(playlist.id)
 
+@api_view(['GET'])
+def get_tags(request):
+    song_id = request.GET.get('id')
+    tags = []
+    song = Song.objects.get(id=song_id)
+    for tag in TagSongMap.objects.filter(song=song).values('tag'):
+        tags.append(Tag.objects.get(id=tag['tag']))
+    serializer = TagSerializer(tags, many=True)
+    return Response(serializer.data)
+
 
 @api_view(['GET'])
 def song_list_from_playlist(request):
@@ -106,6 +116,7 @@ def song_list_from_playlist(request):
     songlist = PlaylistHandler.get_songs_from_playlist(playlist_id)
     serializer = SongSerializer(songlist, many=True)
     return Response(serializer.data)
+
 
 
 def download(request, file_name):

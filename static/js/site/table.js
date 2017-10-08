@@ -67,7 +67,9 @@ const filter_table = function (url) {
         loaded_songs = {};
         $.getJSON(url, function(result){
             $.each(result, function(i, song_field){
+
                 loaded_songs[song_field.id] = song_field;
+
                 const row = table.insertRow(0);
                 const cell1 = row.insertCell(0);
                 cell1.className = "col-md-1";
@@ -149,6 +151,7 @@ const showAddToPlaylistPopover = function (event, songId) {
 };
 
 const showCreatePlaylistPopup = function (songId) {
+    alert(loaded_songs[songId].tagList);
     addToPlaylistTooltip.close();
     newSongId = songId;
     $(".playlist_modal").show();
@@ -193,11 +196,21 @@ const resetTableIcons = function () {
 // edit song
 const edit_modal_data = function (id) {
     const song_field = loaded_songs[id];
+    tags = "";
+
     document.getElementById("edit_modal_title").innerHTML = song_field.name;
     $('input[name="edit_title"]').val(song_field.name);
     $('input[name="edit_song_id"]').val(id);
     $('input[name="edit_album"]').val(song_field.album.album_name);
     $('input[name="edit_artist"]').val(song_field.artist.artist_name);
+
+     $.getJSON('/api/tags/?id='+song_field.id, function(result){
+        $.each(result, function(f, tag){
+            tags += (tag.tag_name + ", ");
+            console.log("tag: " + tag.tag_name);
+        });
+        $('input[name="edit_tags"]').val(tags.slice(0, tags.length-2));
+    });
 };
 
 const edit_modal_send_data = function(){

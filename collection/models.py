@@ -34,7 +34,7 @@ class Tag(models.Model):
 
 
 class TagSongMap(models.Model):
-    tag = models.ForeignKey(Tag)
+    tag = models.ForeignKey(Tag, related_name='tag')
     song = models.ForeignKey(Song)
 
 

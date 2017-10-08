@@ -115,20 +115,32 @@ def add_tags_for_songs():
 
 def edit_song(id, title, album, artist, tags):
     song = Song.objects.get(id=id)
+    file = eyed3.load(MEDIA_ROOT + '/' + song.path)
     if song.name != title:
         song.name = title
-    if song.album.album_name != album:
-        try:
-            album_object = Album.objects.get(album_name=album)
-            song.album = album_object
-        except Album.DoesNotExist:
-            return "album" # TODO save new album?
-    if song.artist.artist_name != artist:
-        try:
-            artist_object = Artist.objects.get(artist_name=artist)
-            song.artist = artist_object
-        except Artist.DoesNotExist:
-            return "artist" # TODO save new artist?
+        file.tag.title = title
+        file.tag.save(MEDIA_ROOT + '/' + song.path)
+    # if song.album.album_name != album:
+    #     try:
+    #         album_object = Album.objects.get(album_name=album)
+    #         song.album = album_object
+    #     except Album.DoesNotExist:
+    #         return "album" # TODO save new album?
+    # if song.artist.artist_name != artist:
+    #     try:
+    #         artist_object = Artist.objects.get(artist_name=artist)
+    #         song.artist = artist_object
+    #     except Artist.DoesNotExist:
+    #         return "artist" # TODO save new artist?
     # if tags != "":
         # TODO: make tags
+    TagSongMap.objects.filter(song=id).delete()
+    for t in tags.split(', '):
+        try:
+            tag = Tag.objects.get(tag_name=t)
+        except Tag.DoesNotExist:
+            tag = Tag(tag_name=t)
+            tag.save()
+        relation = TagSongMap(tag=tag, song=song)
+        relation.save()
     song.save()
