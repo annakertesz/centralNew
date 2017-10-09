@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^add_new_playlist/$', views.add_new_playlist, name='add_new_playlist'),
     url(r'^add_song_to_playlist/$', views.add_to_playlist, name='add_song_to_playlists'),
     url(r'^delete_song_from_playlist/$', views.delete_song_from_playlist, name='delete_song_from_playlist'),
+    url(r'^download_playlist/$', views.download_playlist, name='download_playlist'),
     url(r'^users/$', views.user_list, name='userlist'),
     url(r'^tags/$', views.get_tags, name='taglist'),
     url(r'^edit_song/$', views.edit_song, name='edit_song'),

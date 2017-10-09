@@ -87,6 +87,13 @@ def delete_song_from_playlist(request):
 
 
 @api_view(['GET'])
+def download_playlist(request):
+    playlist_id = request.GET.get('playlist_id')
+    print("Downloading playlist with id:" + playlist_id)
+    return Response("TODO")
+
+
+@api_view(['GET'])
 def playlist_list(request):
     playlists = PlaylistHandler.get_playlists_of_user(request.user)
     serializer = PlaylistSerializer(playlists, many=True)

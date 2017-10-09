@@ -16,7 +16,11 @@ const showSongsOfPlaylist = function (id, name) {
         const row = table.insertRow(-1);
         const cell = row.insertCell(0);
         cell.colSpan = 5;
-        cell.innerHTML = '<h3>' + name + '</h3>';
+        // replaces everything that's not a number or a letter with _
+        const filename = currentPlaylistName.replace(/[^a-z0-9]/gi, '_').substr(0, 40);
+        cell.innerHTML = `<div style="display:flex;align-items:center"><h3 style="flex-grow:1">${name}</h3>
+                          <a class="btn btn-primary" href="/api/download_playlist/?playlist_id=${currentPlaylistId}" 
+                             download="${filename}.zip" role="button">Download whole playlist</a></div>`;
 
         $.each(result, function(num, field){
             const song = field.song;
@@ -47,6 +51,12 @@ const showSongsOfPlaylist = function (id, name) {
                     <i class="glyphicon glyphicon-trash icon"></i></button>`;
         });
     });
+};
+
+const downloadPlaylist = function () {
+    console.log('dl dl dl');
+    currentPlaylistId;
+
 };
 
 const showDeleteFromPlaylistModal = function (idInPlaylist, name) {
