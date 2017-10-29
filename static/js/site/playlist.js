@@ -79,6 +79,10 @@ const deleteSongFromPlaylist = function(event) {
 const load_playlists = function () {
     $("#playlist_list").find("tr").remove();
     const list_table = document.getElementById("playlist_list");
+    const row = list_table.insertRow(-1);
+            const cell = row.insertCell(0);
+            cell.innerHTML =
+                `<button class="btn btn-outline-secondary" onclick="addEmotyPLaylistName(event)">Create new playlist</button>`;
     $.getJSON("/api/playlists", function(result){
         playlists = result;
         $.each(playlists, function(i, field){
@@ -150,3 +154,40 @@ const addUserToPlaylist = function (user_id, playlistId){
     $.getJSON("/api/add_user_to_playlist/?playlist_id=" + playlistId + "&user_id="+ user_id,
         function(result) {});
 };
+
+const addEmotyPLaylistName = function (event) {
+    let popoverContent =
+        `<div>
+            <div class="modal-header">
+                <h4 class="modal-title">Create empty playlist</h4>
+            </div>
+            <div class="modal-body">
+                <input id="empty__playlist_input" type="text">
+                <button class="btn btn-sm" onclick="createEmptyPlaylist()">OK</button>
+            </div>
+        </div>`;
+    addEmptyListrTooltip = new jBox('Tooltip', {
+        content: popoverContent,
+        target: $(event.target),
+        closeOnClick: 'body', // close if clicked anywhere but the toolip
+        position: {x: 'right', y: 'center'},
+        outside: 'x',
+        overlay:true,
+        onCloseComplete: function() {
+            addEmptyListrTooltip.destroy();
+        }
+    });
+    addEmptyListrTooltip.open();
+};
+
+const createEmptyPlaylist = function () {
+    const new_playlist_name = $("#empty__playlist_input").val();
+    alert(new_playlist_name);
+        let url = "/api/add_new_playlist/?name=" + new_playlist_name;
+        $.getJSON(url, function (result) {
+                load_playlists();
+                filter_table(actual_url);
+            });
+        addEmptyListrTooltip.close();
+};
+
