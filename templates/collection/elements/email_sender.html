@@ -8,8 +8,11 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Interested in this song?</h4>
       </div>
+{#        TODO: plusz fieldek, formázás#}
       <div class="modal-body" >
-          <p>Do you intend to buy this song? If you click OK, Central Publishing will contact you shortly.</p>
+          <p>phone:<input id="phone" type="text" ></p>
+          <p>message<textarea id="message"></textarea></p>
+          <p>If you click OK, Central Publishing will contact you shortly.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" onclick="send_email()">Ok</button>

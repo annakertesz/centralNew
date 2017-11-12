@@ -19,8 +19,9 @@ const showSongsOfPlaylist = function (id, name) {
         // replaces everything that's not a number or a letter with _
         const filename = currentPlaylistName.replace(/[^a-z0-9]/gi, '_').substr(0, 40);
         cell.innerHTML = `<div style="display:flex;align-items:center"><h3 style="flex-grow:1">${name}</h3>
-                          <a class="btn btn-primary" href="/api/download_playlist/?playlist_id=${currentPlaylistId}" 
-                             download="${filename}.zip" role="button">Download whole playlist</a></div>`;
+                          <a class="btn btn-primary" href="/api/download_playlist/?playlist_id=${currentPlaylistId}"
+                             role="button">Download whole playlist</a></div>`;
+                             // download="${filename}.zip" role="button">Download whole playlist</a></div>`;  "/download/${song.path}"
 
         $.each(result, function(num, field){
             const song = field.song;

@@ -171,7 +171,7 @@ const set_email_message = function(id){
 };
 
 const send_email = function () {
-    const url = "/api/send_mail/?id=" + email_sender_song_id;
+    const url = "/api/send_mail/?id=" + email_sender_song_id + "&phone="+$("#phone").val()+"&message="+$("#message").val();
     $.getJSON(url, function(result){
         console.log(result);
     })

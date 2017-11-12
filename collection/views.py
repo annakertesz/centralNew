@@ -1,6 +1,8 @@
 import json
 
 import os
+import zipfile
+import time
 
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
@@ -86,11 +88,20 @@ def delete_song_from_playlist(request):
     return Response("success")
 
 
-@api_view(['GET'])
 def download_playlist(request):
     playlist_id = request.GET.get('playlist_id')
     print("Downloading playlist with id:" + playlist_id)
-    return Response("TODO")
+    file_name=createZipFile(playlist_id)
+    file_path = os.path.join(settings.MEDIA_ROOT, file_name)
+    print(file_path)
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as fh:
+            response = HttpResponse(fh.read(), content_type="application/zip")
+            response['Content-Disposition'] = 'inline; filename=' + file_name
+            deleteZipFile(file_name)
+            return response
+    print("not found")
+    raise Http404
 
 
 @api_view(['GET'])
@@ -194,3 +205,22 @@ def send_email(request):
     )
     print("Email sent")
     return Response("Number of emails sent: " + str(resp) )
+
+
+def createZipFile(playlist_id):
+    timestamp = "%.9f" % time.time()
+    filename = timestamp.replace(".", "") + ".zip"
+    zipFile = zipfile.ZipFile(os.path.join(settings.MEDIA_ROOT, filename), "w")
+
+    songObjects = PlaylistSongMap.objects.filter(playlist=playlist_id)
+
+    for songObject in songObjects:
+
+        song=Song.objects.get(id=songObject.song_id)
+        file_path = os.path.join(settings.MEDIA_ROOT, song.path)
+        print(file_path)
+        zipFile.write(file_path, song.path, compress_type=zipfile.ZIP_DEFLATED)
+    return filename
+
+def deleteZipFile(filename):
+    os.remove(os.path.join(settings.MEDIA_ROOT, filename))
