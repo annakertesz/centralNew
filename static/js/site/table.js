@@ -2,7 +2,7 @@ let loaded_songs;
 let actual_url;
 let newSongId;
 let addToPlaylistTooltip;
-
+// Code the the "Browse" menu
 const initTable = function() {
     $(document).on("click", "#create_playlist", function () {
         const playlist_name = $("#new_playlist_input").val();
@@ -44,7 +44,6 @@ const initTable = function() {
         })
     });
     filter_table(actual_url);
-    load_playlists();
 
     if (is_staff) {
         $.getJSON("/api/users", function(result) {
@@ -53,13 +52,15 @@ const initTable = function() {
     }
 };
 
+// executed when the user presses enter or the search button in the top bar
 const searchForSongs = function () {
     const keywords = document.getElementById('search_field');
-    const actual_url = '/api/songs/?keywords=' + keywords.value; // TODO this might be better as a GET request here
+    const actual_url = '/api/songs/?keywords=' + keywords.value;
     filter_table(actual_url);
     show_browser();
 };
 
+// loads and fills the table with songs based on the text in the filter
 const filter_table = function (url) {
         actual_url = url;
         $("#song_table").find("tr").remove();
@@ -67,7 +68,7 @@ const filter_table = function (url) {
         loaded_songs = {};
         $.getJSON(url, function(result){
             $.each(result, function(i, song_field){
-
+                // Create a row for a song
                 loaded_songs[song_field.id] = song_field;
 
                 const row = table.insertRow(0);
@@ -89,7 +90,8 @@ const filter_table = function (url) {
                 cell2.innerHTML = `<p>${song_field.artist.artist_name}</br><strong>${song_field.name}</strong></p>`;
 
                 cell3.className = "col-md-1";
-                // This button only works if load_playlists() has run!
+                // note: This button only works if load_playlists() has run. This is called at startup
+                // but if the user is really quick clicking this it might break
                 cell3.innerHTML = `<button role="button" onclick="showAddToPlaylistPopover(event, '${song_field.id}')"
                                            class="no_button">Add to playlist</button>`;
 
@@ -123,7 +125,7 @@ const deleteSong = function(event) {
     });
 };
 
-// Add to playlist/create playlist
+// Add to playlist/create playlist modal
 const showAddToPlaylistPopover = function (event, songId) {
     let popover_str = `<div class="modal-header">
                            <h4 class="modal-title">Select playlist</h4>

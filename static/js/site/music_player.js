@@ -1,3 +1,5 @@
+// Code for the music player at the bottom
+
 let isWaveSurferLoading = false;
 let musicPlayerMediaURL;
 let playlist = [];
@@ -15,12 +17,15 @@ const initMusicPlayer = function() {
         hideScrollbar: true
     });
     const musicPlayer = $('#music_player');
-    musicPlayer.css('flex-basis', '0px'); //need to set opacity, Wavesurfer breaks if I use hide() :(
-    musicPlayer.css('padding-top', '0px'); //need to set opacity, Wavesurfer breaks if I use hide() :(
+    // This hides the music player on loading
+    musicPlayer.css('flex-basis', '0px');
+    musicPlayer.css('padding-top', '0px');
 
-    wavesurfer.on('ready', function () {
+    wavesurfer.on('ready', function () { // Called when a song is buffered and ready to play
+        // show the music player
         musicPlayer.css('flex-basis', '50px');
         musicPlayer.css('padding-top', '10px');
+
         if (playlist.length >0) {
             $("#music-player-next-song").show();
             $("#music-player-prev-song").show();
@@ -30,19 +35,21 @@ const initMusicPlayer = function() {
         resetTableIcons();
         isWaveSurferLoading = false;
 
-        var jsmediatags = window.jsmediatags;
-        // it would be much nicer to read the binary loaded by Wavesurfer, but it might not be possible
-        // jsmediatags requires that I enter the full URL!! (http://blabla)
+        let jsmediatags = window.jsmediatags;
+        // jsmediatags reads the IDv2 tag from .mp3 files.
+        // it would be much nicer to read the binary loaded by Wavesurfer for the artwork, but it might not be possible
+        // since jsmediatags requires that I enter the full URL!! (http://blabla)
         jsmediatags.read(window.location.origin + musicPlayerMediaURL, {
             onSuccess: function(tag) {
-                 var artwork = $('#music-player-artwork');
-                 var image = tag.tags.picture;
+                 let artwork = $('#music-player-artwork');
+                 let image = tag.tags.picture;
                  if (image) {
-                     var base64String = "";
-                     for (var i = 0; i < image.data.length; i++) {
+                     // read the image binary data and display it
+                     let base64String = "";
+                     for (let i = 0; i < image.data.length; i++) {
                          base64String += String.fromCharCode(image.data[i]);
                      }
-                     var base64 = "data:image/jpeg;base64," + window.btoa(base64String);
+                     let base64 = "data:image/jpeg;base64," + window.btoa(base64String);
                      artwork.attr('src', base64);
                      artwork.attr('title', tag.tags.title);
                      artwork.show();
@@ -60,7 +67,7 @@ const initMusicPlayer = function() {
         playNextOnPlaylist();
     });
 
-    // Recalculate waweform on window resize
+    // Recalculate waveform on window resize
     $(window).resize(function() {
         if (musicPlayerMediaURL !== undefined && musicPlayerMediaURL !== null && isWaveSurferLoading === false) {
             wavesurfer.empty();
@@ -76,7 +83,7 @@ const playSingleSong = function(filename) {
     _loadAndPlaySong(filename);
 };
 
-// do not call this from other files!
+// do not call this from other files, it messes up the playlist array here.
 const _loadAndPlaySong = function (filename) {
     $("#music-player-next-song").hide();
     $("#music-player-prev-song").hide();
@@ -97,6 +104,7 @@ const onPlayPauseClick = function () {
     }
 };
 
+// plays a playlist from the 'from' position
 const playPlaylist = function (id, from) {
     const url = "/api/songs_of_playlists/?playlist=" + id;
     playlist = [];
@@ -112,7 +120,7 @@ const playPlaylist = function (id, from) {
 const playNextOnPlaylist = function () {
     if (playlist.length > 0) {
         playlistPos++;
-        if (playlistPos === playlist.length) {
+        if (playlistPos === playlist.length) { // start from the beginning
             playlistPos = 0;
         }
         _loadAndPlaySong(playlist[playlistPos]);
@@ -122,7 +130,7 @@ const playNextOnPlaylist = function () {
 const playPrevOnPlaylist = function () {
     if (playlist.length > 0) {
         playlistPos--;
-        if (playlistPos < 0) {
+        if (playlistPos < 0) { // play the last song
             playlistPos = playlist.length - 1;
         }
         _loadAndPlaySong(playlist[playlistPos]);
