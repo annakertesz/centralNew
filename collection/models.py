@@ -15,13 +15,13 @@ class Artist(models.Model):
 
 class Album(models.Model):
     album_name = models.CharField(max_length=30)
-    artist = models.ForeignKey(Artist, related_name='artist')
+    artist = models.ForeignKey(Artist, related_name='artist', on_delete=models.CASCADE)
     cover = models.CharField(max_length=30, default='default_image')
 
 class Song(models.Model):
     path = models.CharField(max_length=150)
-    album = models.ForeignKey(Album, related_name='name')
-    artist = models.ForeignKey(Artist)
+    album = models.ForeignKey(Album, related_name='name', on_delete=models.CASCADE)
+    artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
     name = models.CharField(max_length=60)
 
 class SongToEdit(models.Model):
@@ -34,8 +34,8 @@ class Tag(models.Model):
 
 
 class TagSongMap(models.Model):
-    tag = models.ForeignKey(Tag, related_name='tag')
-    song = models.ForeignKey(Song)
+    tag = models.ForeignKey(Tag, related_name='tag', on_delete=models.CASCADE)
+    song = models.ForeignKey(Song, on_delete=models.CASCADE)
 
 
 class Playlist(models.Model):
@@ -43,10 +43,10 @@ class Playlist(models.Model):
 
 
 class PlaylistUserMap(models.Model):
-    playlist = models.ForeignKey(Playlist)
-    user = models.ForeignKey(User)
+    playlist = models.ForeignKey(Playlist, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class PlaylistSongMap(models.Model):
-    playlist = models.ForeignKey(Playlist)
-    song = models.ForeignKey(Song)
+    playlist = models.ForeignKey(Playlist, on_delete=models.CASCADE)
+    song = models.ForeignKey(Song, on_delete=models.CASCADE)
