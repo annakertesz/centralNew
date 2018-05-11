@@ -14,7 +14,7 @@ html, body {
 }
 
 body{
-    background: url("../img/ticks.png");
+    background: url("../img/black_wallpaper.jpg");
     font-family: simple;
     color: black;
     overflow: hidden;
@@ -27,12 +27,13 @@ body{
 }
 
 #custom-navbar{
-    background-color: #000000;
+    background-color: transparent;
     margin: 0;
     padding-left: 5.5%;
     flex-grow: 0;
     flex-shrink: 0;
     flex-basis: auto;
+    border: none;
 }
 
 #content_flexBox{
@@ -47,7 +48,7 @@ body{
     flex-shrink: 0;
     flex-basis: 50px;
     border-top: solid lightgrey 1px;
-    background-color: snow;
+    background-color: transparent;
     padding-top: 10px;
     overflow: hidden;
 }
@@ -57,7 +58,7 @@ strong{
 }
 
 #main_container{
-    background-color: snow;
+    background-color: transparent;
 }
 
 .table_div{
@@ -84,7 +85,7 @@ strong{
 }
 
 .container_artist_title{
-    background-color: gray;
+    background-color: transparent;
     color: white;
     width: 100%;
     padding: 0.5%;

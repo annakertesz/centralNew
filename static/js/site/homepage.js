@@ -23,6 +23,16 @@ const loadArtists = function () {
     });
 };
 
+$('#foo a').colorbox();
+alert();
+
+//when thumb is clicked, set main image to it
+$('div#thumbs img').click( function() {
+    $('#foo a').prop('href', $(this).prop('src'));
+    $('#foo img').prop('src', $(this).prop('src'));
+    return false;  //stop link from navigating
+})
+
 const show_clicked_albums = function(url){
     show_browser();
     filter_table(url);
