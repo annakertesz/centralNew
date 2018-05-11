@@ -6,11 +6,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="{% static 'css/elements.css' %}">
-        <link rel="stylesheet" href="{% static 'css/main_layout.css' %}">
+        <!--<link rel="stylesheet" href="{% static 'css/elements.css' %}">-->
+        <!--<link rel="stylesheet" href="{% static 'css/main_layout.css' %}">-->
+        <link rel="stylesheet" href="{% static 'css/carousel.css' %}">
         <link rel="stylesheet" href="{% static 'css/jBox.css' %}">
         <script src="{% static 'js/vendor/jquery.min.js' %}"></script>
+        <script src="{% static 'js/vendor/popper.min.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery-slim.min.js' %}"></script>
         <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/vendor/holder.min.js' %}"></script>
 
 
         <script src="{% static 'js/vendor/jBox.min.js' %}"></script>
@@ -25,9 +29,11 @@
     </head>
 
     <body>
-        <div id="main_flexBox">
             <input type="hidden" id="is_staff" value="{{user.is_staff}}">
-            {% include "collection/elements/navbar.html" %}
+            <header>
+                {% include "collection/elements/navbar.html" %}
+            </header>
+
             <div id="content_flexBox">
                 <div class="col-md-1"></div>
                 <div class="container col-md-10" id="main_container">
@@ -39,7 +45,6 @@
             </div>
             {% include "collection/elements/music_player.html" %}
         </div>
-        <div>BLABLABLA</div>
         {% include "collection/elements/email_sender.html" %}
     </body>
 </html>
