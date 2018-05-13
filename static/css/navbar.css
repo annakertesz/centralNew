@@ -2,6 +2,27 @@
 transition: transform .2s;
 }
 
+#search_field {
+    margin-top: 10px;
+    /*margin-left: 5%;*/
+    width: 35%;
+    height: 30px;
+    border-radius: 5px;
+    color: black;
+    background-color: snow;
+    border: solid snow 1px;
+}
+
+#search_button{
+    background-color: transparent;
+    border: none;
+    color: #d2d2d2;
+}
+
+#search_button:hover{
+    color: white;
+}
+
 #logo{
 margin-right: 40px;
 margin-left: 10px;

@@ -30,7 +30,7 @@ const initMusicPlayer = function() {
             $("#music-player-next-song").show();
             $("#music-player-prev-song").show();
         }
-        $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-pause");
+        $("#play_btn").find(".player_play_btn_graphic").html("pause");
         wavesurfer.play();
         resetTableIcons();
         isWaveSurferLoading = false;
@@ -87,7 +87,7 @@ const playSingleSong = function(filename) {
 const _loadAndPlaySong = function (filename) {
     $("#music-player-next-song").hide();
     $("#music-player-prev-song").hide();
-    $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-transfer");
+    $("#play_btn").find(".player_play_btn_graphic").html("360");
     musicPlayerMediaURL = '/media/' + filename;
     wavesurfer.load(musicPlayerMediaURL);
     isWaveSurferLoading = true;
@@ -96,9 +96,9 @@ const _loadAndPlaySong = function (filename) {
 const onPlayPauseClick = function () {
     if (!isWaveSurferLoading) { // do not change icons if its currently loading
         if (wavesurfer.isPlaying()) {
-            $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-play");
+            $("#play_btn").find(".player_play_btn_graphic").html("play_arrow");
         } else {
-            $("#play_btn").find(".player_play_btn_graphic").attr("class","player_play_btn_graphic glyphicon glyphicon-pause");
+            $("#play_btn").find(".player_play_btn_graphic").html("pause");
         }
         wavesurfer.playPause();
     }

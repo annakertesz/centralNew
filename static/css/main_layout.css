@@ -60,20 +60,6 @@ strong{
     background-color: snow;
 }
 
-.table_div{
-    margin-top: 200px;
-}
-
-#playlist_table td {
-  vertical-align: middle !important;
-}
-
-.playlist_table_div{
-    display:block;
-    /*height:400px;*/
-    overflow-y: hidden;
-    overflow-x: hidden;
-}
 
 .artist_albums_container{
     display: inline-block;

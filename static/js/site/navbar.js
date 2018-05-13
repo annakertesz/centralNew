@@ -25,5 +25,4 @@ const show_browser = function () {  //TODO: show all + remove search field cucc
 const show_playlists = function () {
     hide_all();
     $("#playlists").show();
-    alert("I showed playlist");
 };

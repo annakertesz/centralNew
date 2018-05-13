@@ -86,7 +86,7 @@ const filter_table = function (url) {
                     cell4.className = "col-md-1";
                 }
                 cell1.innerHTML = `<button class="btn btn-primary" onclick="onPlayStopClick('${song_field.path}', this)">
-                                   <div class="table_play_icon glyphicon glyphicon-play"></div></button></td>`;
+                                   <i class="material-icons">play_arrow</i></button></td>`;
                 cell2.innerHTML = `<p>${song_field.artist.artist_name}</br><strong>${song_field.name}</strong></p>`;
 
                 cell3.className = "col-md-1";
@@ -96,15 +96,15 @@ const filter_table = function (url) {
                                            class="no_button">Add to playlist</button>`;
 
                 cell4.innerHTML =
-                        `<a href="/download/${song_field.path}"><i class="glyphicon glyphicon-download icon"></i></a>
-                         <button class="glyphicon glyphicon-shopping-cart no_style icon" data-toggle="modal" data-target="#email_sender"
-                                 onclick="set_email_message('${song_field.id}')"></button>`;
+                        `<a href="/download/${song_field.path}"><i class="material-icons">cloud_download</i></a>
+                         <button data-toggle="modal" data-target="#email_sender"
+                                 onclick="set_email_message('${song_field.id}')"><i class="material-icons">shopping_cart</i></button>`;
                 if (is_staff){
                     cell4.innerHTML +=
                         `<button type="button" class="no_style" data-toggle="modal" data-target="#edit_song" 
-                                onclick="edit_modal_data('${song_field.id}')"><i class="glyphicon glyphicon-edit icon"></i>
+                                onclick="edit_modal_data('${song_field.id}')"><i class="material-icons">edit</i>
                          </button>
-                         <button onclick="showDeleteSongModal('${song_field.id}','${song_field.name}')" class="no_style"><i class="glyphicon glyphicon-trash icon"></i></button>`;
+                         <button onclick="showDeleteSongModal('${song_field.id}','${song_field.name}')" class="no_style"><i class="material-icons">delete</i></button>`;
                 }
             });
         });
