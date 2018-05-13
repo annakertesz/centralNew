@@ -218,21 +218,5 @@ const edit_modal_data = function (id) {
 };
 
 const edit_modal_send_data = function(){
-     const data = JSON.stringify({
-        "id": $("#edit_song_id").val(),
-        "title": $("#edit_title").val(),
-        "tags": $("#edit_tags").val()});
-
-    const xhr = new XMLHttpRequest();
-    const url = "/api/edit_song/?data=" + encodeURIComponent(data);
-    xhr.open("GET", url, true);
-    xhr.setRequestHeader("Content-type", "application/json");
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            //let json = JSON.parse(xhr.responseText);
-            filter_table(actual_url);
-        }
-        console.log("song data edit " + data);
-    };
-    xhr.send(data);
+//  Itt kell küldeni egy cimet és paraméterként az id-t
 };

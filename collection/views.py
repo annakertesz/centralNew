@@ -168,6 +168,10 @@ def home(request):
     # CollectionDao.add_tags_for_songs()
     return render(request, 'collection/index.html', {'user': request.user})
 
+def sent_playlist(request):
+    playlist_id = request.GET.get('id')
+    return render(request, 'collection/sent_playlist.html', {'playlist_id': playlist_id})
+
 
 @api_view(['GET'])
 @user_passes_test(admin_check)

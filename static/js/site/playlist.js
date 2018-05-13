@@ -18,7 +18,7 @@ const showSongsOfPlaylist = function (id, name) {
         const cell = row.insertCell(0);
         cell.colSpan = 5;
         // replaces everything that's not a number or a letter with _
-        const filename = currentPlaylistName.replace(/[^a-z0-9]/gi, '_').substr(0, 40);
+//        const filename = currentPlaylistName.replace(/[^a-z0-9]/gi, '_').substr(0, 40);
         cell.innerHTML = `<div style="display:flex;align-items:center"><h3 style="flex-grow:1">${name}</h3>
                           <a class="btn btn-primary" href="/api/download_playlist/?playlist_id=${currentPlaylistId}"
                              role="button">Download whole playlist</a></div>`;
@@ -46,9 +46,9 @@ const showSongsOfPlaylist = function (id, name) {
             cell3.innerHTML = song.album.album_name;
             cell4.innerHTML = song.artist.artist_name;
             cell5.innerHTML =
-                `<a href="/download/${song.path}"><i class="glyphicon glyphicon-download"></i></a>
+                `<a href="/download/${song.path}"><i class="material-icons">cloud_download</i></a>
                  <a href="" data-toggle="modal" data-target="#email_sender" onclick="set_email_message('${song.id}')">
-                    <i class="glyphicon glyphicon-shopping-cart icon"></i></a>
+                    <i class="material-icons">shopping_cart</i></a>
                  <a href="#" onclick="showDeleteFromPlaylistModal('${idInPlaylist}','${song.name}')">
                     <i class="material-icons">delete</i></a>`;
         });
@@ -124,6 +124,7 @@ const load_playlists = function () {
 
 const showAndPlayPlaylist = function (id, name) {
     showSongsOfPlaylist(id, name);
+    alert(id);
     playPlaylist(id, 0);
 };
 
@@ -202,6 +203,6 @@ const send_in_email = function (id) {
 };
 
 const sender_modal_send_email = function(){
-
+    $('input[name="sender_playlist_id"]').
 };
 

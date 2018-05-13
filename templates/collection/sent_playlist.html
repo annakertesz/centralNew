@@ -1,0 +1,54 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Central Publishing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/elements.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main_layout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/music_player.css' %}">
+    <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/browsera.css' %}">
+    <link rel="stylesheet" href="{% static 'css/carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jBox.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <script src="{% static 'js/vendor/jquery.min.js' %}"></script>
+    <script src="{% static 'js/vendor/popper.min.js' %}"></script>
+    <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/vendor/jBox.min.js' %}"></script>
+    <script src="{% static 'js/vendor/wavesurfer.min.js' %}"></script>
+    <script src="{% static 'js/vendor/jsmediatags.min.js' %}"></script>
+    <script src="{% static 'js/site/music_player.js' %}"></script>
+    <script src="{% static 'js/site/sent_playlist.js' %}"></script>
+    <script src="{% static 'js/vendor/holder.min.js' %}"></script>
+
+</head>
+
+<body>
+<input type="hidden" id="playlist_id" value="{{playlist_id}}">
+<header>
+    <nav class="navbar navbar-expand-md fixed-top stroke">
+    <a class="navbar-brand" href="http://central-publishing.com/"><img id="logo" height="42" src="{% static "img/logo_white.png" %}"></a>
+</nav>
+</header>
+        <div id="playlists" class="container-fluid text-center col-lg-10">
+            <p><br></p>
+            <div class="row" >
+                <div class="col-md-9 playlist_table_div">
+                    <table class="table table-condensed">
+                        <tbody id="playlist_table">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+{% include "collection/elements/music_player.html" %}
+
+</body>
+</html>

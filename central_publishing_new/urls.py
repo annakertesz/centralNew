@@ -25,6 +25,7 @@ from collection import views
 urlpatterns = [
     url(r'^api/', include('collection.urls')),
     url(r'^home/$', views.home, name='home'),
+    url(r'^sent_playlist/$', views.sent_playlist, name='sent_playlist'),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', views.log_user_out, name='logout'),
     url(r'^$', RedirectView.as_view(url='/home')),
