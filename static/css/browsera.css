@@ -1,0 +1,26 @@
+
+
+#browse-table{
+margin-top: 20px;
+background-color: white;
+}
+
+
+.table_div{
+    margin-top: 200px;
+}
+
+#playlist_table td {
+  vertical-align: middle !important;
+}
+
+.playlist_table_div{
+    display:block;
+    /*height:400px;*/
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.material-icons{
+    font-size: 30px;
+}

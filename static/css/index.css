@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'simple'; /*a name to be used later*/
+    src: url("../fonts/simple.ttf"); /*URL to font*/
+}
+
+@font-face {
+    font-family: 'bold'; /*a name to be used later*/
+    src: url("../fonts/bold.ttf"); /*URL to font*/
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body{
+    background: url("../img/ticks.png");
+    font-family: simple;
+    color: black;
+    overflow: hidden;
+}
+
+#main_flexBox{
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}

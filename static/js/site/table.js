@@ -73,38 +73,38 @@ const filter_table = function (url) {
 
                 const row = table.insertRow(0);
                 const cell1 = row.insertCell(0);
-                cell1.className = "col-md-1";
+                cell1.style.width = "10%";
                 const cell2 = row.insertCell(1);
                 const cell3 = row.insertCell(2);
                 const cell4 = row.insertCell(3);
                 if (is_staff){
-                    cell2.className = "col-md-8";
-                    cell4.className = "col-md-2";
+                    cell2.style.width = "70%";
+                    cell4.style.width = "10%";
                 }
                 else {
-                    cell2.className = "col-md-9";
-                    cell4.className = "col-md-1";
+                    cell2.style.width = "70%";
+                    cell4.style.width = "10%";
                 }
-                cell1.innerHTML = `<button class="btn btn-primary" onclick="onPlayStopClick('${song_field.path}', this)">
-                                   <i class="material-icons">play_arrow</i></button></td>`;
+                cell1.innerHTML = `<a onclick="onPlayStopClick('${song_field.path}', this)">
+                                   <i class="material-icons">play_arrow</i></a></td>`;
                 cell2.innerHTML = `<p>${song_field.artist.artist_name}</br><strong>${song_field.name}</strong></p>`;
 
-                cell3.className = "col-md-1";
+                cell3.className = "10%";
                 // note: This button only works if load_playlists() has run. This is called at startup
                 // but if the user is really quick clicking this it might break
-                cell3.innerHTML = `<button role="button" onclick="showAddToPlaylistPopover(event, '${song_field.id}')"
-                                           class="no_button">Add to playlist</button>`;
+                cell3.innerHTML = `<a role="button" onclick="showAddToPlaylistPopover(event, '${song_field.id}')"
+                                           class="no_button">Add to playlist</a>`;
 
                 cell4.innerHTML =
                         `<a href="/download/${song_field.path}"><i class="material-icons">cloud_download</i></a>
-                         <button data-toggle="modal" data-target="#email_sender"
-                                 onclick="set_email_message('${song_field.id}')"><i class="material-icons">shopping_cart</i></button>`;
+                         <a data-toggle="modal" data-target="#email_sender"
+                                 onclick="set_email_message('${song_field.id}')"><i class="material-icons">shopping_cart</i></a>`;
                 if (is_staff){
                     cell4.innerHTML +=
-                        `<button type="button" class="no_style" data-toggle="modal" data-target="#edit_song" 
+                        `<a type="button" class="no_style" data-toggle="modal" data-target="#edit_song"
                                 onclick="edit_modal_data('${song_field.id}')"><i class="material-icons">edit</i>
-                         </button>
-                         <button onclick="showDeleteSongModal('${song_field.id}','${song_field.name}')" class="no_style"><i class="material-icons">delete</i></button>`;
+                         </a>
+                         <a onclick="showDeleteSongModal('${song_field.id}','${song_field.name}')" class="no_style"><i class="material-icons">delete</i></a>`;
                 }
             });
         });
