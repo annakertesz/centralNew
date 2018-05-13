@@ -1,0 +1,22 @@
+.artist_albums_container{
+  /*  display: inline-block;
+    float: left;
+    width: 100%;
+    margin-top: 2%;*/
+
+}
+
+.container_artist_title{
+    background-color: gray;
+    color: white;
+    width: 100%;
+    padding: 0.5%;
+}
+
+.album_of_artist{
+    float: left;
+    display: inline-block;
+    margin-left: 0.8%;
+    margin-right: 0.8%;
+    margin-top: 4%;
+}

@@ -2,7 +2,7 @@
 const loadArtists = function () {
     $.getJSON("/api/artists/", function (result) {
         $.each(result, function (i, artist) {
-            const album_container = $("<div>", {"class": "artist_albums_container"});
+            const album_container = $("<div>");
             // The big artist title bar
             album_container.append(
                 '<button class="container_artist_title" onclick="show_clicked_albums(\'/api/songs/?artist=' + artist.id + '\')">' +
@@ -11,11 +11,11 @@ const loadArtists = function () {
                 // The album pictures
                 $.each(result, function (i, album) {
                     album_container.append
-                    ('<button class="no_style" onclick="show_clicked_albums(\'/api/songs/?album=' + album.id + '\')">' +
+                    ('<a class="featurette-image img-fluid mx-auto" onclick="show_clicked_albums(\'/api/songs/?album=' + album.id + '\')">' +
                         '<figure class="album_of_artist">' +
                             '<img src="/media/covers/' + album.cover + '.jpg" />' +
                             ' <figcaption>'+album.album_name + '</figcaption>' +
-                        '</figure></button>');
+                        '</figure></a>');
                 });
             });
             $("#all_albums").append(album_container);
