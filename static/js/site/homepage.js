@@ -5,17 +5,19 @@ const loadArtists = function () {
             const album_container = $("<div>");
             // The big artist title bar
             album_container.append(
-                '<button class="container_artist_title" onclick="show_clicked_albums(\'/api/songs/?artist=' + artist.id + '\')">' +
-                '<h3>' + artist.artist_name + '</h3></button>');
+//            <h2 class="featurette-heading">First featurette heading. <span
+//                        class="text-muted">It'll blow your mind.</span></h2>
+                '<a class="container_artist_titlea" onclick="show_clicked_albums(\'/api/songs/?artist=' + artist.id + '\')">' +
+                '<h2 class="featurette-heading">' + artist.artist_name + '</h2></a>');
             $.getJSON("/api/albums/?artist=" + artist.id, function (result) {
                 // The album pictures
                 $.each(result, function (i, album) {
                     album_container.append
-                    ('<a class="featurette-image img-fluid mx-auto" onclick="show_clicked_albums(\'/api/songs/?album=' + album.id + '\')">' +
-                        '<figure class="album_of_artist">' +
-                            '<img src="/media/covers/' + album.cover + '.jpg" />' +
-                            ' <figcaption>'+album.album_name + '</figcaption>' +
-                        '</figure></a>');
+                    ('<div class="album_of_artist"><a class="featurette-image img-fluid mx-auto" onclick="show_clicked_albums(\'/api/songs/?album=' + album.id + '\')"><div class="hovereffect">' +
+                        '<img class="img-responsive img-thumbnail" src="/media/covers/' + album.cover + '.jpg" alt=""/>' +
+                            '<div class="overlay">' +
+                            '<h2>'+album.album_name + '</h2></div>' +
+                        '</div></a></div>');
                 });
             });
             $("#all_albums").append(album_container);
