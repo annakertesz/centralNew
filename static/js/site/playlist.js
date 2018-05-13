@@ -203,6 +203,6 @@ const send_in_email = function (id) {
 };
 
 const sender_modal_send_email = function(){
-    $('input[name="sender_playlist_id"]').
+alert("http://127.0.0.1:8000/sent_playlist/?id=4");
 };
 
