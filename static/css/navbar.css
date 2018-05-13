@@ -1,5 +1,12 @@
 .navbar-brand {
-transition: transform .2s;
+    transition: transform .2s;
+}
+
+.custom-toggler.navbar-toggler {
+    border-color: rgb(250,250,250);
+}
+.custom-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(250,250,250, 0.7)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
 
 #search_field {
@@ -61,8 +68,6 @@ nav ul li a:hover {
   color: white;
 }
 
-
-/* stroke */
 nav.stroke ul li a,
 nav.fill ul li a {
   position: relative;

@@ -1,28 +1,33 @@
 
 const initNavbar = function () {
-    hide_all();
+    reset_all();
     show_home();
 };
 
-const hide_all = function () {
+const reset_all = function () {
     $("#browser").hide();
     $("#playlists").hide();
     $("#home").hide();
     $('#myCarousel').hide();
+
+    $("#show-browser").css("font-weight","Normal");
+    $("#show-playlist").css("font-weight","Normal");
 };
 
 const show_home = function () {
-    hide_all();
+    reset_all();
     $("#home").show();
-        $('#myCarousel').show();
+    $('#myCarousel').show();
 };
 
 const show_browser = function () {  //TODO: show all + remove search field cucc
-    hide_all();
+    reset_all();
     $("#browser").show();
+    $("#show-browser").css("font-weight","Bold");
 };
 
 const show_playlists = function () {
-    hide_all();
+    reset_all();
     $("#playlists").show();
+    $("#show-playlist").css("font-weight","Bold");
 };
