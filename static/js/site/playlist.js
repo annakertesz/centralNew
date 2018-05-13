@@ -99,7 +99,10 @@ const load_playlists = function () {
                     onclick="showAndPlayPlaylist('${field.id}', '${field.playlist_name}')">Play playlist</button>`;
             if (is_staff){
                 cell.innerHTML += `<button class="btn btn-outline-secondary btn-sm btn-block"
-                                   onclick="showUserSelector(event, '${field.id}')">Add user to playlist</button>`;
+                                   onclick="showUserSelector(event, '${field.id}')">Add user to playlist</button>
+                                   <br>
+                                   <button  data-toggle="modal" data-target="#send_in_email"
+                                onclick="send_in_email('${field.id}')" class="btn btn-outline-secondary btn-sm btn-block">send in email</button>`;
             }
             cell.innerHTML += '<br>';
         });
@@ -192,5 +195,13 @@ const createEmptyPlaylist = function () {
                 filter_table(actual_url);
             });
         addEmptyListrTooltip.close();
+};
+
+const send_in_email = function (id) {
+    $('input[name="sender_playlist_id"]').val(id);
+};
+
+const sender_modal_send_email = function(){
+
 };
 

@@ -12,3 +12,23 @@
         </table>
     </div>
 </div>
+
+{% if user.is_staff %}
+<div id="send_in_email" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="sender_playlist_id" name="sender_playlist_id" class="sender_modal_input"><br>
+        Email address:<br><input id="sender_email_address" name="sender_email_address" class="sender_modal_input"><br><br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" onclick="sender_modal_send_email()" class="btn btn-default" data-dismiss="modal">Ok</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}

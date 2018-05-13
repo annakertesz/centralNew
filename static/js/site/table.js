@@ -78,14 +78,14 @@ const filter_table = function (url) {
                 const cell3 = row.insertCell(2);
                 const cell4 = row.insertCell(3);
                 if (is_staff){
-                    cell2.style.width = "70%";
-                    cell4.style.width = "110px";
-                }
-                else {
                     cell2.style.width = "65%";
                     cell2.align="left";
-                    cell4.style.width = "110px";
+                    cell4.style.width = "250px";
+                }
+                else {
+                    cell2.style.width = "70%";
                     cell2.align="left";
+                    cell4.style.width = "150px";
                 }
                 cell1.innerHTML = `<a href=# onclick="onPlayStopClick('${song_field.path}', this)">
                                    <i class="material-icons">play_arrow</i></a></td>`;
@@ -104,7 +104,7 @@ const filter_table = function (url) {
                                  onclick="set_email_message('${song_field.id}')"><i class="material-icons">shopping_cart</i></a>`;
                 if (is_staff){
                     cell4.innerHTML +=
-                        `<a href="#" class="icon" type="button" data-toggle="modal" data-target="#edit_song"
+                        `<a href="#" class="icon" data-toggle="modal" data-target="#edit_song"
                                 onclick="edit_modal_data('${song_field.id}')"><i class="material-icons">edit</i>
                          </a>
                          <a href="#" class="icon" onclick="showDeleteSongModal('${song_field.id}','${song_field.name}')"><i class="material-icons">delete</i></a>`;
