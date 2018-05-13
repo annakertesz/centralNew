@@ -12,22 +12,19 @@
 }
 
 .music_player_art {
-    flex-grow: 0;
-    flex-shrink: 0;
-    flex-basis: 50px;
-    margin-left: 10px
+    flex-basis: 50px; /* the width of this element */
+    margin-left: 10px;
+    left: 0;
+    bottom: 0;
 }
 
 .music_player_controls {
-    flex-grow: 0;
-    flex-shrink: 0;
-    flex-basis: 115px;
+    flex-basis: auto;
     margin-top: 3px;
 }
 
 .music_player_wave {
     flex-grow: 1;
-    flex-shrink: 1;
     flex-basis: auto;
     margin-right: 10px;
     background-color: #efefef;
@@ -35,11 +32,11 @@
 }
 
 #music_player{
-    flex-grow: 0;
-    flex-shrink: 0;
-    flex-basis: 50px;
     border-top: solid lightgrey 1px;
     background-color: snow;
     padding-top: 10px;
     overflow: hidden;
+    position:fixed;
+    bottom: 0;
+    width: 100%;
 }

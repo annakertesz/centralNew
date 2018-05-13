@@ -18,13 +18,11 @@ const initMusicPlayer = function() {
     });
     const musicPlayer = $('#music_player');
     // This hides the music player on loading
-    musicPlayer.css('flex-basis', '0px');
-    musicPlayer.css('padding-top', '0px');
+    musicPlayer.css('margin-bottom', '-100px');
 
     wavesurfer.on('ready', function () { // Called when a song is buffered and ready to play
         // show the music player
-        musicPlayer.css('flex-basis', '50px');
-        musicPlayer.css('padding-top', '10px');
+        musicPlayer.css('margin-bottom', '0px');
 
         if (playlist.length >0) {
             $("#music-player-next-song").show();
