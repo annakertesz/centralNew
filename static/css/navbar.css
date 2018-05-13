@@ -4,8 +4,7 @@ transition: transform .2s;
 
 #search_field {
     margin-top: 10px;
-    /*margin-left: 5%;*/
-    width: 35%;
+    width: 400px;
     height: 30px;
     border-radius: 5px;
     color: black;
@@ -84,6 +83,7 @@ nav.fill ul li a:after {
 nav.stroke ul li a:hover:after {
   width: 100%;
 }
+
 
 
 

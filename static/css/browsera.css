@@ -21,6 +21,81 @@ background-color: white;
     overflow-x: hidden;
 }
 
-.material-icons{
-    font-size: 30px;
+.icon{
+color: black;
+margin-right: 15px;
 }
+
+a{
+cursor: pointer;
+transition: transform .2s;
+}
+
+.popover-content{
+    color: black;
+}
+
+.playlist_modal{
+    border: solid #000000 3px;
+    display: none;
+    padding: 3%;
+    position: fixed;
+    left: 30%;
+    top: 20%;
+    background-color: white;
+}
+
+
+.playlist_name{
+    text-transform: capitalize;
+    text-align: left;
+    vertical-align: bottom;
+}
+
+
+.new_playlist_btn {
+    color: black;
+}
+
+
+#new_playlist_input{
+    color: black;
+}
+
+.icon{
+    font-size: 1.3em;
+    margin: 0.5em;
+}
+
+.user_btn {
+    font-size: 1.3em;
+    background-color: white;
+    border: none;
+}
+
+.user_btn_selected {
+    font-size: 1.3em;
+    background-color: white;
+    color: #9b9b9b;
+    border: none;
+}
+
+.edit_modal_input {
+    width: 100%;
+}
+
+.table_div{
+    margin-top: 200px;
+}
+
+#playlist_table td {
+  vertical-align: middle !important;
+}
+
+.playlist_table_div{
+    display:block;
+    /*height:400px;*/
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+

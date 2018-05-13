@@ -30,18 +30,18 @@ const showSongsOfPlaylist = function (id, name) {
             const row = table.insertRow(-1); // always insert at the end
 
             const cell1 = row.insertCell(0);
-            cell1.className = "col-md-1";
+            cell1.style.width = "20%";
             const cell2 = row.insertCell(1);
-            cell2.className = "col-md-4";
+                    cell2.style.width = "20%";
             const cell3 = row.insertCell(2);
-            cell3.className = "col-md-3";
+                    cell2.style.width = "20%";
             const cell4 = row.insertCell(3);
-            cell4.className = "col-md-2";
+                    cell2.style.width = "20%";
             const cell5 = row.insertCell(4);
-            cell5.className = "col-md-2";
+                    cell2.style.width = "20%";
 
-            cell1.innerHTML = `<button class="table_btn" onclick="playPlaylist('${id}','${num}')">
-                               <div class="glyphicon glyphicon-play"></div></button>`;
+            cell1.innerHTML = ` <a href=# onclick="playPlaylist('${id}','${num}')">
+                                <i class="material-icons">play_arrow</i></a>`;
             cell2.innerHTML = song.name;
             cell3.innerHTML = song.album.album_name;
             cell4.innerHTML = song.artist.artist_name;
@@ -49,8 +49,8 @@ const showSongsOfPlaylist = function (id, name) {
                 `<a href="/download/${song.path}"><i class="glyphicon glyphicon-download"></i></a>
                  <a href="" data-toggle="modal" data-target="#email_sender" onclick="set_email_message('${song.id}')">
                     <i class="glyphicon glyphicon-shopping-cart icon"></i></a>
-                 <button onclick="showDeleteFromPlaylistModal('${idInPlaylist}','${song.name}')" class="no_style">
-                    <i class="glyphicon glyphicon-trash icon"></i></button>`;
+                 <a href="#" onclick="showDeleteFromPlaylistModal('${idInPlaylist}','${song.name}')">
+                    <i class="material-icons">delete</i></a>`;
         });
     });
 };
@@ -90,10 +90,11 @@ const load_playlists = function () {
         $.each(playlists, function(i, field){
             const row = list_table.insertRow(-1);
             const cell = row.insertCell(0);
+            cell.align="left";
             cell.innerHTML =
-                `<button class="no_button playlist_name"
+                `<a class="playlist_name"
                     onclick="showSongsOfPlaylist('${field.id}', '${field.playlist_name}')">${field.playlist_name}
-                </button><br>
+                </a><br>
                 <button class="btn btn-outline-secondary btn-sm btn-block"
                     onclick="showAndPlayPlaylist('${field.id}', '${field.playlist_name}')">Play playlist</button>`;
             if (is_staff){

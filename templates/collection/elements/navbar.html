@@ -14,13 +14,14 @@
                 <a class="nav-link" onclick="show_playlists()">Playlists</a>
             </li>
         </ul>
-        <form class="form-inline mt-2 mt-md-0">
-            <input class="form-control mr-sm-4" type="text" id="search_field" title="Song search"
+            <input type="text" id="search_field" title="Song search"
                    placeholder="Search for songs, albums, moods, tags,..">
             <button class="btn btn-outline-success my-2 my-sm-0" id="search_button" onclick="searchForSongs()">
                 <i class="material-icons">search</i>
             </button>
-        </form>
+        <ul class="nav navbar-nav navbar-right" id="logout">
+        <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+      </ul>
         <!--<ul class="nav navbar-nav navbar-right" id="logout">-->
         <!--<li><a href="/logout"><span class="glyphicon glyphicon-log-out nav-link"></span> Logout</a></li>-->
         <!--</ul>-->
