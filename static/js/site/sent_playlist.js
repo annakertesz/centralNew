@@ -3,15 +3,11 @@ let usersArray = [];
 let currentPlaylistId;
 let currentPlaylistName;
 let addUserTooltip;
-// Code the the Playlists menu
-// TODO add a new playlist button
-// TODO add function to download a playlist as a .zip file
-
+// Code the the Playlists HTML page
 
 $(document).ready(function() {
-    // I don't know how to template JS files...
-    // Matyi: Do not use templates. You will tie the frontend to the backend which is baad
     id = $("#playlist_id").val();
+    initMusicPlayer();
     showSongsOfPlaylist(id);
 });
 

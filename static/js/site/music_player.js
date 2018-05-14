@@ -30,7 +30,9 @@ const initMusicPlayer = function() {
         }
         $("#play_btn").find(".player_play_btn_graphic").html("pause");
         wavesurfer.play();
-        resetTableIcons();
+        if (typeof resetTableIcons !== 'undefined' && typeof resetTableIcons === 'function') { // it does not exist in the playlist only mode
+            resetTableIcons();
+        }
         isWaveSurferLoading = false;
 
         let jsmediatags = window.jsmediatags;
