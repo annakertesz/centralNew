@@ -1,3 +1,5 @@
+import os
+
 import PIL
 import io
 from django.utils.text import slugify
@@ -34,7 +36,10 @@ class CollectionDao:
             for image in images: # an mp3 file can  have multiple images
                 img = Image.open(io.BytesIO(image.image_data))
                 img = img.resize((300, 300), PIL.Image.ANTIALIAS)
-                img.save(MEDIA_ROOT + "/covers/" + slugify(song.tag.album)+".jpg")
+                cover_dir = MEDIA_ROOT + "/covers/"
+                if not os.path.exists(cover_dir):
+                    os.makedirs(cover_dir)
+                img.save(cover_dir + slugify(song.tag.album)+".jpg")
                 # print("saved image of " + song.tag.album)
             song = Song(name=song.tag.title, artist=artist, album=album, path=file_name)
             song.save()

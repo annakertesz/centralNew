@@ -76,6 +76,9 @@ $(function () {
                 'width',
                 progress + '%'
             );
+        },
+        fail: function (err, data) {
+            console.log("upload error " + err + " " + data);
         }
     }).prop('disabled', !$.support.fileInput)
         .parent().addClass($.support.fileInput ? undefined : 'disabled');

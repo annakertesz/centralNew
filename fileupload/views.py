@@ -8,7 +8,7 @@ from django.views.generic import CreateView, DeleteView, ListView
 from .CollectionDao import *
 from .models import MusicFile
 from .response import JSONResponse, response_mimetype
-# from .serialize import serialize
+from .serialize import serialize
 
 import django.utils.text
 
@@ -20,12 +20,12 @@ class PictureCreateView(CreateView):
     dao = CollectionDao()
     def form_valid(self, form):
         self.object = form.save()
-        # files = [serialize(self.object)]
+        files = [serialize(self.object)]
         path = self.create_good_path()
         # rename the file to this one
         os.rename(self.object.file.path, path)  # TODO handle if rename fails, e.g. file with such name exists
-        # data = {'files': files} //TODO: upgrade!
-        data = {}
+        data = {'files': files} # TODO: upgrade!
+        # data = {}
         response = JSONResponse(data, mimetype=response_mimetype(self.request))
         response['Content-Disposition'] = 'inline; filename=files.json'
         self.dao.add_song(os.path.basename(path))
@@ -63,9 +63,9 @@ class PictureListView(ListView):
     model = MusicFile
 
     def render_to_response(self, context, **response_kwargs):
-        # files = [ serialize(p) for p in self.get_queryset() ]  //TODO: upgrade!
-        # data = {'files': files}
-        data = {}
+        files = [ serialize(p) for p in self.get_queryset() ]  #  TODO: upgrade!
+        data = {'files': files}
+        # data = {}
         response = JSONResponse(data, mimetype=response_mimetype(self.request))
         response['Content-Disposition'] = 'inline; filename=files.json'
         return response
