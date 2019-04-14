@@ -8,7 +8,6 @@ from collection.models import Album, Artist, Song
 import eyed3
 from eyed3.utils import art
 from PIL import Image
-import pathlib
 import threading
 
 

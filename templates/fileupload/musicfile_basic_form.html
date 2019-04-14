@@ -53,12 +53,11 @@ function csrfSafeMethod(method) {
 }
 $(function () {
     'use strict';
-    // Change this to the location of your server-side upload handler:
-    var url = '/upload/basic/';
+    const url = '/upload/basic/';
     var csrftoken = $.cookie('csrftoken');
     $('#fileupload').fileupload({
         url: url,
-        crossDomain: false,
+        crossDomain: true,
         beforeSend: function(xhr, settings) {
             if (!csrfSafeMethod(settings.type)) {
                 xhr.setRequestHeader("X-CSRFToken", csrftoken);
@@ -71,14 +70,15 @@ $(function () {
             });
         },
         progressall: function (e, data) {
-            var progress = parseInt(data.loaded / data.total * 100, 10);
+            let progress = parseInt(data.loaded / data.total * 100, 10);
+            console.log("progress " + progress);
             $('#progress .progress-bar').css(
                 'width',
                 progress + '%'
             );
         },
-        fail: function (err, data) {
-            console.log("upload error " + err + " " + data);
+        fail: function (event, data) {
+            console.log("upload error " + event + " " + data);
         }
     }).prop('disabled', !$.support.fileInput)
         .parent().addClass($.support.fileInput ? undefined : 'disabled');

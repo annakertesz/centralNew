@@ -1,0 +1,14 @@
+Django==1.9.13
+Pillow==6.0.0
+djangorestframework==3.6.3
+eyeD3==0.8.10
+pip==19.0.2
+protobuf==3.6.1
+pycparser==2.19
+python-magic== 0.4.15
+python-magic-bin == 0.4.14
+pytz==2019.1
+setuptools==40.8.0
+six==1.11.0
+sqlparse==0.3.0
+wheel==0.33.0
