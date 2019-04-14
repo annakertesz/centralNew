@@ -7,7 +7,7 @@ import time
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.core.urlresolvers import reverse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.http import HttpResponse, Http404
