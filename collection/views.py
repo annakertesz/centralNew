@@ -7,8 +7,9 @@ import time
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.core.urlresolvers import reverse
+# from django.core.urlresolvers import reverse
 from rest_framework.decorators import api_view
+# from rest_framework.views import APIView as api_view
 from rest_framework.response import Response
 from django.http import HttpResponse, Http404
 
@@ -159,12 +160,12 @@ def edit_song(request):
 
 def log_user_out(request):
     logout(request)
-    return redirect(reverse('login'))
+    return redirect('login')
 
 
 def home(request):
     if not request.user.is_authenticated:
-        return redirect(reverse('login'))
+        return redirect('login')
     # CollectionDao.add_tags_for_songs()
     return render(request, 'collection/index.html', {'user': request.user})
 
