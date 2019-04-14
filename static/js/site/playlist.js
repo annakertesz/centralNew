@@ -39,9 +39,9 @@ const showSongsOfPlaylist = function (id, name) {
             cell4.className = "col-md-2";
             const cell5 = row.insertCell(4);
             cell5.className = "col-md-2";
-
+// TODO KKKKK
             cell1.innerHTML = `<button class="table_btn" onclick="playPlaylist('${id}','${num}')">
-                               <div class="glyphicon glyphicon-play"></div></button>`;
+                               <div class="glyphicon glyphicon-play playlist-play-button" id="playlist_btn_icon_${id}_${num}"></div></button>`;
             cell2.innerHTML = song.name;
             cell3.innerHTML = song.album.album_name;
             cell4.innerHTML = song.artist.artist_name;

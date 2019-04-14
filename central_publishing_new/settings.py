@@ -18,6 +18,7 @@ from os.path import join
 from django.conf import settings
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ADMIN_EMAIL = "kerteszannanak@gmail.com"
 
 
 # Quick-start development settings - unsuitable for production

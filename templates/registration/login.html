@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <title>Central Publishing</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/site/registration.js' %}"></script>
+    <script src="{% static 'js/vendor/jquery.min.js' %}"></script>
+    <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
 </head>
 <body>
     <div class="text-center">
@@ -16,8 +19,33 @@
             {{ form.as_p }}
             <br>
             <button class="btn btn-lg" type="submit">Login</button>
-            <button class="btn btn-lg" onclick="alert('For registration please contact us!')">Sign up</button>
         </form>
+        <button class="btn btn-lg" onclick="showSignUpModal()">Sign up</button>
+    </div>
+
+    <!-- Confirm signup Modal -->
+    <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Sign up</h4>
+          </div>
+          <div class="modal-body">
+            <h4 id="confirmDeleteModalText">Sign up text: Here, there should be some information about a registration process</h4>
+            <p>name:<input id="newusername" type="text" ></p>
+            <p>phone:<input id="newphone" type="text" ></p>
+            <p>message: <textarea id="newmessage"></textarea></p>
+            <p>...</p>
+            <p>If you click OK, Central Publishing will contact you shortly.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="send_signUp_email()">Ok</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+          </div>
+        </div>
+      </div>
     </div>
 </body>
 </html>

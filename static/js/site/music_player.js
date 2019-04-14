@@ -106,6 +106,8 @@ const onPlayPauseClick = function () {
 
 // plays a playlist from the 'from' position
 const playPlaylist = function (id, from) {
+    // TODO if its already playing juat pause the song
+
     const url = "/api/songs_of_playlists/?playlist=" + id;
     playlist = [];
     playlistPos = from;
@@ -115,6 +117,9 @@ const playPlaylist = function (id, from) {
         });
         _loadAndPlaySong(playlist[playlistPos]);
     });
+
+    $(".playlist-play-button").attr("class", "glyphicon glyphicon-play playlist-play-button");
+    $("#playlist_btn_icon_" + id + "_" + from).attr("class", "glyphicon glyphicon-pause playlist-play-button");
 };
 
 const playNextOnPlaylist = function () {

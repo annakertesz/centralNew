@@ -192,20 +192,33 @@ def add_user_to_playlist(request):
 
 @api_view(['GET'])
 def send_email(request):
-    song = Song.objects.get(id=request.GET.get('id'))
-    user = request.user
+    if (request.GET.get('id')!=None):
+        song = Song.objects.get(id=request.GET.get('id'))
+        user = request.user
+        subject='License'
+        message='Dear Admin, \n' + user.username + \
+                ' wants to buy a song. \nData of the song: \n' + song.name +'\n-' + song.album.album_name + \
+                '\n-' + song.artist.artist_name + '\n\n And the user: \n' + user.username + '\nname: ' + user.first_name + ' ' + \
+                user.last_name + '\nemail:' + user.email
+    else:
+        subject='Registration request'
+        message=request.GET.get('message')
     print("Trying to send mail")
-    resp = send_mail(
-        'Licence', # subject
-        'Dear Admin, \n' + user.username + 'wants to buy a song. \nData of the song: \n' + song.name +
-        '\n-' + song.album.album_name + '\n-' + song.artist.artist_name +
-        '\n\n And the user: \n' + user.username + '\nname: ' + user.first_name + ' ' + user.last_name + '\nemail:' + user.email,
-        'centralpublishingemail@gmail.com', # from_email
-        ['kerteszannanak@gmail.com'], # recipient list
-        fail_silently = False
-    )
+    try:
+        resp = send_mail(
+            subject, # subject
+            message,
+            'centralpublishingemail@gmail.com', # from_email
+            [settings.ADMIN_EMAIL], # recipient list
+            fail_silently = False,
+            auth_user=settings.EMAIL_HOST_USER,
+            auth_password=settings.EMAIL_HOST_PASSWORD
+        )
+    except Exception:
+        return Response(settings.ADMIN_EMAIL)
     print("Email sent")
-    return Response("Number of emails sent: " + str(resp) )
+    print(str(resp))
+    return Response("success" )
 
 
 def createZipFile(playlist_id):
