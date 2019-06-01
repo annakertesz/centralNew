@@ -5,47 +5,103 @@
     <meta charset="UTF-8">
     <title>Central Publishing</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
     <script src="{% static 'js/site/registration.js' %}"></script>
     <script src="{% static 'js/vendor/jquery.min.js' %}"></script>
     <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
 </head>
 <body>
-    <div class="text-center">
+<div class="text-center">
+    <br>
+    <h1>Welcome to Central Publishing</h1>
+    <br><br>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
         <br>
-        <h1>Welcome to Central Publishing</h1>
-        <br><br>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <br>
-            <button class="btn btn-lg" type="submit">Login</button>
-        </form>
-        <button class="btn btn-lg" onclick="showSignUpModal()">Sign up</button>
-    </div>
+        <button class="btn btn-lg" type="submit">Login</button>
+    </form>
+    <button class="btn btn-lg" onclick="showSignUpModal()">Sign up</button>
+</div>
 
-    <!-- Confirm signup Modal -->
-    <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document">
+<!-- signup Modal -->
+<div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Sign up</h4>
-          </div>
-          <div class="modal-body">
-            <h4 id="confirmDeleteModalText">Sign up text: Here, there should be some information about a registration process</h4>
-            <p>name:<input id="newusername" type="text" ></p>
-            <p>phone:<input id="newphone" type="text" ></p>
-            <p>message: <textarea id="newmessage"></textarea></p>
-            <p>...</p>
-            <p>If you click OK, Central Publishing will contact you shortly.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="send_signUp_email()">Ok</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-      </div>
-          </div>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Sign up</h4>
+            </div>
+            <div class="text-center" id="signupSpinner">
+                <div class="spinner-border" role="status">
+                    <div id="loading-bar-spinner" class="spinner">
+                        <div class="spinner-icon"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body" id="signupModalBody">
+                <table style="width:100%">
+                    <tr>
+                        <th> <p id="firstnametext">First name:*</p></th><th><input class="signupfield" id="firstname" type="text"></th>
+                    </tr>
+                    <tr>
+                       <th> <p id="lastnametext">Last name:*</p></th><th><input class="signupfield" id="lastname" type="text"></th>
+                    </tr>
+                    <tr>
+                       <th> <p>Company name:</p></th><th><input class="signupfield" id="company" type="text"></th>
+                    </tr>
+                    <tr>
+                       <th> <p id="addresstext">Email address:*</p></th><th><input class="signupfield" id="address" type="email"></th>
+                    </tr>
+                    <tr>
+                       <th> <p>Phone number:</p></th><th><input class="signupfield" id="phone" type="text"></th></tr>
+                </table>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="validate_form()">Ok
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
         </div>
-      </div>
     </div>
+</div>
+</div>
+
+<!-- SuccessfulModal -->
+<div class="modal fade" id="successfulSignUpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Successful registration request</h4>
+            </div>
+            <div class="modal-body">
+                <h4 style="text-align: center">We will contact you soon</h4>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<!-- unsuccessfulModal -->
+<div class="modal fade" id="unsuccessfulSignUpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Unsuccessful registration request</h4>
+            </div>
+            <div class="modal-body">
+                <h4>Something went wrong. Please contact us on email@cim.com</h4>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 </body>
 </html>
