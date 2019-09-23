@@ -113,20 +113,20 @@ WSGI_APPLICATION = 'central_publishing_new.wsgi.application'
 # }
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'det0ji2cah9n0e',
-        'USER': 'alfjqzaeworxjr',
-        'PASSWORD': 'efc020d3ef49d176bde4ae38023a7fd66f560d166e59fc600c985d1a0cf2fce2',
-        'HOST': 'ec2-107-21-120-104.compute-1.amazonaws.com',
-        'PORT': '5432',
-    }
     # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     # 'NAME': '/home/centralpublishing/centralNew/central',
-    #     'NAME': 'central',
-    #
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'det0ji2cah9n0e',
+    #     'USER': 'alfjqzaeworxjr',
+    #     'PASSWORD': 'efc020d3ef49d176bde4ae38023a7fd66f560d166e59fc600c985d1a0cf2fce2',
+    #     'HOST': 'ec2-107-21-120-104.compute-1.amazonaws.com',
+    #     'PORT': '5432',
     # }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': '/home/centralpublishing/centralNew/central',
+        'NAME': 'central',
+
+    }
 }
 
 # Password validation
