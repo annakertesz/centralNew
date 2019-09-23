@@ -32,7 +32,7 @@ SECRET_KEY = 'wea3#h3&ne+xlc-mz(v1iv8(3(6j1z=ils)t5+ybezh_*uu@0v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['central-publishing.herokuapp.com']
 
 
 
