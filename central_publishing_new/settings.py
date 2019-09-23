@@ -174,17 +174,17 @@ MEDIA_URL = '/media/'
 # FILEBROWSER_DIRECTORY = getattr(settings, "FILEBROWSER_DIRECTORY", '')
 
 FILEBROWSER_EXTENSIONS = getattr(settings, "FILEBROWSER_EXTENSIONS", {
-    'Image': ['.jpg','.jpeg','.gif','.png','.tif','.tiff'],
-    'Document': ['.pdf','.doc','.rtf','.txt','.xls','.csv'],
-    'Video': ['.mov','.wmv','.mpeg','.mpg','.avi','.rm'],
-    'Audio': ['.mp3','.mp4','.wav','.aiff','.midi','.m4p']
+    'Image': ['.jpg', '.jpeg', '.gif', '.png', '.tif', '.tiff'],
+    'Document': ['.pdf', '.doc', '.rtf', '.txt', '.xls', '.csv'],
+    'Video': ['.mov', '.wmv', '.mpeg', '.mpg', '.avi', '.rm'],
+    'Audio': ['.mp3', '.mp4', '.wav', '.aiff', '.midi', '.m4p']
 })
 
 FILEBROWSER_SELECT_FORMATS = getattr(settings, "FILEBROWSER_SELECT_FORMATS", {
-    'file': ['Image','Document','Video','Audio'],
+    'file': ['Image', 'Document', 'Video', 'Audio'],
     'image': ['Image'],
     'document': ['Document'],
-    'media': ['Video','Audio'],
+    'media': ['Video', 'Audio'],
 })
 
 FILEBROWSER_NORMALIZE_FILENAME = getattr(settings, "FILEBROWSER_NORMALIZE_FILENAME", False)
