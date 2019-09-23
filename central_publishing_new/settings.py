@@ -22,7 +22,6 @@ ADMIN_EMAIL = "kerteszannanak@gmail.com"
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
@@ -32,10 +31,7 @@ SECRET_KEY = 'wea3#h3&ne+xlc-mz(v1iv8(3(6j1z=ils)t5+ybezh_*uu@0v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['central-publishing.herokuapp.com']
-
-
-
+ALLOWED_HOSTS = ['central-publishing.herokuapp.com', '127.0.0.1']
 
 # Application definition
 
@@ -102,7 +98,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'central_publishing_new.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
@@ -119,13 +114,20 @@ WSGI_APPLICATION = 'central_publishing_new.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': '/home/centralpublishing/centralNew/central',
-        'NAME': 'central',
-
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'det0ji2cah9n0e',
+        'USER': 'alfjqzaeworxjr',
+        'PASSWORD': 'efc020d3ef49d176bde4ae38023a7fd66f560d166e59fc600c985d1a0cf2fce2',
+        'HOST': 'ec2-107-21-120-104.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     # 'NAME': '/home/centralpublishing/centralNew/central',
+    #     'NAME': 'central',
+    #
+    # }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -145,7 +147,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
@@ -158,7 +159,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static media (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
