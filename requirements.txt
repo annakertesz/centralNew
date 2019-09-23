@@ -1,13 +1,18 @@
+dj-database-url==0.5.0
 Django==1.11.20
-Pillow==6.0.0
 djangorestframework==3.6.3
 eyeD3==0.8.10
-pip==19.0.2
-protobuf==3.6.1
+gunicorn==19.9.0
+numpy==1.16.3
+Pillow==6.0.0
+protobuf==3.7.1
+psycopg2==2.8.3
 pycparser==2.19
-python-magic== 0.4.15
+python-magic==0.4.15
+python-magic-bin==0.4.14
 pytz==2019.1
-setuptools==40.8.0
-six==1.11.0
+scipy==1.2.1
+six==1.12.0
 sqlparse==0.3.0
-wheel==0.33.0
+Theano==1.0.4
+whitenoise==4.1.3

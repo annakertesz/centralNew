@@ -30,7 +30,7 @@ STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 SECRET_KEY = 'wea3#h3&ne+xlc-mz(v1iv8(3(6j1z=ils)t5+ybezh_*uu@0v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['central-publishing.herokuapp.com', '127.0.0.1']
 
@@ -65,23 +65,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 ROOT_URLCONF = 'central_publishing_new.urls'
 
 TEMPLATES = [
-    # {
-    #     'BACKEND': 'django.template.backends.django.DjangoTemplates',
-    #     'DIRS': [os.path.join(BASE_DIR, 'templates')],
-    #     'OPTIONS': {
-    #         'context_processors': [
-    #             'django.template.context_processors.debug',
-    #             'django.template.context_processors.request',
-    #             'django.contrib.auth.context_processors.auth',
-    #             'django.contrib.messages.context_processors.messages',
-    #         ],
-    #         'loaders': [
-    #             'django.template.loaders.filesystem.Loader',
-    #             'django.template.loaders.app_directories.Loader'
-    #         ],
-    #     },
-    # },
-
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': (os.path.join(BASE_DIR, 'central/../templates/'),),
@@ -171,7 +154,6 @@ USE_TZ = True
 # Static media (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATICFILES_DIRS = os.path.join(BASE_DIR, "static"),
 STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')
 ]
 STATIC_URL = '/static/'
