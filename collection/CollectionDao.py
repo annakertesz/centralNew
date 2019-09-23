@@ -1,3 +1,5 @@
+import sys
+
 import eyed3
 
 from central_publishing_new.settings import MEDIA_ROOT
@@ -5,7 +7,7 @@ from collection.models import Album, Artist, Song, Tag, TagSongMap
 
 
 def simple_search(string, isExact): #TODO: exact mode returns everything
-
+    sys.stdout.write('simple search')
     if len(string) == 0:
         return Song.objects.all()
 
