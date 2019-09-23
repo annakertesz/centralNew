@@ -1,5 +1,6 @@
 # encoding: utf-8
 import json
+import sys
 
 from django.http import HttpResponse
 from django.views.generic import CreateView
@@ -18,6 +19,7 @@ class PictureCreateView(CreateView):
 
     dao = CollectionDao()
     def form_valid(self, form):
+        sys.stdout.write('from valid')
         self.object = form.save()
         files = [serialize(self.object)]
         path = self.create_good_path()
@@ -30,10 +32,12 @@ class PictureCreateView(CreateView):
         return response
 
     def form_invalid(self, form):
+        sys.stdout.write('from invalid')
         data = json.dumps(form.errors)
         return HttpResponse(content=data, status=400, content_type='application/json')
 
     def create_good_path(self):
+        sys.stdout.write('create_good_path')
         curr_path = self.object.file.path
         curr_filename = os.path.basename(curr_path)
         curr_filename_arr = os.path.splitext(curr_filename)

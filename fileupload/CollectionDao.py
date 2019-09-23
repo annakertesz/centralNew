@@ -1,4 +1,5 @@
 import os
+import sys
 
 import PIL
 import io
@@ -16,6 +17,7 @@ class CollectionDao:
     lock = threading.RLock()
 
     def add_song(self, file_name):
+        sys.stdout.write('add_song')
         with CollectionDao.lock: # lock the thread so it doesnt save the same album/artist twice
             # TODO: iterate through albums and artists
             song = eyed3.load(MEDIA_ROOT + '/' + file_name)
