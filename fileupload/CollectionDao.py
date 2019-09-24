@@ -22,6 +22,7 @@ class CollectionDao:
             # TODO: iterate through albums and artists
             song = eyed3.load(MEDIA_ROOT + '/' + file_name)
             sys.stdout.write('\nfilename : '+ file_name)
+            sys.stdout.write('artist_name= ' + song.tag.artist)
             try:
                 sys.stdout.write('\nartist:' + song.tag.tag_name)
                 artist = Artist.objects.get(artist_name=song.tag.artist)
