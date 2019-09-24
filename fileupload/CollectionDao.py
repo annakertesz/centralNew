@@ -26,18 +26,20 @@ class CollectionDao:
                 sys.stdout.write('\nartist:' + song.tag.tag_name)
                 artist = Artist.objects.get(artist_name=song.tag.artist)
             except Artist.DoesNotExist:
-                sys.stdout.write('1')
+                sys.stdout.write('\n1')
                 artist = Artist(artist_name=song.tag.artist)
                 sys.stdout.write("\nNEW ARTIST :" + song.tag.artist)
                 try:
-                    sys.stdout.write('2')
+                    sys.stdout.write('\n2')
                     artist.save()
                 except Exception:
-                    sys.stdout.write('3')
+                    sys.stdout.write('\n3')
                     sys.stdout.write("\nartist save falied :" + Exception)
             except Exception:
-                sys.stdout.write('4')
-                sys.stdout.write("\nartist save falied :" + Exception)
+                sys.stdout.write('\n4')
+                sys.stdout.write("\nartist save falied :")
+                sys.stdout.write(Exception)
+                sys.stdout.write("\n...")
             try:
                 sys.stdout.write('\nalbum:' + song.tag.album)
                 album = Album.objects.get(album_name=song.tag.album)
