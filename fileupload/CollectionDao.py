@@ -17,22 +17,31 @@ class CollectionDao:
     lock = threading.RLock()
 
     def add_song(self, file_name):
-        sys.stdout.write('add_song')
+        sys.stdout.write('\nadd_song:\n')
         with CollectionDao.lock: # lock the thread so it doesnt save the same album/artist twice
             # TODO: iterate through albums and artists
             song = eyed3.load(MEDIA_ROOT + '/' + file_name)
+            sys.stdout.write('\nfilename : '+ file_name)
             try:
+                sys.stdout.write('\nartist:' + song.tag.tag_name)
                 artist = Artist.objects.get(artist_name=song.tag.artist)
             except Artist.DoesNotExist:
                 artist = Artist(artist_name=song.tag.artist)
-                print("NEW ARTIST:" + song.tag.artist)
-                artist.save()
+                sys.stdout.write("\nNEW ARTIST :" + song.tag.artist)
+                try:
+                    artist.save()
+                except Exception:
+                    sys.stdout.write("\nartist save falied :" + Exception)
             try:
+                sys.stdout.write('\nalbum:' + song.tag.album)
                 album = Album.objects.get(album_name=song.tag.album)
             except Album.DoesNotExist:
                 album = Album(album_name=song.tag.album, artist=artist, cover=slugify(song.tag.album))
-                album.save()
-                print("NEW ALBUM:" + song.tag.album)
+                sys.stdout.write("\nNEW ALBUm :" + song.tag.album)
+                try:
+                    album.save()
+                except Exception:
+                    sys.stdout.write("\nartist save falied :" + Exception)
             images = art.getArtFromTag(song.tag)
             for image in images: # an mp3 file can  have multiple images
                 img = Image.open(io.BytesIO(image.image_data))
