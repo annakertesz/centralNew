@@ -32,6 +32,8 @@ class CollectionDao:
                     artist.save()
                 except Exception:
                     sys.stdout.write("\nartist save falied :" + Exception)
+            except Exception:
+                sys.stdout.write("\nartist save falied :" + Exception)
             try:
                 sys.stdout.write('\nalbum:' + song.tag.album)
                 album = Album.objects.get(album_name=song.tag.album)
