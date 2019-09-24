@@ -23,8 +23,9 @@ class CollectionDao:
             song = eyed3.load(MEDIA_ROOT + '/' + file_name)
             sys.stdout.write('\nfilename : '+ file_name)
             sys.stdout.write('artist_name= ' + song.tag.artist)
+            song.tag.artist='NewQueen'
             try:
-                sys.stdout.write('\nartist:' + song.tag.tag_name)
+                sys.stdout.write('\nartist:' + song.tag.artist)
                 artist = Artist.objects.get(artist_name=song.tag.artist)
             except Artist.DoesNotExist:
                 sys.stdout.write('\n1')
