@@ -19,17 +19,23 @@ class PictureCreateView(CreateView):
 
     dao = CollectionDao()
     def form_valid(self, form):
-        sys.stdout.write('from valid')
-        self.object = form.save()
-        files = [serialize(self.object)]
-        path = self.create_good_path()
-        # rename the file to this one
-        os.rename(self.object.file.path, path)  # TODO handle if rename fails, e.g. file with such name exists
-        data = {'files': files}
-        response = JSONResponse(data, mimetype=response_mimetype(self.request))
-        response['Content-Disposition'] = 'inline; filename=files.json'
-        self.dao.add_song(os.path.basename(path))
-        return response
+        try:
+            sys.stdout.write('from valid')
+            self.object = form.save()
+            files = [serialize(self.object)]
+            path = self.create_good_path()
+            # rename the file to this one
+            os.rename(self.object.file.path, path)  # TODO handle if rename fails, e.g. file with such name exists
+            data = {'files': files}
+            response = JSONResponse(data, mimetype=response_mimetype(self.request))
+            response['Content-Disposition'] = 'inline; filename=files.json'
+            try:
+                self.dao.add_song(os.path.basename(path))
+            except Exception:
+                sys.stdout.write('addsong exception: ' + Exception)
+            return response
+        except Exception:
+            sys.stdout.write('whole stuff exception: ' +  Exception)
 
     def form_invalid(self, form):
         sys.stdout.write('from invalid')
