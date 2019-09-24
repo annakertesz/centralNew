@@ -23,7 +23,7 @@ class CollectionDao:
             song = eyed3.load(MEDIA_ROOT + '/' + file_name)
             sys.stdout.write('\nfilename : '+ file_name)
             sys.stdout.write('artist_name= ' + song.tag.artist)
-            song.tag.artist='NewQueen2'
+            song.tag.artist='NewQueen3'
             try:
                 sys.stdout.write('\nartist:' + song.tag.artist)
                 artist = Artist.objects.get(artist_name=song.tag.artist)
@@ -52,6 +52,9 @@ class CollectionDao:
                     album.save()
                 except Exception:
                     sys.stdout.write("\nartist save falied :" + Exception)
+            except Exception as e:
+                sys.stdout.write("\n5")
+                sys.stdout.write(e.message, type(e))
             images = art.getArtFromTag(song.tag)
             for image in images: # an mp3 file can  have multiple images
                 img = Image.open(io.BytesIO(image.image_data))
