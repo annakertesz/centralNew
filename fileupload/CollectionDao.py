@@ -33,10 +33,11 @@ class CollectionDao:
                 sys.stdout.write("\nNEW ARTIST :" + song.tag.artist)
                 try:
                     sys.stdout.write('\n2')
+                    sys.stdout.write("Oops!", sys.exc_info()[0], "occured.")
                     artist.save()
-                except Exception:
+                except:
                     sys.stdout.write('\n3')
-                    sys.stdout.write("\nartist save falied :" + Exception)
+                    sys.stdout.write("Oops!", sys.exc_info()[0], "occured.")
             except:
                 sys.stdout.write('\n4')
                 sys.stdout.write("\nartist save falied :")
@@ -50,8 +51,8 @@ class CollectionDao:
                 sys.stdout.write("\nNEW ALBUm :" + song.tag.album)
                 try:
                     album.save()
-                except Exception:
-                    sys.stdout.write("\nartist save falied :" + Exception)
+                except:
+                    sys.stdout.write("Oops!", sys.exc_info()[0], "occured.")
             except:
                 sys.stdout.write("\n5")
                 sys.stdout.write("Oops!",sys.exc_info()[0],"occured.")
