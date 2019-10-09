@@ -23,7 +23,6 @@ class CollectionDao:
             song = eyed3.load(MEDIA_ROOT + '/' + file_name)
             sys.stdout.write('\nfilename : '+ file_name)
             sys.stdout.write('artist_name= ' + song.tag.artist)
-            song.tag.artist='NewQueen3'
             try:
                 sys.stdout.write('\nartist:' + song.tag.artist)
                 artist = Artist.objects.get(artist_name=song.tag.artist)
@@ -47,7 +46,7 @@ class CollectionDao:
                 album = Album.objects.get(album_name=song.tag.album)
             except Album.DoesNotExist:
                 album = Album(album_name=song.tag.album, artist=artist, cover=slugify(song.tag.album))
-                sys.stdout.write("\nNEW ALBUm :" + song.tag.album)
+                sys.stdout.write("\nNEW ALBUm :" + album.album_name)
                 try:
                     album.save()
                 except:
