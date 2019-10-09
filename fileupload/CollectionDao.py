@@ -33,7 +33,6 @@ class CollectionDao:
                 sys.stdout.write("\nNEW ARTIST :" + song.tag.artist)
                 try:
                     sys.stdout.write('\n2')
-                    sys.stdout.write("Oops!", sys.exc_info()[0], "occured.")
                     artist.save()
                 except:
                     sys.stdout.write('\n3')
