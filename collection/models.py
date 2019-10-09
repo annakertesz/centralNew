@@ -11,26 +11,26 @@ from django.contrib.auth.models import User
 
 
 class Artist(models.Model):
-    artist_name = models.CharField(max_length=30)
+    artist_name = models.CharField(max_length=100)
 
 class Album(models.Model):
-    album_name = models.CharField(max_length=30)
+    album_name = models.CharField(max_length=100)
     artist = models.ForeignKey(Artist, related_name='artist', on_delete=models.CASCADE)
-    cover = models.CharField(max_length=30, default='default_image')
+    cover = models.CharField(max_length=100, default='default_image')
 
 class Song(models.Model):
     path = models.CharField(max_length=150)
     album = models.ForeignKey(Album, related_name='name', on_delete=models.CASCADE)
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
-    name = models.CharField(max_length=60)
+    name = models.CharField(max_length=100)
 
 class SongToEdit(models.Model):
     path = models.CharField(max_length=150)
-    name = models.CharField(max_length=60)
+    name = models.CharField(max_length=100)
 
 
 class Tag(models.Model):
-    tag_name = models.CharField(max_length=20, default='DEFAULT')
+    tag_name = models.CharField(max_length=100, default='DEFAULT')
 
 
 class TagSongMap(models.Model):
@@ -39,7 +39,7 @@ class TagSongMap(models.Model):
 
 
 class Playlist(models.Model):
-    playlist_name = models.CharField(max_length=60)
+    playlist_name = models.CharField(max_length=100)
 
 
 class PlaylistUserMap(models.Model):
