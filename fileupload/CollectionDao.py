@@ -40,7 +40,7 @@ class CollectionDao:
             except:
                 sys.stdout.write('\n4')
                 sys.stdout.write("\nartist save falied :")
-                sys.stdout.write(Exception)
+                sys.stdout.write("Oops!",sys.exc_info()[0],"occured.")
                 sys.stdout.write("\n...")
             try:
                 sys.stdout.write('\nalbum:' + song.tag.album)
@@ -54,7 +54,7 @@ class CollectionDao:
                     sys.stdout.write("\nartist save falied :" + Exception)
             except:
                 sys.stdout.write("\n5")
-                # sys.stdout.write(e.message, type(e))
+                sys.stdout.write("Oops!",sys.exc_info()[0],"occured.")
             images = art.getArtFromTag(song.tag)
             for image in images: # an mp3 file can  have multiple images
                 img = Image.open(io.BytesIO(image.image_data))
