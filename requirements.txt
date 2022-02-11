@@ -5,7 +5,7 @@ eyeD3==0.8.10
 gunicorn==19.9.0
 numpy==1.16.3
 Pillow==6.0.0
-protobuf==3.7.1
+protobuf==3.15.0
 psycopg2==2.8.3
 pycparser==2.19
 python-magic==0.4.15
